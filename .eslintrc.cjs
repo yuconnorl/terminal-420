@@ -15,7 +15,7 @@ const config = {
   parserOptions: {
     project: "./tsconfig.json",
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ["simple-import-sort", "@typescript-eslint"],
   extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
   rules: {
     "@typescript-eslint/consistent-type-imports": [
@@ -25,6 +25,9 @@ const config = {
         fixStyle: "inline-type-imports",
       },
     ],
+    "simple-import-sort/imports": "error", // sorting imports
+    "simple-import-sort/exports": "error", // sorting exports
+    "@typescript-eslint/require-await": "off",
   },
 };
 
