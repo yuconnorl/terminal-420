@@ -1,40 +1,60 @@
-import "./global.css";
+import './global.css'
 
-import clsx from "clsx";
-import type { Metadata } from "next";
-import localFont from "next/font/local";
+import clsx from 'clsx'
+import type { Metadata } from 'next'
+import localFont from 'next/font/local'
 
-// import AnalyticsWrapper from "../components/analytics";
-import Sidebar from "@/components/Sidebar";
+import Header from '@/components/Header'
+
+const noto = localFont({
+  src: [
+    {
+      path: '../public/fonts/noto-sans-light.woff2',
+      weight: '300',
+    },
+    {
+      path: '../public/fonts/noto-sans-semibold.woff2',
+      weight: '600',
+    },
+  ],
+  variable: '--font-noto',
+})
 
 const roboto = localFont({
-  src: "../public/fonts/roboto-serif-light.ttf",
-  weight: "300",
-  variable: "--font-roboto",
-  display: "swap",
-});
+  src: [
+    {
+      path: '../public/fonts/roboto-regular.ttf',
+      weight: '400',
+    },
+    {
+      path: '../public/fonts/roboto-bold.ttf',
+      weight: '700',
+    },
+  ],
+  variable: '--font-roboto',
+})
 
 // built-in SEO helper
 export const metadata: Metadata = {
   title: {
-    default: "test title",
-    template: "%s | Testing title",
+    default: 'test title',
+    template: '%s | Testing title',
   },
-  description: "description",
+  description: 'description',
   openGraph: {
-    title: "Lee Robinson",
-    description: "Developer, writer, and creator.",
-    url: "https://leerob.io",
-    siteName: "Lee Robinson",
+    title: 'Lee Robinson',
+    description: 'Developer, writer, and creator.',
+    url: 'https://leerob.io',
+    siteName: 'Lee Robinson',
     images: [
       {
-        url: "https://leerob.io/og.jpg",
+        url: 'https://leerob.io/og.jpg',
         width: 1920,
         height: 1080,
       },
     ],
-    locale: "en-US",
-    type: "website",
+    locale: 'en-US',
+    type: 'website',
   },
   robots: {
     index: true,
@@ -42,38 +62,36 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
   icons: {
-    shortcut: "/favicon.ico",
+    shortcut: '/favicon.ico',
   },
   verification: {
-    google: "eZSdmzAXlLkKhNJzfgwDqWORghxnJ8qR9_CHdAh5-xw",
-    yandex: "14d2e73487fa6c71",
+    google: 'eZSdmzAXlLkKhNJzfgwDqWORghxnJ8qR9_CHdAh5-xw',
+    yandex: '14d2e73487fa6c71',
   },
-};
+}
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html
-      lang="en"
+      lang='en'
       className={clsx(
-        "bg-white text-black dark:bg-[#111010] dark:text-white",
-        roboto.variable
+        'h-full w-full bg-white font-sans-serif text-black dark:bg-[#111010] dark:text-white',
+        noto.variable,
+        roboto.variable,
       )}
     >
-      <body className="mx-4 mb-40 mt-8 flex max-w-4xl flex-col antialiased md:mt-20 md:flex-row lg:mx-auto lg:mt-32">
-        <Sidebar />
-        <main className="mt-6 flex min-w-0 flex-auto flex-col px-2 md:mt-0 md:px-0">
-          {children}
-          {/* <AnalyticsWrapper /> */}
-        </main>
+      <body className='relative mx-4 flex w-full max-w-5xl flex-col px-8 pt-16 pb-32 antialiased md:flex-row lg:mx-auto'>
+        <Header />
+        <main className='h-full w-full'>{children}</main>
       </body>
     </html>
-  );
-};
+  )
+}
 
-export default RootLayout;
+export default RootLayout

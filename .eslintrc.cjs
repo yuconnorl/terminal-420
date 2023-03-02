@@ -3,32 +3,33 @@ const config = {
   overrides: [
     {
       extends: [
-        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
       ],
-      files: ["*.ts", "*.tsx"],
+      files: ['*.ts', '*.tsx'],
       parserOptions: {
-        project: "tsconfig.json",
+        project: 'tsconfig.json',
       },
     },
   ],
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: "./tsconfig.json",
+    project: './tsconfig.json',
   },
-  plugins: ["simple-import-sort", "@typescript-eslint"],
-  extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+  plugins: ['simple-import-sort', '@typescript-eslint'],
+  extends: ['next/core-web-vitals', 'plugin:@typescript-eslint/recommended'],
   rules: {
-    "@typescript-eslint/consistent-type-imports": [
-      "warn",
+    '@typescript-eslint/consistent-type-imports': [
+      'warn',
       {
-        prefer: "type-imports",
-        fixStyle: "inline-type-imports",
+        prefer: 'type-imports',
+        fixStyle: 'inline-type-imports',
       },
     ],
-    "simple-import-sort/imports": "error", // sorting imports
-    "simple-import-sort/exports": "error", // sorting exports
-    "@typescript-eslint/require-await": "off",
+    'simple-import-sort/imports': 'error', // sorting imports
+    'simple-import-sort/exports': 'error', // sorting exports
+    '@typescript-eslint/require-await': 'off',
   },
-};
+  ignorePatterns: ['**/*.mdx', '**/*.js'],
+}
 
-module.exports = config;
+module.exports = config

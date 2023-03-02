@@ -1,13 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 const config = {
-  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  content: ['./app/**/*.{ts,tsx}', './src/**/*.{ts,tsx}', './content/**/*.mdx'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'sans-serif': ['var(--font-roboto)', 'Roboto', 'serif'],
+      },
+    },
   },
   future: {
     hoverOnlyWhenSupported: true,
   },
-  plugins: [],
-};
+  plugins: [require('@tailwindcss/typography')],
+}
 
-module.exports = config;
+module.exports = config

@@ -2,12 +2,7 @@
 title: Open Container Initiatives (OCI)
 id: 961ed19e-5574-4513-a798-5d3ba6146642
 date: 2022-Oct-21 10:55:10+08:00
-modified date: 2022-Nov-04 13:43:01+08:00
-aliases: []
-status: 🚧 / 🛳 / 🖖
 ---
-
-# Open Container Initiatives (OCI)
 
 在 [[Docker]] 於 2013 年推出時，解決了許多開發人員在使用容器化技術上遇到的問題，其中包含：
 
@@ -78,11 +73,8 @@ Many things that once required time-consuming and error-prone human effort can n
 
 這份 configuration 包含兩個 section，*common* 及 [*platform-specific*](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config.md#platform-specific-configuration)。common section 包含通用的設定，像是 `ociVersion` `root` fileesystem path within the bundle, additional `mounts` beyond the `root`, a `process` to start in the container, a `user`, and a `hostname`；*platform-specific* section 則用來設置各個平台特有的參數，像是 [Linux](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-linux.md), [Solaris](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-solaris.md), [Windows](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-windows.md), [z/OS](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-zos.md), 及 [Virtual Machine](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-vm.md)。而熟知的 [[cgroups]] 及 [[namespace]] 的設置則被包含在 [Linux-specific section](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-linux.md) 之中。
 
-```ad-note
 
-顯示只有 [[Linux]] 的 [[Container]] 需要依賴 [[namespace]] 及 [[cgroups]] 來實作，但不是所有標準化容器都是 [[Linux]] based。
-
-```
+> 顯示只有 [[Linux]] 的 [[Container]] 需要依賴 [[namespace]] 及 [[cgroups]] 來實作，但不是所有標準化容器都是 [[Linux]] based。
 
 ![[container config.png]]
 
@@ -108,9 +100,3 @@ To summarize, containers aren't just slightly more isolated and restricted Linux
 - [Open Container Initiative Github](https://github.com/opencontainers)
 - [The 5 principles of Standard Containers](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/principles.md#the-5-principles-of-standard-containers)
 - [What Is a Standard Container (2021 edition)](https://iximiuz.com/en/posts/oci-containers/)
-
----
-
-## Correlation
-
-Tags:
