@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 
+import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 
 const noto = localFont({
@@ -86,9 +87,12 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         roboto.variable,
       )}
     >
-      <body className='relative mx-4 flex w-full max-w-5xl flex-col px-8 pt-16 pb-32 antialiased md:flex-row lg:mx-auto'>
+      <body className='relative mx-4 flex min-h-full w-full max-w-5xl flex-col px-8 pt-16 pb-32 antialiased md:flex-row lg:mx-auto'>
         <Header />
-        <main className='h-full w-full'>{children}</main>
+        <main className='flex h-full w-full flex-col'>
+          {children}
+          <Footer />
+        </main>
       </body>
     </html>
   )

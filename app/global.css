@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.prose .anchor {
+  @apply absolute invisible no-underline;
+
+  margin-left: -1.5rem;
+  padding-right: 0.5rem;
+  width: 80%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.anchor:hover {
+  @apply visible;
+}
+
+.prose .anchor::after {
+  @apply absolute text-slate-300;
+  content: '#';
+}
+
+.prose *:hover > .anchor {
+  @apply visible;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  @apply relative
+}

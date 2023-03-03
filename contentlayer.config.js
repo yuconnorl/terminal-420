@@ -39,7 +39,7 @@ export const Post = defineDocumentType(() => ({
 
 const prettyCodeOptions = {
   // Use one of Shiki's packaged themes
-  theme: 'one-dark-pro',
+  theme: 'github-dark-dimmed',
  
   // Keep the background or use a custom background color?
   keepBackground: true,
@@ -63,6 +63,7 @@ const prettyCodeOptions = {
   },
 };
 
+// adding .anchor to link
 const autolinkHeadingsOptions = {
   properties: {
     className: ['anchor'],
@@ -75,9 +76,9 @@ export default makeSource({
   mdx: { 
     remarkPlugins: [remarkGfm],
     rehypePlugins: [
-      [rehypePrettyCode, prettyCodeOptions], 
+      rehypeSlug,
       [rehypeAutolinkHeadings, autolinkHeadingsOptions],
-      rehypeSlug
+      [rehypePrettyCode, prettyCodeOptions], 
     ] 
   },
 })
