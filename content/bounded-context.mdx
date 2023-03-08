@@ -1,0 +1,37 @@
+---
+title: Bounded Contexts
+id: 19b31383-aa3a-45cd-8707-3c14c1558836
+date: 2022-Oct-14 11:26:47+08:00
+---
+
+## What's Bounded Contexts
+
+> *A pragmatic way to make elegant models help real project.*
+
+A defined part of the software where praticular terms, definitions and rules apply consistently. Means that you will encounter this meaning right 'here', at this boundary. In some conversation, for the purpose of this conversation, the word means this, which defined the boundary of the word.
+
+A developer must be able to easily know if they are inside or outside of the boundary, like different database schema indicated different boundary, deployment boundary, services boundary. **There must be separation within boundaries, and developers must easily see that separation**. Team within bounded context must agree on design, architecture and process. They need to agree on what words mean, and some development process.
+
+## 但現實總不會這麼理想，不會每次都可以把大問題拆解成一個一個界限明顯的小問題
+
+> 我以為我們只要夠努力就可以達成完美的 bounded context，但事實是，這從來沒有發生過
+
+> *A picture this tidy makes me very suspicoius. In the real world when I've been on a real projects, things are never like this even project that I've run. Although I must admit that there was a time when I thought if we just tried hard enough we could make the whole thing like that, but it never happens, it never ever happens. Beyond very small sort of example project. - Eric Evans*
+
+### 案例一：銀行現金部門及信用卡部門
+
+在一間小銀行中，以現金及信用卡區分不同部門，彼此間的業務也都相當清晰，也有各自的開發人員，Bounded Context 也相當明確。而在一次改組後，公司不再以現金及信用卡區分部門，而是以 Business Account 及 Personal Account 來區分，並將兩個部門重新改組。但由於系統架構早已建立，因此 Bounded Context 並不會因爲改組而有所改變，即便我們要在這個系統加入新功能，也是在這個架構上繼續新增功能
+
+好的權責分配就像跑得很快的兩人三腳，兩人間的協調性非常好，讓產品開發十分快速且順利；而糟糕的權責分配像是一匹馬，被許多人拉往各個方向，最後停滯不前。就像我們嘗試用一個相同的語言來解釋一個相當複雜的系統，每個人能對於這個語言的認知鬥不同，最後導致沒有人能夠向前移動。而 Bounded Context 讓我們不用每個人都同意每件事，因為每個人的 model 不同，就會被不同的 boundary 所限制住。
+
+### 案例二：新系統及老舊系統
+
+類似的道理也可以應用在新系統及老舊系統。新系統可能超讚，而老舊系統雖然過時，但仍堪用。若我們將兩者緊密的綁在一起，就會導致沒有人能夠向前，最後兩個系統一起走向滅亡。
+
+#### Anti-corruption layer (ACL) comes to the rescue!
+
+但其實我們沒必要完全放棄舊系統，因為一但我們這麼做，要面對的問題就瞬間複雜了好幾個層次，讓問題變得更難以解決。此時若以一些程式碼來橋接新舊系統，就可將兩者的 context 分離，不需要棄用舊系統，同時也避免舊系統崩潰、或舊系統導致新系統的崩潰。而讓兩者之間介接的程式稱為 anti-corruption layer (ACL)。ACL 就像是玄關，位於室外及室內中間、更換鞋子的落塵區。
+
+## Reference
+
+- [Bounded Contexts - Eric Evans - DDD Europe 2020](https://www.youtube.com/watch?v=am-HXycfalo&ab_channel=Domain-DrivenDesignEurope)

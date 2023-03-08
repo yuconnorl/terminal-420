@@ -87,7 +87,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         roboto.variable,
       )}
     >
-      <body className='relative mx-4 flex min-h-full w-full max-w-5xl flex-col px-8 pt-16 pb-32 antialiased md:flex-row lg:mx-auto'>
+      <body className='relative mx-4 flex min-h-full w-full max-w-6xl flex-col px-8 pt-16 pb-32 antialiased md:flex-row lg:mx-auto'>
         <Header />
         <main className='flex h-full w-full flex-col'>
           {children}

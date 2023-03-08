@@ -1,0 +1,38 @@
+---
+title: Container runtime
+id: 19b31383-aa3a-45cd-8707-3c14c1558839
+date: 2022-Oct-14 11:26:47+08:00
+---
+
+aka Container manager，用來啟動、停止或刪除 container。
+
+目前常見的 container runtime 有 [[containerd]]、[cri-o](https://github.com/cri-o/cri-o)，而他們都可以能夠拉下並執行任何遵守 [[Open Container Initiatives (OCI)]] 規範的 image。
+
+```ad-tip
+title: Why are Container Runtimes so Confusing?
+
+當我們啟用一個 [[Docker]] [[container]] 時，會歷經以下步驟：
+
+1. 下載 image
+2. 解壓縮 image 變成 bundle，在這個過程中，會將 image 一層層的結構打平，變成單一個 filesystem
+3. 由 bundle 啟動 container
+
+[[Docker]] 僅貢獻如何標準化的啟動 (run) 一個 container 給 [[Open Container Initiatives (OCI)]] 。[[Docker]] 並沒有將 image、或是 [[Registry]] push / pull 的格式貢獻出來。也就是説 [[Docker]] 僅將第三個步驟貢獻出來並標準化，而在這件事被釐清之前，所有人都認為 Container runtimes 幫我們完成了上面三個步驟，就像 [[Docker]] 過去所做的一樣。也造成 "Container runtimes" 這個字容易令人混淆的原因。
+```
+
+## Low-level and High-level Container Runtimes
+
+![[runtimes.png]]
+
+當提到 container runtimes 時，幾個名字可能會出現在腦中，像是 [[runC]]、[[LXC]]、lmctfy、Docker ([[containerd]]), rkt, cri-o 等等，但其實這些工具都各自為了不同的情境而生、也時做了不同的功能。像是 [[containerd]] 及 cri-o 使用 [[runC]] 來運行一個 container，但另外還實作了 higher level 的功能，像是 image 管理及 APIs。對比於 [[runC]] 的 low-level implementation，這些 high-level 的功能包含
+
+- image transport
+- image management
+- image unpacking
+- APIs
+
+在實務方面，只專注於如何運行好一個 [[container]] 的 container runtime 稱為 **low-level container runtimes**；而支援較 high-level 功能的 container runtime，像是 image management 或是 [[gRPC]]/Web APIs，通常會稱為 **high-level container runtimes** 或是 **high-level container tools**
+
+## Reference
+
+- [Container Runtimes Part 1: An Introduction to Container Runtimes](https://www.ianlewis.org/en/container-runtimes-part-1-introduction-container-r)
