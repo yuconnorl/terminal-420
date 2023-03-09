@@ -18,11 +18,12 @@ interface Props {
 }
 
 export default async function Blog({ params }: Props) {
-  const post: Post = allPosts.find((post) => post.slug === params.slug)
-
-  console.log(post)
+  const post: Post | undefined = allPosts.find(
+    (post) => post.slug === params.slug,
+  )
 
   if (!post) {
+    // TODO: handle no post
     console.log('no post')
   }
 

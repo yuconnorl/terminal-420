@@ -2,18 +2,13 @@
 import clsx from 'clsx'
 import GithubSlugger from 'github-slugger'
 import { useEffect, useRef, useState } from 'react'
-
-interface Props {
-  rawPost: string
-}
-
 interface MenuData {
   id: string
   heading: string
   headingLevel: number
 }
 
-const SidePanel = ({ rawPost }: Props) => {
+const SidePanel = ({ rawPost = '' }) => {
   const slugger = new GithubSlugger()
   const observer = useRef<IntersectionObserver | null>(null)
 
@@ -68,7 +63,7 @@ const SidePanel = ({ rawPost }: Props) => {
       {menuData.map(({ id, heading, headingLevel }: MenuData) => (
         <div
           className={clsx(
-            headingLevel === 3 ? 'pl-3' : '',
+            headingLevel === 3 ? 'pl-4' : '',
             currentId === id ? 'text-cyan-500' : 'text-gray-300',
           )}
           key={id}

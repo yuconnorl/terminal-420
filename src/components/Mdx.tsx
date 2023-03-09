@@ -3,16 +3,12 @@ import { useMDXComponent } from 'next-contentlayer/hooks'
 import Callout from './Callout'
 import CustomLink from './CustomLink'
 
-interface MdxProps {
-  code: string
-}
-
 const components = {
   a: CustomLink,
   Callout,
 }
 
-const Mdx = ({ code }: MdxProps) => {
+const Mdx = ({ code = '' }) => {
   const MDXContent = useMDXComponent(code)
 
   return (

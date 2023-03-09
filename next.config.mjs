@@ -2,7 +2,7 @@ import { withContentlayer } from 'next-contentlayer'
 
 /** @type {import("next").NextConfig} */
 const config = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
     formats: ['image/avif', 'image/webp'],
   },

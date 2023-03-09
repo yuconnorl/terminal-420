@@ -42,21 +42,6 @@ export const metadata: Metadata = {
     template: '%s | Testing title',
   },
   description: 'description',
-  openGraph: {
-    title: 'Lee Robinson',
-    description: 'Developer, writer, and creator.',
-    url: 'https://leerob.io',
-    siteName: 'Lee Robinson',
-    images: [
-      {
-        url: 'https://leerob.io/og.jpg',
-        width: 1920,
-        height: 1080,
-      },
-    ],
-    locale: 'en-US',
-    type: 'website',
-  },
   robots: {
     index: true,
     follow: true,
@@ -70,10 +55,6 @@ export const metadata: Metadata = {
   },
   icons: {
     shortcut: '/favicon.ico',
-  },
-  verification: {
-    google: 'eZSdmzAXlLkKhNJzfgwDqWORghxnJ8qR9_CHdAh5-xw',
-    yandex: '14d2e73487fa6c71',
   },
 }
 
