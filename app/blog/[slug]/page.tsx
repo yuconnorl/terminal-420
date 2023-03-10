@@ -4,6 +4,7 @@ import { allPosts, type Post } from 'contentlayer/generated'
 import dayjs from 'dayjs'
 import Balancer from 'react-wrap-balancer'
 
+import CommentSection from '@/components/CommentSection'
 import Mdx from '@/components/Mdx'
 import SidePanel from '@/components/SidePanel'
 
@@ -37,6 +38,7 @@ export default async function Blog({ params }: Props) {
           <p>{dayjs(post?.date).format('MMM DD, YYYY')}</p>
         </div>
         <Mdx code={post?.body.code} />
+        <CommentSection />
       </section>
       <SidePanel rawPost={post?.body.raw} />
     </div>

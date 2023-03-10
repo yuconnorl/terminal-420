@@ -20,8 +20,8 @@ const config = {
 };
 
 // https://nextjs.org/docs/advanced-features/security-headers
+// removed 'default-src 'self' vercel.live' for giscus
 const ContentSecurityPolicy = `
-    default-src 'self' vercel.live;
     script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live;
     style-src 'self' 'unsafe-inline';
     img-src * blob: data:;

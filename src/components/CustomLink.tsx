@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { LinkA, RightUpArrow } from './Icon'
+import { RoundRightUpArrow } from './Icon'
 
 type CustomLinkProps = React.ComponentPropsWithoutRef<'a'>
 
@@ -20,9 +20,9 @@ const CustomLink = (props: CustomLinkProps) => {
   }
 
   return (
-    <span className='not-prose inline-flex'>
+    <span className='not-prose inline-flex hover:opacity-70'>
       <a target='_blank' rel='noopener noreferrer' {...props} />
-      <LinkA />
+      <RoundRightUpArrow />
     </span>
   )
 }

@@ -9,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@giscus/react": "^2.2.8",
     "clsx": "^1.2.1",
     "contentlayer": "^0.3.0",
     "dayjs": "^1.11.7",

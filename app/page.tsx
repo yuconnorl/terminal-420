@@ -10,8 +10,8 @@ const LandingPage = () => {
           Hi, this is Connor, a frontend developer from Taiwan 🥸 focusing on
           developing good stuff
         </Balancer>
-        <BackgroundCanvas />
       </h1>
+      <BackgroundCanvas />
     </div>
   )
 }
