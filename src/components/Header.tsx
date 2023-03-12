@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const Header = () => {
   return (
-    <header className='sticky top-16 mr-10'>
+    <header className='flex w-full'>
       <div>
         <Link href='/blog'>Blog</Link>
       </div>

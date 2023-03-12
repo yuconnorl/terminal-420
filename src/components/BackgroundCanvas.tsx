@@ -4,20 +4,28 @@
 import {
   Bodies,
   Body,
+  Common,
   Composite,
   Engine,
   Mouse,
   MouseConstraint,
   Render,
   Runner,
+  Svg,
   Vector,
+  Vertices,
   World,
 } from 'matter-js'
+// import decomp from 'poly-decomp'
 import { useEffect, useRef } from 'react'
 
 const BackgroundCanvas = () => {
+  // ;() => Pathseg
   const scene = useRef()
-  const engine = useRef(Engine.create({ enableSleeping: true }))
+  // const engine = useRef(Engine.create({ enableSleeping: true }))
+  const engine = useRef(Engine.create())
+  engine.current.gravity = { x: 0, y: 0, scale: 0.0001 }
+  // window.decomp = decomp
 
   const onButtonClick = () => {
     const cc = Bodies.circle(3, 500, Math.random() * 50, {
@@ -53,9 +61,7 @@ const BackgroundCanvas = () => {
     const handleResize = () => {
       render.canvas.width = window.innerWidth
       render.canvas.height = window.innerHeight
-
       Body.setPosition(ground, Vector.create(cw / 2, ch + THICCNESS / 2))
-
       // reposition right wall
       Body.setPosition(rightWall, Vector.create(cw + THICCNESS / 2, ch / 2))
     }
@@ -103,10 +109,35 @@ const BackgroundCanvas = () => {
       isStatic: true,
     })
 
+    const renderText = () => {
+      const ctx = document.getElementsByTagName('canvas')[0].getContext('2d')
+      if (!ctx) return
+      for (const elementId in engine.current.world.bodies) {
+        const targetBody = engine.world.bodies[elementId]
+        if (!Number(targetBody.label)) continue
+        if (targetBody.render.text) {
+          let fontsize = 20
+          const fontfamily = 'Arial'
+          const color = '#EEEEEE'
+          fontsize = targetBody.circleRadius
+
+          ctx.textBaseline = 'middle'
+          ctx.textAlign = 'center'
+          ctx.fillStyle = color
+          ctx.font = fontsize + 'px ' + fontfamily
+          ctx.fillText(
+            targetBody.render.text,
+            targetBody.position.x,
+            targetBody.position.y,
+          )
+        }
+      }
+    }
+
     Mouse.setElement(mouse, mouse.element)
 
     // TODO: clean me
-    window.addEventListener('resize', () => handleResize())
+    window.addEventListener('resize', handleResize)
 
     Composite.add(engine.current.world, [
       boxA,
@@ -136,19 +167,23 @@ const BackgroundCanvas = () => {
   }, [])
 
   return (
-    <>
-      <button className='z-10' type='button' onClick={() => onButtonClick()}>
+    <div className='fixed top-0 left-0 h-full w-full'>
+      <div ref={scene} className='fixed top-0 left-0 z-0 h-full w-full' />
+      <button
+        className='z-10 rounded-2xl border border-slate-200 p-4'
+        type='button'
+        onClick={() => onButtonClick()}
+      >
         Adding good stuffs
       </button>
       <button
-        className='z-10'
+        className='z-10 rounded-2xl border border-slate-200 p-4'
         type='button'
         onClick={() => switchToOuterSpaceMode()}
       >
         Space Mode
       </button>
-      <div ref={scene} className='fixed top-0 left-0 z-0 h-full w-full' />
-    </>
+    </div>
   )
 }
 

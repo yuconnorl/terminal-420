@@ -3,8 +3,8 @@ import './global.css'
 import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
+import Head from 'next/head'
 
-import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 
 const noto = localFont({
@@ -68,12 +68,18 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         roboto.variable,
       )}
     >
-      <body className='relative mx-4 flex min-h-full w-full max-w-6xl flex-col px-8 pt-16 pb-32 antialiased md:flex-row lg:mx-auto'>
-        <Header />
-        <main className='flex h-full w-full flex-col'>
-          {children}
-          <Footer />
-        </main>
+      {/* <Head>
+        <script
+          async
+          src='https://cdn.jsdelivr.net/npm/poly-decomp@0.2.1/build/decomp.min.js'
+        ></script>
+      </Head> */}
+      {/* <body className='h-full w-full antialiased'> */}
+      <body className='h-full w-full'>
+        <div className='max-w-6xl'>
+          <Header />
+          <main className=''>{children}</main>
+        </div>
       </body>
     </html>
   )
