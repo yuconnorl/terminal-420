@@ -6,6 +6,8 @@ import {
   Body,
   Common,
   Composite,
+  Composites,
+  Constraint,
   Engine,
   Mouse,
   MouseConstraint,
@@ -16,16 +18,16 @@ import {
   Vertices,
   World,
 } from 'matter-js'
-// import decomp from 'poly-decomp'
 import { useEffect, useRef } from 'react'
 
+import { matterBodiesConfig } from '@/configs/matter'
+
 const BackgroundCanvas = () => {
-  // ;() => Pathseg
   const scene = useRef()
   // const engine = useRef(Engine.create({ enableSleeping: true }))
   const engine = useRef(Engine.create())
-  engine.current.gravity = { x: 0, y: 0, scale: 0.0001 }
-  // window.decomp = decomp
+  // engine.current.gravity = { x: 0, y: 0.9, scale: 0.0001 }
+  const WALL_THICKNESS = 60
 
   const onButtonClick = () => {
     const cc = Bodies.circle(3, 500, Math.random() * 50, {
@@ -42,30 +44,18 @@ const BackgroundCanvas = () => {
   }
 
   useEffect(() => {
-    // mount
-    const cw = window.innerWidth
-    const ch = window.innerHeight
-    const THICCNESS = 60
-
     const render = Render.create({
       element: scene.current,
       engine: engine.current,
       options: {
-        width: cw,
-        height: ch,
+        width: scene.current.clientWidth,
+        height: scene.current.clientHeight,
         wireframes: false,
         background: 'transparent',
       },
     })
 
-    const handleResize = () => {
-      render.canvas.width = window.innerWidth
-      render.canvas.height = window.innerHeight
-      Body.setPosition(ground, Vector.create(cw / 2, ch + THICCNESS / 2))
-      // reposition right wall
-      Body.setPosition(rightWall, Vector.create(cw + THICCNESS / 2, ch / 2))
-    }
-
+    // mouse movement
     const mouse = Mouse.create(render.canvas)
     const mouseConstraint = MouseConstraint.create(engine.current, {
       mouse: mouse,
@@ -77,82 +67,152 @@ const BackgroundCanvas = () => {
       },
     })
 
+    Mouse.setElement(mouse, mouse.element)
+    Composite.add(engine.current.world, mouseConstraint)
+
+    // create left, right wall and ground surfaces
+    const surfaceOption = {
+      isStatic: true,
+    }
+
     const leftWall = Bodies.rectangle(
-      0 - THICCNESS / 2,
-      ch / 2,
-      THICCNESS,
-      ch * 5,
-      {
-        isStatic: true,
-      },
+      0 - WALL_THICKNESS / 2,
+      scene.current.clientHeight / 2,
+      WALL_THICKNESS,
+      scene.current.clientHeight * 5,
+      surfaceOption,
     )
 
     const rightWall = Bodies.rectangle(
-      cw + THICCNESS / 2,
-      ch / 2,
-      THICCNESS,
-      ch * 5,
-      {
-        isStatic: true,
-      },
+      scene.current.clientWidth + WALL_THICKNESS / 2,
+      scene.current.clientHeight / 2,
+      WALL_THICKNESS,
+      scene.current.clientHeight * 5,
+      surfaceOption,
     )
 
-    const circle = Bodies.circle(3, 10, 30, {
-      friction: 0.3,
-      frictionAir: 0.0001,
-      restitution: 0.8,
-    })
+    const ground = Bodies.rectangle(
+      scene.current.clientWidth / 2,
+      scene.current.clientHeight + WALL_THICKNESS / 2,
+      45312,
+      WALL_THICKNESS,
+      surfaceOption,
+    )
 
-    const boxA = Bodies.rectangle(100, 200, 80, 80)
-    const boxB = Bodies.rectangle(150, 50, 80, 80)
-    const ground = Bodies.rectangle(cw / 2, ch + THICCNESS / 2, cw, THICCNESS, {
-      isStatic: true,
-    })
+    Composite.add(engine.current.world, [ground, leftWall, rightWall])
 
-    const renderText = () => {
-      const ctx = document.getElementsByTagName('canvas')[0].getContext('2d')
-      if (!ctx) return
-      for (const elementId in engine.current.world.bodies) {
-        const targetBody = engine.world.bodies[elementId]
-        if (!Number(targetBody.label)) continue
-        if (targetBody.render.text) {
-          let fontsize = 20
-          const fontfamily = 'Arial'
-          const color = '#EEEEEE'
-          fontsize = targetBody.circleRadius
+    // const circle = Bodies.circle(3, 10, 30, {
+    //   friction: 0.3,
+    //   frictionAir: 0.0001,
+    //   restitution: 0.8,
+    // })
+    // Composite.add(engine.current.world, circle)
 
-          ctx.textBaseline = 'middle'
-          ctx.textAlign = 'center'
-          ctx.fillStyle = color
-          ctx.font = fontsize + 'px ' + fontfamily
-          ctx.fillText(
-            targetBody.render.text,
-            targetBody.position.x,
-            targetBody.position.y,
-          )
-        }
-      }
+    const SCALE = 0.25
+
+    const scaleBodies = () => {
+      const allBodies = Composite.allBodies(engine.current.world)
+
+      allBodies.forEach((body) => {
+        if (body.isStatic) return
+        const { min, max } = body.bounds
+        const bodyWidth = max.x - min.x
+        const scaleFactor = (scene.current.clientWidth * SCALE) / bodyWidth
+
+        Body.scale(body, scaleFactor, scaleFactor)
+      })
     }
 
-    Mouse.setElement(mouse, mouse.element)
+    const handleResize = () => {
+      render.canvas.width = scene.current.clientWidth
+      render.canvas.height = scene.current.clientHeight
+      Body.setPosition(
+        ground,
+        Vector.create(
+          scene.current.clientWidth / 2,
+          scene.current.clientHeight + WALL_THICKNESS / 2,
+        ),
+      )
+      // reposition right wall
+      Body.setPosition(
+        rightWall,
+        Vector.create(
+          scene.current.clientWidth + WALL_THICKNESS / 2,
+          scene.current.clientHeight / 2,
+        ),
+      )
+
+      scaleBodies()
+    }
 
     // TODO: clean me
     window.addEventListener('resize', handleResize)
-
-    Composite.add(engine.current.world, [
-      boxA,
-      boxB,
-      ground,
-      leftWall,
-      rightWall,
-      circle,
-    ])
-    Composite.add(engine.current.world, mouseConstraint)
 
     Render.run(render)
 
     // create runner
     const runner = Runner.create()
+
+    const createWordBody = (word = '', index = 0, ratio = 1) => {
+      const body = Bodies.rectangle(
+        300 + index + Math.random() * 100,
+        40 * index + index * Math.random() * 100,
+        matterBodiesConfig[word].width * ratio,
+        matterBodiesConfig[word].height * ratio,
+        {
+          friction: 0.3,
+          frictionAir: 0.0001,
+          restitution: 0.8,
+          label: word,
+          render: {
+            sprite: {
+              texture: `images/${word}.png`,
+              xScale: ratio,
+              yScale: ratio,
+            },
+          },
+        },
+      )
+      return body
+    }
+
+    const words = ['hello', 'im', 'yu', 'from', 'taiwan', 'hand']
+    const RATIO_CONSTANT = 1.33
+    const ratio =
+      scene.current.clientWidth > 1200
+        ? (scene.current.clientWidth / 2560) * RATIO_CONSTANT
+        : (scene.current.clientWidth / 1380) * RATIO_CONSTANT
+
+    words.forEach((word, index) => {
+      const wordBody = createWordBody(word, index, ratio)
+
+      Composite.add(engine.current.world, wordBody)
+    })
+
+    const frontendBody = createWordBody('frontend', 0, ratio)
+    const developerBody = createWordBody('developer', 0, ratio)
+
+    const frontConstraint = Constraint.create({
+      bodyA: developerBody,
+      bodyB: frontendBody,
+      damping: 0.1,
+      stiffness: 0.01,
+      label: 'frontendConstraint',
+      length: 150,
+      render: {
+        visible: true,
+        lineWidth: 2,
+        strokeStyle: '#F5F8F1',
+        type: 'spring',
+        anchors: true,
+      },
+    })
+
+    Composite.add(engine.current.world, [
+      developerBody,
+      frontendBody,
+      frontConstraint,
+    ])
 
     // run the engine
     Runner.run(runner, engine.current)
@@ -170,14 +230,14 @@ const BackgroundCanvas = () => {
     <div className='fixed top-0 left-0 h-full w-full'>
       <div ref={scene} className='fixed top-0 left-0 z-0 h-full w-full' />
       <button
-        className='z-10 rounded-2xl border border-slate-200 p-4'
+        className='z-100 rounded-2xl border border-slate-200 p-4'
         type='button'
         onClick={() => onButtonClick()}
       >
         Adding good stuffs
       </button>
       <button
-        className='z-10 rounded-2xl border border-slate-200 p-4'
+        className='z-100 rounded-2xl border border-slate-200 p-4'
         type='button'
         onClick={() => switchToOuterSpaceMode()}
       >

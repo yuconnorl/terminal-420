@@ -38,8 +38,8 @@ const roboto = localFont({
 // built-in SEO helper
 export const metadata: Metadata = {
   title: {
-    default: 'test title',
-    template: '%s | Testing title',
+    default: 'Terminal 420',
+    template: '%s | Terminal 420',
   },
   description: 'description',
   robots: {
@@ -68,12 +68,13 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         roboto.variable,
       )}
     >
-      {/* <Head>
+      <Head>
         <script
           async
-          src='https://cdn.jsdelivr.net/npm/poly-decomp@0.2.1/build/decomp.min.js'
+          src='https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js'
+          integrity='sha512-3RlxD1bW34eFKPwj9gUXEWtdSMC59QqIqHnD8O/NoTwSJhgxRizdcFVQhUMFyTp5RwLTDL0Lbcqtl8b7bFAzog=='
         ></script>
-      </Head> */}
+      </Head>
       {/* <body className='h-full w-full antialiased'> */}
       <body className='h-full w-full'>
         <div className='max-w-6xl'>
