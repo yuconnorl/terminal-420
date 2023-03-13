@@ -4,43 +4,64 @@
 import {
   Bodies,
   Body,
-  Common,
   Composite,
   Composites,
   Constraint,
   Engine,
+  Events,
   Mouse,
   MouseConstraint,
   Render,
   Runner,
-  Svg,
   Vector,
-  Vertices,
   World,
 } from 'matter-js'
 import { useEffect, useRef } from 'react'
 
-import { matterBodiesConfig } from '@/configs/matter'
+import {
+  matterBodiesConfig,
+  RATIO_CONSTANT,
+  WALL_THICKNESS,
+} from '@/configs/matter'
+
+import { OuterSpace, TrashBin } from './Icon'
 
 const BackgroundCanvas = () => {
   const scene = useRef()
-  // const engine = useRef(Engine.create({ enableSleeping: true }))
-  const engine = useRef(Engine.create())
-  // engine.current.gravity = { x: 0, y: 0.9, scale: 0.0001 }
-  const WALL_THICKNESS = 60
+  const engine = useRef<Engine>(Engine.create({ enableSleeping: true }))
+  const isSpaceMode = useRef<boolean>(false)
 
-  const onButtonClick = () => {
+  function onPartyStart() {
     const cc = Bodies.circle(3, 500, Math.random() * 50, {
       friction: 0.3,
       frictionAir: 0.0001,
       restitution: 0.8,
     })
     Composite.add(engine.current.world, cc)
-    console.log('clicked')
   }
 
-  const switchToOuterSpaceMode = () => {
-    engine.current.gravity = { x: 0, y: 0, scale: 0.0001 }
+  function onRemoveClick() {
+    if (!engine.current) return
+    const ground = engine.current.world.bodies.find(
+      (body) => body.label === 'ground',
+    )
+    if (!ground) return
+    Composite.remove(engine.current.world, ground)
+  }
+
+  function toggleOuterSpaceMode() {
+    if (!isSpaceMode.current) {
+      engine.current.gravity = { x: 0, y: 0, scale: 0.0001 }
+      isSpaceMode.current = !isSpaceMode.current
+      console.log('active space mode')
+      console.log(engine.current)
+      return
+    }
+
+    engine.current.gravity = { x: 0, y: 1, scale: 0.0001 }
+    isSpaceMode.current = !isSpaceMode.current
+    console.log('deactive space mode')
+    console.log(engine.current)
   }
 
   useEffect(() => {
@@ -71,16 +92,15 @@ const BackgroundCanvas = () => {
     Composite.add(engine.current.world, mouseConstraint)
 
     // create left, right wall and ground surfaces
-    const surfaceOption = {
-      isStatic: true,
-    }
-
     const leftWall = Bodies.rectangle(
       0 - WALL_THICKNESS / 2,
       scene.current.clientHeight / 2,
       WALL_THICKNESS,
       scene.current.clientHeight * 5,
-      surfaceOption,
+      {
+        isStatic: true,
+        label: 'leftWall',
+      },
     )
 
     const rightWall = Bodies.rectangle(
@@ -88,7 +108,10 @@ const BackgroundCanvas = () => {
       scene.current.clientHeight / 2,
       WALL_THICKNESS,
       scene.current.clientHeight * 5,
-      surfaceOption,
+      {
+        isStatic: true,
+        label: 'rightWall',
+      },
     )
 
     const ground = Bodies.rectangle(
@@ -96,32 +119,27 @@ const BackgroundCanvas = () => {
       scene.current.clientHeight + WALL_THICKNESS / 2,
       45312,
       WALL_THICKNESS,
-      surfaceOption,
+      {
+        isStatic: true,
+        label: 'ground',
+      },
     )
 
-    Composite.add(engine.current.world, [ground, leftWall, rightWall])
+    // Events.on(engine.current, 'collisionEnd', (event) => {
+    //   const pairs = event.pairs
 
-    // const circle = Bodies.circle(3, 10, 30, {
-    //   friction: 0.3,
-    //   frictionAir: 0.0001,
-    //   restitution: 0.8,
+    //   for (let i = 0, j = pairs.length; i != j; ++i) {
+    //     const pair = pairs[i]
+
+    //     if (pair.bodyA === ground) {
+    //       pair.bodyB.render.strokeStyle = colorB
+    //     } else if (pair.bodyB === ground) {
+    //       pair.bodyA.render.strokeStyle = colorB
+    //     }
+    //   }
     // })
-    // Composite.add(engine.current.world, circle)
 
-    const SCALE = 0.25
-
-    const scaleBodies = () => {
-      const allBodies = Composite.allBodies(engine.current.world)
-
-      allBodies.forEach((body) => {
-        if (body.isStatic) return
-        const { min, max } = body.bounds
-        const bodyWidth = max.x - min.x
-        const scaleFactor = (scene.current.clientWidth * SCALE) / bodyWidth
-
-        Body.scale(body, scaleFactor, scaleFactor)
-      })
-    }
+    Composite.add(engine.current.world, [ground, leftWall, rightWall])
 
     const handleResize = () => {
       render.canvas.width = scene.current.clientWidth
@@ -133,7 +151,6 @@ const BackgroundCanvas = () => {
           scene.current.clientHeight + WALL_THICKNESS / 2,
         ),
       )
-      // reposition right wall
       Body.setPosition(
         rightWall,
         Vector.create(
@@ -141,8 +158,6 @@ const BackgroundCanvas = () => {
           scene.current.clientHeight / 2,
         ),
       )
-
-      scaleBodies()
     }
 
     // TODO: clean me
@@ -153,6 +168,7 @@ const BackgroundCanvas = () => {
     // create runner
     const runner = Runner.create()
 
+    // TODO: arrange these bodies
     const createWordBody = (word = '', index = 0, ratio = 1) => {
       const body = Bodies.rectangle(
         300 + index + Math.random() * 100,
@@ -161,7 +177,7 @@ const BackgroundCanvas = () => {
         matterBodiesConfig[word].height * ratio,
         {
           friction: 0.3,
-          frictionAir: 0.0001,
+          frictionAir: 0.001,
           restitution: 0.8,
           label: word,
           render: {
@@ -177,21 +193,19 @@ const BackgroundCanvas = () => {
     }
 
     const words = ['hello', 'im', 'yu', 'from', 'taiwan', 'hand']
-    const RATIO_CONSTANT = 1.33
-    const ratio =
+    const resizeRatio =
       scene.current.clientWidth > 1200
         ? (scene.current.clientWidth / 2560) * RATIO_CONSTANT
         : (scene.current.clientWidth / 1380) * RATIO_CONSTANT
 
     words.forEach((word, index) => {
-      const wordBody = createWordBody(word, index, ratio)
+      const wordBody = createWordBody(word, index, resizeRatio)
 
       Composite.add(engine.current.world, wordBody)
     })
 
-    const frontendBody = createWordBody('frontend', 0, ratio)
-    const developerBody = createWordBody('developer', 0, ratio)
-
+    const frontendBody = createWordBody('frontend', 0, resizeRatio)
+    const developerBody = createWordBody('developer', 0, resizeRatio)
     const frontConstraint = Constraint.create({
       bodyA: developerBody,
       bodyB: frontendBody,
@@ -227,23 +241,17 @@ const BackgroundCanvas = () => {
   }, [])
 
   return (
-    <div className='fixed top-0 left-0 h-full w-full'>
-      <div ref={scene} className='fixed top-0 left-0 z-0 h-full w-full' />
-      <button
-        className='z-100 rounded-2xl border border-slate-200 p-4'
-        type='button'
-        onClick={() => onButtonClick()}
-      >
-        Adding good stuffs
-      </button>
-      <button
-        className='z-100 rounded-2xl border border-slate-200 p-4'
-        type='button'
-        onClick={() => switchToOuterSpaceMode()}
-      >
-        Space Mode
-      </button>
-    </div>
+    <>
+      <div ref={scene} className='absolute top-0 left-0 z-0 h-full w-full' />
+      <div className='absolute right-4 top-4 flex flex-col gap-4'>
+        <button className='' type='button' onClick={onRemoveClick}>
+          <TrashBin />
+        </button>
+        <button className='' type='button' onClick={toggleOuterSpaceMode}>
+          <OuterSpace />
+        </button>
+      </div>
+    </>
   )
 }
 

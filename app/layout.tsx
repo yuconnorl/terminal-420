@@ -3,19 +3,19 @@ import './global.css'
 import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-import Head from 'next/head'
 
 import Header from '@/components/Header'
 
-const noto = localFont({
+// loading local fonts
+const notoTc = localFont({
   src: [
     {
-      path: '../public/fonts/noto-sans-light.woff2',
-      weight: '300',
+      path: '../public/fonts/noto-sans-tc-regular.woff2',
+      weight: '400',
     },
     {
-      path: '../public/fonts/noto-sans-semibold.woff2',
-      weight: '600',
+      path: '../public/fonts/noto-sans-tc-bold.woff2',
+      weight: '700',
     },
   ],
   variable: '--font-noto',
@@ -33,6 +33,11 @@ const roboto = localFont({
     },
   ],
   variable: '--font-roboto',
+})
+
+const jetBrain = localFont({
+  src: '../public/fonts/jetbrain-mono-variable.ttf',
+  variable: '--font-jet-brain',
 })
 
 // built-in SEO helper
@@ -61,25 +66,21 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html
-      lang='en'
+      lang='zh-TW'
       className={clsx(
-        'h-full w-full bg-white font-sans-serif text-black dark:bg-[#111010] dark:text-white',
-        noto.variable,
+        'h-full w-full bg-main-white font-sans-serif text-black dark:bg-main-black dark:text-main-white',
+        notoTc.variable,
         roboto.variable,
+        jetBrain.variable,
       )}
     >
-      <Head>
-        <script
-          async
-          src='https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js'
-          integrity='sha512-3RlxD1bW34eFKPwj9gUXEWtdSMC59QqIqHnD8O/NoTwSJhgxRizdcFVQhUMFyTp5RwLTDL0Lbcqtl8b7bFAzog=='
-        ></script>
-      </Head>
       {/* <body className='h-full w-full antialiased'> */}
-      <body className='h-full w-full'>
-        <div className='max-w-6xl'>
+      <body className='h-full w-full p-4'>
+        <div className='flex h-full w-full flex-col'>
           <Header />
-          <main className=''>{children}</main>
+          <main className='relative flex w-full flex-[1_0_0] justify-center'>
+            {children}
+          </main>
         </div>
       </body>
     </html>

@@ -4,7 +4,7 @@ id: 961ed19e-5574-4513-a798-5d3ba6146642
 date: 2022-Oct-21 10:55:10+08:00
 ---
 
-在 [[Docker]] 於 2013 年推出時，解決了許多開發人員在使用容器化技術上遇到的問題，其中包含：
+在 Docker 於 2013 年推出時，解決了許多開發人員在使用容器化技術上遇到的問題，其中包含：
 
 - A container image format
 - A method for building container images (Dockerfile/docker build)
@@ -15,7 +15,7 @@ date: 2022-Oct-21 10:55:10+08:00
 
 在那個時後，Docker 是一個 monolithic 系統，將所有功能包成一大包，但其實這些功能並沒有相依性且可以獨立實作成一個更小、更專注的工具，再將彼此整合在一起使用，並可以各自遵循一個通用格式，也就是**容器化標準**。
 
-而為了避免重複造輪子、且讓容器化技術的相關開發有規範可以依循，在 2015 年，Docker、[CoreOs](https://getfedora.org/en/coreos?stream=stable) 、[Google](https://www.google.com/) 及一些 container 相關的企業聯手定義了這份倡議，並將各自使用在容器化技術上的 code 拆散，組合成一個全新工具 —— [[runC]]，並將其開源，作為定義 OCI Spec 的實作參考。
+而為了避免重複造輪子、且讓容器化技術的相關開發有規範可以依循，在 2015 年，Docker、[CoreOs](https://getfedora.org/en/coreos?stream=stable) 、[Google](https://www.google.com/) 及一些 container 相關的企業聯手定義了這份倡議，並將各自使用在容器化技術上的 code 拆散，組合成一個全新工具 —— runC，並將其開源，作為定義 OCI Spec 的實作參考。
 
 Open Container Initiatives 包含三個主要的規範，分別為
 
@@ -27,13 +27,13 @@ OCI 並沒有直接規範該如何實作一個 Container runtime，而是定義�
 
 ## The 5 principles of Standard Containers
 
-Standard [[Container]] 旨在將 software component 及其所有相依性套件 (dependencies) 以一個能夠可自敘 (self-describing) 且容易傳輸 (portable) 的格式封裝，讓所有符合規範的 [[Container runtime]] 都能在不需要其他相依套件、且不用顧慮機器及 [[Container]] 內容物的情況下運行其中的程式。
+Standard Container 旨在將 software component 及其所有相依性套件 (dependencies) 以一個能夠可自敘 (self-describing) 且容易傳輸 (portable) 的格式封裝，讓所有符合規範的 Container runtime 都能在不需要其他相依套件、且不用顧慮機器及 Container 內容物的情況下運行其中的程式。
 
 > Define a unit of software delivery called a Standard Container. The goal of a Standard Container is to encapsulate a software component and all its dependencies in a format that is self-describing and portable, so that any compliant runtime can run it without extra dependencies, regardless of the underlying machine and the contents of the container.
 
 ### 1. Standard operations
 
-定義對於 Container 能夠進行的操作，像是 creat、run、stop、kill、Delete (Container Lifecycle)
+定義對於 Container 能夠進行的操作，像是 `Create`、`Run`、`Stop`、`Kill`、`Delete` (Container Lifecycle)
 
 > Standard Containers define a set of STANDARD OPERATIONS. They can be created, started, and stopped using standard container tools; copied and snapshotted using standard filesystem tools; and downloaded and uploaded using standard network tools.
 
@@ -63,20 +63,20 @@ Many things that once required time-consuming and error-prone human effort can n
 
 > Standard Containers make INDUSTRIAL-GRADE DELIVERY of software a reality. Leveraging all of the properties listed above, Standard Containers are enabling large and small enterprises to streamline and automate their software delivery pipelines. Whether it is in-house devOps flows, or external customer-based software delivery mechanisms, Standard Containers are changing the way the community thinks about software packaging and delivery.
 
-## 除了 Container 之外，Spec 同時定義了 Container 的 configuration 及執行環境
+## 除了 Container 之外，Spec 同時定義了 Container configuration 及執行環境
 
-要建立一個 [[Container]]，需要提供給 [[Container runtime|runtime]] [filesystem bundle](https://github.com/opencontainers/runtime-spec/blob/44341cdd36f6fee6ddd73e602f9e3eca1466052f/bundle.md) 及 optional folder holding the future container's root filesystem，其中 filesystem bundle **必須**包含一個 `config.json` 檔案。
+要建立一個 Container，需要提供給 Container runtime|runtime [filesystem bundle](https://github.com/opencontainers/runtime-spec/blob/44341cdd36f6fee6ddd73e602f9e3eca1466052f/bundle.md) 及 optional folder holding the future container's root filesystem，其中 filesystem bundle **必須**包含一個 `config.json` 檔案。
 
-`config.json` contains data necessary to implement standard operations against the container (Create, Start, Query State, Kill, and Delete, the [[Container Lifecycle]]). But things start getting really interesting when it comes to the actual structure of the `config.json` file.
+`config.json` contains data necessary to implement standard operations against the container (Create, Start, Query State, Kill, and Delete, the Container Lifecycle). But things start getting really interesting when it comes to the actual structure of the `config.json` file.
 
-這份 configuration 包含兩個 section，*common* 及 [*platform-specific*](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config.md#platform-specific-configuration)。common section 包含通用的設定，像是 `ociVersion` `root` fileesystem path within the bundle, additional `mounts` beyond the `root`, a `process` to start in the container, a `user`, and a `hostname`；*platform-specific* section 則用來設置各個平台特有的參數，像是 [Linux](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-linux.md), [Solaris](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-solaris.md), [Windows](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-windows.md), [z/OS](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-zos.md), 及 [Virtual Machine](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-vm.md)。而熟知的 [[cgroups]] 及 [[namespace]] 的設置則被包含在 [Linux-specific section](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-linux.md) 之中。
+這份 configuration 包含兩個 section，*common* 及 [*platform-specific*](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config.md#platform-specific-configuration)。common section 包含通用的設定，像是 `ociVersion` `root` fileesystem path within the bundle, additional `mounts` beyond the `root`, a `process` to start in the container, a `user`, and a `hostname`；*platform-specific* section 則用來設置各個平台特有的參數，像是 [Linux](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-linux.md), [Solaris](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-solaris.md), [Windows](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-windows.md), [z/OS](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-zos.md), 及 [Virtual Machine](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-vm.md)。而熟知的 cgroups 及 namespace 的設置則被包含在 [Linux-specific section](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-linux.md) 之中。
 
 
-> 顯示只有 [[Linux]] 的 [[Container]] 需要依賴 [[namespace]] 及 [[cgroups]] 來實作，但不是所有標準化容器都是 [[Linux]] based。
+> 顯示只有 Linux 的 Container 需要依賴 namespace 及 cgroups 來實作，但不是所有標準化容器都是 Linux based。
 
 ## Virtual Machines are actually containers?!
 
-VM Container 的方式和我們認知的 [[Linux]] [[Container]] 略為不同。他先虛擬畫出 VM 需要的硬體設備，接著在這個硬體上開啟完整的 OS (kernel + image)，最終組成 VM [[Container]] 的大箱子。
+VM Container 的方式和我們認知的 Linux Container 略為不同。他先虛擬畫出 VM 需要的硬體設備，接著在這個硬體上開啟完整的 OS (kernel + image)，最終組成 VM Container 的大箱子。
 
 ### Further reading
 

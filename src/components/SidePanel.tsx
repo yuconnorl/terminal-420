@@ -59,12 +59,12 @@ const SidePanel = ({ rawPost = '' }) => {
   }, [menuData])
 
   return (
-    <aside className='sticky top-16 ml-10 hidden h-fit shrink-0 grow-[3] basis-0 flex-col gap-2 lg:flex'>
+    <aside className='sticky top-16 ml-10 hidden h-fit shrink-0 grow-[3] basis-0 flex-col gap-2 pt-20 lg:flex'>
       {menuData.map(({ id, heading, headingLevel }: MenuData) => (
         <div
           className={clsx(
             headingLevel === 3 ? 'pl-4' : '',
-            currentId === id ? 'text-cyan-500' : 'text-gray-300',
+            currentId === id ? 'text-main-green' : 'text-main-gray',
           )}
           key={id}
         >

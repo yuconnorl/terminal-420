@@ -8,3 +8,8 @@ export const matterBodiesConfig = {
   yu: {width: 777, height: 160},
   hand: {width: 100, height: 100},
 }
+
+export const WALL_THICKNESS = 60
+
+// magic number for size adjustment
+export const RATIO_CONSTANT = 1.33

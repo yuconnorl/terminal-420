@@ -12,7 +12,7 @@ const Mdx = ({ code = '' }) => {
   const MDXContent = useMDXComponent(code)
 
   return (
-    <article className='prose-icon-link:m-0 prose-quoteless prose prose-neutral max-w-4xl dark:prose-invert prose-h2:font-semibold'>
+    <article className='prose-icon-link:m-0 prose-quoteless prose prose-neutral mb-16 max-w-4xl dark:prose-invert prose-h2:font-semibold'>
       <MDXContent components={{ ...components }} />
     </article>
   )
