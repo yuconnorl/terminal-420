@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 
-import Header from '@/components/Header'
+import Header from './header'
 
 // loading local fonts
 const notoTc = localFont({
@@ -68,14 +68,13 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html
       lang='zh-TW'
       className={clsx(
-        'h-full w-full bg-main-white font-sans-serif text-black dark:bg-main-black dark:text-main-white',
+        'h-full w-full bg-main-black font-sans-serif text-mallard-50',
         notoTc.variable,
         roboto.variable,
         jetBrain.variable,
       )}
     >
-      {/* <body className='h-full w-full antialiased'> */}
-      <body className='h-full w-full p-4'>
+      <body className='h-full w-full p-4 antialiased'>
         <div className='flex h-full w-full flex-col'>
           <Header />
           <main className='relative flex w-full flex-[1_0_0] justify-center'>

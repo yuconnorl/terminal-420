@@ -5,7 +5,6 @@ import {
   Bodies,
   Body,
   Composite,
-  Composites,
   Constraint,
   Engine,
   Events,
@@ -28,7 +27,7 @@ import { OuterSpace, TrashBin } from './Icon'
 
 const BackgroundCanvas = () => {
   const scene = useRef()
-  const engine = useRef<Engine>(Engine.create({ enableSleeping: true }))
+  const engine = useRef<Engine>(Engine.create())
   const isSpaceMode = useRef<boolean>(false)
 
   function onPartyStart() {
@@ -53,15 +52,11 @@ const BackgroundCanvas = () => {
     if (!isSpaceMode.current) {
       engine.current.gravity = { x: 0, y: 0, scale: 0.0001 }
       isSpaceMode.current = !isSpaceMode.current
-      console.log('active space mode')
-      console.log(engine.current)
       return
     }
 
     engine.current.gravity = { x: 0, y: 1, scale: 0.0001 }
     isSpaceMode.current = !isSpaceMode.current
-    console.log('deactive space mode')
-    console.log(engine.current)
   }
 
   useEffect(() => {

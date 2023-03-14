@@ -31,11 +31,11 @@ export default async function Blog({ params }: Props) {
 
   return (
     <div className='relative flex max-w-5xl pt-8 font-sans-serif'>
-      <section className='mx-auto shrink-0 grow-[10] basis-0'>
+      <section className='mx-auto max-w-4xl shrink-0 grow-[10] basis-0'>
         <h1 className='font-mono text-3xl font-bold'>
           <Balancer>{post?.title}</Balancer>
         </h1>
-        <div className='mb-6 mt-4 font-mono text-main-gray'>
+        <div className='mb-6 mt-4 font-mono tracking-tight text-main-gray'>
           <p>{dayjs(post?.date).format('MMM DD, YYYY')}</p>
         </div>
         <Mdx code={post?.body.code} />

@@ -23,7 +23,9 @@ Open Container Initiatives 包含三個主要的規範，分別為
 - Image Specification ([image-spec](https://github.com/opencontainers/image-spec/blob/main/spec.md))
 - Distribution Specification ([distribution-spec](https://github.com/opencontainers/distribution-spec/blob/main/spec.md))
 
-OCI 並沒有直接規範該如何實作一個 Container runtime，而是定義和 runtime 的溝通方式。
+<Callout emoji="🥸">
+OCI 並沒有直接規範該如何實作一個 Container runtime，而是定義和 runtime 的溝通方式
+</Callout>
 
 ## The 5 principles of Standard Containers
 
@@ -65,7 +67,7 @@ Many things that once required time-consuming and error-prone human effort can n
 
 ## 除了 Container 之外，Spec 同時定義了 Container configuration 及執行環境
 
-要建立一個 Container，需要提供給 Container runtime|runtime [filesystem bundle](https://github.com/opencontainers/runtime-spec/blob/44341cdd36f6fee6ddd73e602f9e3eca1466052f/bundle.md) 及 optional folder holding the future container's root filesystem，其中 filesystem bundle **必須**包含一個 `config.json` 檔案。
+要建立一個 Container，需要提供給 runtime [filesystem bundle](https://github.com/opencontainers/runtime-spec/blob/44341cdd36f6fee6ddd73e602f9e3eca1466052f/bundle.md) 及 optional folder holding the future container's root filesystem，其中 filesystem bundle **必須**包含一個 `config.json` 檔案。
 
 `config.json` contains data necessary to implement standard operations against the container (Create, Start, Query State, Kill, and Delete, the Container Lifecycle). But things start getting really interesting when it comes to the actual structure of the `config.json` file.
 
@@ -83,10 +85,6 @@ VM Container 的方式和我們認知的 Linux Container 略為不同。他先�
 [Virtual-machine-specific Container Configuration](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-vm.md)
 
 ---
-
-## The future, a more secure container (Google gVisor, AWS Firecracker)
-
-To summarize, containers aren't just slightly more isolated and restricted Linux processes. Instead, they are standardized execution environments improving workload portability. Linux containers are the most widespread form of containers nowadays, but the need for more secure containers is growing. The OCI Runtime Spec defines the VM-backed containers, and the Kata project makes them real. So, it's an exciting time to explore the containerverse!
 
 ## Reference
 
