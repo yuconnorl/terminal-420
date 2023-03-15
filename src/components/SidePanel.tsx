@@ -59,31 +59,36 @@ const SidePanel = ({ rawPost = '' }) => {
   }, [menuData])
 
   return (
-    <aside className='sticky top-16 ml-10 hidden h-fit shrink-0 grow-[3] basis-0 flex-col gap-2 pt-20 lg:flex'>
-      {menuData.map(({ id, heading, headingLevel }: MenuData) => (
-        <div
-          className={clsx(
-            headingLevel === 3 ? 'pl-4' : '',
-            currentId === id ? 'text-main-green' : 'text-main-gray',
-          )}
-          key={id}
-        >
-          <button
-            className='text-left text-sm'
-            type='button'
-            onClick={(e) => {
-              e.preventDefault()
-              document.getElementById(`${id}`)?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-                inline: 'nearest',
-              })
-            }}
+    <aside className='sticky top-16 ml-10 hidden h-fit shrink-0 grow-[3] basis-0 flex-col lg:flex'>
+      <p className='mb-3 font-mono font-bold'>On this page</p>
+      <ul className='flex flex-col gap-2 border-l border-l-[#2c2c2c59] pl-4'>
+        {menuData.map(({ id, heading, headingLevel }: MenuData) => (
+          <li
+            className={clsx(
+              headingLevel === 3 ? 'pl-4' : '',
+              currentId === id
+                ? 'font-bold text-mallard-400 before:absolute before:-left-4 before:h-full before:w-[1px] before:bg-mallard-400 before:content-[""]'
+                : 'text-main-gray',
+              'relative cursor-pointer',
+            )}
+            key={id}
           >
-            {heading}
-          </button>
-        </div>
-      ))}
+            <a
+              className='text-left text-sm'
+              onClick={(e) => {
+                e.preventDefault()
+                document.getElementById(`${id}`)?.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start',
+                  inline: 'nearest',
+                })
+              }}
+            >
+              {heading}
+            </a>
+          </li>
+        ))}
+      </ul>
     </aside>
   )
 }

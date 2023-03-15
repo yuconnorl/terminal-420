@@ -21,20 +21,6 @@ const notoTc = localFont({
   variable: '--font-noto',
 })
 
-const roboto = localFont({
-  src: [
-    {
-      path: '../public/fonts/roboto-regular.ttf',
-      weight: '400',
-    },
-    {
-      path: '../public/fonts/roboto-bold.ttf',
-      weight: '700',
-    },
-  ],
-  variable: '--font-roboto',
-})
-
 const jetBrain = localFont({
   src: '../public/fonts/jetbrain-mono-variable.ttf',
   variable: '--font-jet-brain',
@@ -59,7 +45,7 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    shortcut: '/favicon.ico',
+    shortcut: '/favicon.png',
   },
 }
 
@@ -70,7 +56,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       className={clsx(
         'h-full w-full bg-main-black font-sans-serif text-mallard-50',
         notoTc.variable,
-        roboto.variable,
         jetBrain.variable,
       )}
     >

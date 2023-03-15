@@ -4,7 +4,7 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        'sans-serif': ['var(--font-noto)', 'Roboto', 'sans-serif'],
+        'sans-serif': ['var(--font-noto)', 'sans-serif'],
         mono: ['var(--font-jet-brain)'],
       },
       colors: {

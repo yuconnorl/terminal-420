@@ -13,9 +13,9 @@ date: 2022-Oct-21 10:55:10+08:00
 - A way to share container images (docker push/pull)
 - A way to run containers (docker run)
 
-在那個時後，Docker 是一個 monolithic 系統，將所有功能包成一大包，但其實這些功能並沒有相依性且可以獨立實作成一個更小、更專注的工具，再將彼此整合在一起使用，並可以各自遵循一個通用格式，也就是**容器化標準**。
+當時的 Docker 是一個 monolithic 系統，將所有功能包成一大包。但事實上這些功能並沒有相依性，且可以獨立實作成一個更小、更專注的工具，再將彼此整合在一起使用，並可以各自遵循一個通用格式，也就是**容器化標準**。
 
-而為了避免重複造輪子、且讓容器化技術的相關開發有規範可以依循，在 2015 年，Docker、[CoreOs](https://getfedora.org/en/coreos?stream=stable) 、[Google](https://www.google.com/) 及一些 container 相關的企業聯手定義了這份倡議，並將各自使用在容器化技術上的 code 拆散，組合成一個全新工具 —— runC，並將其開源，作為定義 OCI Spec 的實作參考。
+而為了避免重複造輪子、且讓容器化技術的相關開發有規範可循，於是在 2015 年，Docker、[CoreOs](https://getfedora.org/en/coreos?stream=stable)、[Google](https://www.google.com/) 及一些 container 相關的企業聯手定義了 **Open Container Initiatives (OCI)** 這份倡議，並將各自使用在容器化技術上的 code 拆散，組合成一個全新工具 —— [runC](https://github.com/opencontainers/runc)，並將其開源，作為定義 OCI Spec 的實作參考。
 
 Open Container Initiatives 包含三個主要的規範，分別為
 
@@ -47,7 +47,7 @@ Standard Container 旨在將 software component 及其所有相依性套件 (dep
 
 ### 3. Infrastructure-agnostic
 
-無論使用任何機器或在任何地方，都能夠打包、上傳、下載、且執行運行這個容器
+無論使用任何機器或在任何地方，都能夠打包、上傳、下載、且運行這個容器
 
 > Standard Containers are INFRASTRUCTURE-AGNOSTIC: they can be run in any OCI supported infrastructure. For example, a standard container can be bundled on a laptop, uploaded to cloud storage, downloaded, run and snapshotted by a build server at a fiber hotel in Virginia, uploaded to 10 staging servers in a home-made private cloud cluster, then sent to 30 production instances across 3 public cloud regions.
 
@@ -71,7 +71,7 @@ Many things that once required time-consuming and error-prone human effort can n
 
 `config.json` contains data necessary to implement standard operations against the container (Create, Start, Query State, Kill, and Delete, the Container Lifecycle). But things start getting really interesting when it comes to the actual structure of the `config.json` file.
 
-這份 configuration 包含兩個 section，*common* 及 [*platform-specific*](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config.md#platform-specific-configuration)。common section 包含通用的設定，像是 `ociVersion` `root` fileesystem path within the bundle, additional `mounts` beyond the `root`, a `process` to start in the container, a `user`, and a `hostname`；*platform-specific* section 則用來設置各個平台特有的參數，像是 [Linux](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-linux.md), [Solaris](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-solaris.md), [Windows](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-windows.md), [z/OS](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-zos.md), 及 [Virtual Machine](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-vm.md)。而熟知的 cgroups 及 namespace 的設置則被包含在 [Linux-specific section](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-linux.md) 之中。
+這份 configuration 包含兩個 section，*common* 及 [*platform-specific*](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config.md#platform-specific-configuration)。common section 包含通用的設定，像是 `ociVersion`, `root` filesystem path within the bundle, additional `mounts` beyond the `root`, a `process` to start in the container, a `user`, and a `hostname`；*platform-specific* section 則用來設置各個平台特有的參數，像是 [Linux](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-linux.md), [Solaris](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-solaris.md), [Windows](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-windows.md), [z/OS](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-zos.md), 及 [Virtual Machine](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-vm.md)。而熟知的 cgroups 及 namespace 的設置則被包含在 [Linux-specific section](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-linux.md) 之中。
 
 
 > 顯示只有 Linux 的 Container 需要依賴 namespace 及 cgroups 來實作，但不是所有標準化容器都是 Linux based。
