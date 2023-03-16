@@ -1,6 +1,4 @@
 'use client'
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import {
   Bodies,
   Body,
@@ -18,7 +16,7 @@ import {
 import { useEffect, useRef } from 'react'
 
 import {
-  matterBodiesConfig,
+  BODIES_DIMENSION,
   RATIO_CONSTANT,
   WALL_THICKNESS,
 } from '@/configs/matter'
@@ -26,7 +24,7 @@ import {
 import { OuterSpace, TrashBin } from './Icon'
 
 const BackgroundCanvas = () => {
-  const scene = useRef()
+  const scene = useRef<HTMLDivElement>(null)
   const engine = useRef<Engine>(Engine.create())
   const isSpaceMode = useRef<boolean>(false)
 
@@ -61,11 +59,11 @@ const BackgroundCanvas = () => {
 
   useEffect(() => {
     const render = Render.create({
-      element: scene.current,
+      element: scene.current as HTMLElement,
       engine: engine.current,
       options: {
-        width: scene.current.clientWidth,
-        height: scene.current.clientHeight,
+        width: scene.current ? scene.current.clientWidth : window.innerWidth,
+        height: scene.current ? scene.current.clientHeight : window.innerHeight,
         wireframes: false,
         background: 'transparent',
       },
@@ -89,9 +87,9 @@ const BackgroundCanvas = () => {
     // create left, right wall and ground surfaces
     const leftWall = Bodies.rectangle(
       0 - WALL_THICKNESS / 2,
-      scene.current.clientHeight / 2,
+      scene.current ? scene.current.clientWidth / 2 : window.innerWidth / 2,
       WALL_THICKNESS,
-      scene.current.clientHeight * 5,
+      scene.current ? scene.current.clientHeight * 5 : window.innerHeight * 5,
       {
         isStatic: true,
         label: 'leftWall',
@@ -99,10 +97,12 @@ const BackgroundCanvas = () => {
     )
 
     const rightWall = Bodies.rectangle(
-      scene.current.clientWidth + WALL_THICKNESS / 2,
-      scene.current.clientHeight / 2,
+      scene.current
+        ? scene.current.clientWidth + WALL_THICKNESS / 2
+        : window.innerWidth + WALL_THICKNESS / 2,
+      scene.current ? scene.current.clientHeight / 2 : window.innerHeight / 2,
       WALL_THICKNESS,
-      scene.current.clientHeight * 5,
+      scene.current ? scene.current.clientHeight * 5 : window.innerHeight * 5,
       {
         isStatic: true,
         label: 'rightWall',
@@ -110,8 +110,10 @@ const BackgroundCanvas = () => {
     )
 
     const ground = Bodies.rectangle(
-      scene.current.clientWidth / 2,
-      scene.current.clientHeight + WALL_THICKNESS / 2,
+      scene.current ? scene.current.clientWidth / 2 : window.innerWidth / 2,
+      scene.current
+        ? scene.current.clientHeight + WALL_THICKNESS / 2
+        : window.innerHeight + WALL_THICKNESS / 2,
       45312,
       WALL_THICKNESS,
       {
@@ -137,20 +139,30 @@ const BackgroundCanvas = () => {
     Composite.add(engine.current.world, [ground, leftWall, rightWall])
 
     const handleResize = () => {
-      render.canvas.width = scene.current.clientWidth
-      render.canvas.height = scene.current.clientHeight
+      render.canvas.width = scene.current
+        ? scene.current.clientWidth
+        : window.innerWidth
+      render.canvas.height = scene.current
+        ? scene.current.clientHeight
+        : window.innerHeight
       Body.setPosition(
         ground,
         Vector.create(
-          scene.current.clientWidth / 2,
-          scene.current.clientHeight + WALL_THICKNESS / 2,
+          scene.current ? scene.current.clientWidth / 2 : window.innerWidth / 2,
+          scene.current
+            ? scene.current.clientHeight + WALL_THICKNESS / 2
+            : window.innerHeight + WALL_THICKNESS / 2,
         ),
       )
       Body.setPosition(
         rightWall,
         Vector.create(
-          scene.current.clientWidth + WALL_THICKNESS / 2,
-          scene.current.clientHeight / 2,
+          scene.current
+            ? scene.current.clientWidth + WALL_THICKNESS / 2
+            : window.innerWidth + WALL_THICKNESS / 2,
+          scene.current
+            ? scene.current.clientHeight / 2
+            : window.innerHeight / 2,
         ),
       )
     }
@@ -163,13 +175,19 @@ const BackgroundCanvas = () => {
     // create runner
     const runner = Runner.create()
 
+    // word = '', index = 0, ratio = 1
+
     // TODO: arrange these bodies
-    const createWordBody = (word = '', index = 0, ratio = 1) => {
+    const createWordBody = (
+      word: keyof typeof BODIES_DIMENSION,
+      index: number,
+      ratio: number,
+    ) => {
       const body = Bodies.rectangle(
         300 + index + Math.random() * 100,
         40 * index + index * Math.random() * 100,
-        matterBodiesConfig[word].width * ratio,
-        matterBodiesConfig[word].height * ratio,
+        BODIES_DIMENSION[word].width * ratio,
+        BODIES_DIMENSION[word].height * ratio,
         {
           friction: 0.3,
           frictionAir: 0.001,
@@ -187,11 +205,19 @@ const BackgroundCanvas = () => {
       return body
     }
 
-    const words = ['hello', 'im', 'yu', 'from', 'taiwan', 'hand']
-    const resizeRatio =
-      scene.current.clientWidth > 1200
-        ? (scene.current.clientWidth / 2560) * RATIO_CONSTANT
-        : (scene.current.clientWidth / 1380) * RATIO_CONSTANT
+    const words: Array<keyof typeof BODIES_DIMENSION> = [
+      'hello',
+      'im',
+      'yu',
+      'from',
+      'taiwan',
+      'hand',
+    ]
+    const resizeRatio = !scene.current
+      ? 0.5 * RATIO_CONSTANT
+      : scene.current.clientWidth > 1200
+      ? (scene.current.clientWidth / 2560) * RATIO_CONSTANT
+      : (scene.current.clientWidth / 1380) * RATIO_CONSTANT
 
     words.forEach((word, index) => {
       const wordBody = createWordBody(word, index, resizeRatio)

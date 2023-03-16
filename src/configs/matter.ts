@@ -1,4 +1,4 @@
-export const matterBodiesConfig = {
+export const BODIES_DIMENSION = {
   hello: {width: 478, height: 135},
   im: {width: 253, height: 132},
   frontend: {width: 648, height: 135},
