@@ -15,7 +15,7 @@ const routes = [
   },
 ]
 
-const Navbar = ({ children }: { children: React.ReactNode }) => {
+const Navbar = () => {
   return (
     <div className='flex justify-between'>
       <div className='flex justify-around gap-4'>
@@ -25,7 +25,6 @@ const Navbar = ({ children }: { children: React.ReactNode }) => {
           </div>
         ))}
       </div>
-      {children}
     </div>
   )
 }

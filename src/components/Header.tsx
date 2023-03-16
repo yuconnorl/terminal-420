@@ -1,14 +1,9 @@
 import Navbar from '@/components/Navbar'
 
-import Weather from './Weather'
-
 const Header = () => {
   return (
     <header className='w-full border-b border-mallard-50 border-opacity-40 pb-[0.6rem]'>
-      <Navbar>
-        {/* @ts-expect-error Server Component */}
-        <Weather />
-      </Navbar>
+      <Navbar />
     </header>
   )
 }

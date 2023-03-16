@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 
-import Header from './header'
+import Header from '@/components/Header'
 
 // loading local fonts
 const notoTc = localFont({
