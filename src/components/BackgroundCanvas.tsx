@@ -11,7 +11,6 @@ import {
   Render,
   Runner,
   Vector,
-  World,
 } from 'matter-js'
 import { useEffect, useRef } from 'react'
 
@@ -21,39 +20,53 @@ import {
   WALL_THICKNESS,
 } from '@/configs/matter'
 
-import { OuterSpace, TrashBin } from './Icon'
+import { OuterSpace, PartyRocket, TrashBin } from './Icon'
 
 const BackgroundCanvas = () => {
   const scene = useRef<HTMLDivElement>(null)
   const engine = useRef<Engine>(Engine.create())
   const isSpaceMode = useRef<boolean>(false)
 
-  function onPartyStart() {
-    const cc = Bodies.circle(3, 500, Math.random() * 50, {
-      friction: 0.3,
-      frictionAir: 0.0001,
-      restitution: 0.8,
-    })
-    Composite.add(engine.current.world, cc)
+  function onPartyStart(number: number) {
+    for (let i = 0; i < number; i++) {
+      const cc = Bodies.circle(300, 500, Math.random() * 50, {
+        friction: 0.3,
+        frictionAir: 0.0001,
+        restitution: 0.8,
+      })
+      Composite.add(engine.current.world, cc)
+    }
   }
 
   function onRemoveClick() {
+    engine.current.gravity = { x: 0, y: 1, scale: 0.005 }
+    isSpaceMode.current = false
     if (!engine.current) return
-    const ground = engine.current.world.bodies.find(
-      (body) => body.label === 'ground',
-    )
+    const ground = Composite.allComposites(
+      engine.current.world,
+    )[0]?.bodies.find((body) => body.label === 'ground')
+
     if (!ground) return
-    Composite.remove(engine.current.world, ground)
+
+    Body.setPosition(
+      ground,
+      Vector.create(
+        scene.current ? scene.current.clientWidth / 2 : window.innerWidth / 2,
+        scene.current
+          ? scene.current.clientHeight + WALL_THICKNESS * 4000
+          : window.innerHeight + WALL_THICKNESS * 4000,
+      ),
+    )
   }
 
   function toggleOuterSpaceMode() {
     if (!isSpaceMode.current) {
-      engine.current.gravity = { x: 0, y: 0, scale: 0.0001 }
+      engine.current.gravity = { x: 0, y: 0, scale: 0.001 }
       isSpaceMode.current = !isSpaceMode.current
       return
     }
 
-    engine.current.gravity = { x: 0, y: 1, scale: 0.0001 }
+    engine.current.gravity = { x: 0, y: 1, scale: 0.001 }
     isSpaceMode.current = !isSpaceMode.current
   }
 
@@ -84,6 +97,11 @@ const BackgroundCanvas = () => {
     Mouse.setElement(mouse, mouse.element)
     Composite.add(engine.current.world, mouseConstraint)
 
+    // create composites
+    const wallComposite = Composite.create({
+      label: 'wall',
+    })
+
     // create left, right wall and ground surfaces
     const leftWall = Bodies.rectangle(
       0 - WALL_THICKNESS / 2,
@@ -93,6 +111,11 @@ const BackgroundCanvas = () => {
       {
         isStatic: true,
         label: 'leftWall',
+        render: {
+          strokeStyle: 'transparent',
+          fillStyle: 'transparent',
+          lineWidth: 0,
+        },
       },
     )
 
@@ -106,6 +129,11 @@ const BackgroundCanvas = () => {
       {
         isStatic: true,
         label: 'rightWall',
+        render: {
+          strokeStyle: 'transparent',
+          fillStyle: 'transparent',
+          lineWidth: 0,
+        },
       },
     )
 
@@ -114,31 +142,73 @@ const BackgroundCanvas = () => {
       scene.current
         ? scene.current.clientHeight + WALL_THICKNESS / 2
         : window.innerHeight + WALL_THICKNESS / 2,
-      45312,
+      20882,
       WALL_THICKNESS,
       {
         isStatic: true,
         label: 'ground',
+        render: {
+          strokeStyle: 'transparent',
+          fillStyle: 'transparent',
+          lineWidth: 0,
+        },
       },
     )
 
-    // Events.on(engine.current, 'collisionEnd', (event) => {
-    //   const pairs = event.pairs
+    const removeSensor = Bodies.rectangle(
+      scene.current ? scene.current.clientWidth / 2 : window.innerWidth / 2,
+      scene.current
+        ? scene.current.clientHeight + WALL_THICKNESS * 3
+        : window.innerHeight + WALL_THICKNESS * 3,
+      10000,
+      WALL_THICKNESS * 3,
+      {
+        isStatic: true,
+        isSensor: true,
+        label: 'ground-sensor',
+        render: {
+          strokeStyle: '#fff',
+          fillStyle: 'transparent',
+          lineWidth: 3,
+        },
+      },
+    )
 
-    //   for (let i = 0, j = pairs.length; i != j; ++i) {
-    //     const pair = pairs[i]
+    // remove any elements collide with removeSensor
+    Events.on(engine.current, 'collisionStart', (event) => {
+      const pairs = event.pairs
 
-    //     if (pair.bodyA === ground) {
-    //       pair.bodyB.render.strokeStyle = colorB
-    //     } else if (pair.bodyB === ground) {
-    //       pair.bodyA.render.strokeStyle = colorB
-    //     }
-    //   }
-    // })
+      for (let i = 0, j = pairs.length; i != j; ++i) {
+        const pair = pairs[i]
 
-    Composite.add(engine.current.world, [ground, leftWall, rightWall])
+        if (pair && pair.bodyA === removeSensor) {
+          Composite.remove(engine.current.world, pair.bodyB)
+        }
 
-    const handleResize = () => {
+        if (pair && pair.bodyB === removeSensor) {
+          Composite.remove(engine.current.world, pair.bodyA)
+        }
+      }
+    })
+
+    // make ground return after all elements removed
+    Events.on(engine.current.world, 'afterRemove', () => {
+      if (engine.current.world.bodies.length) return
+      Body.setPosition(
+        ground,
+        Vector.create(
+          scene.current ? scene.current.clientWidth / 2 : window.innerWidth / 2,
+          scene.current
+            ? scene.current.clientHeight + WALL_THICKNESS / 2
+            : window.innerHeight + WALL_THICKNESS / 2,
+        ),
+      )
+    })
+
+    Composite.add(wallComposite, [ground, leftWall, rightWall, removeSensor])
+    Composite.add(engine.current.world, wallComposite)
+
+    function handleResize() {
       render.canvas.width = scene.current
         ? scene.current.clientWidth
         : window.innerWidth
@@ -174,8 +244,6 @@ const BackgroundCanvas = () => {
 
     // create runner
     const runner = Runner.create()
-
-    // word = '', index = 0, ratio = 1
 
     // TODO: arrange these bodies
     const createWordBody = (
@@ -254,7 +322,7 @@ const BackgroundCanvas = () => {
 
     return () => {
       Render.stop(render)
-      World.clear(engine.current.world, false) // TODO: what the heck is keepStatic?
+      Composite.clear(engine.current.world, true)
       Engine.clear(engine.current)
       render.canvas.remove()
       render.textures = {}
@@ -270,6 +338,9 @@ const BackgroundCanvas = () => {
         </button>
         <button className='' type='button' onClick={toggleOuterSpaceMode}>
           <OuterSpace />
+        </button>
+        <button className='' type='button' onClick={() => onPartyStart(50)}>
+          <PartyRocket />
         </button>
       </div>
     </>

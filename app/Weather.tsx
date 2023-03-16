@@ -48,15 +48,19 @@ async function getWeatherData(): Promise<Result> {
     const data = (await res.json()) as WeatherData
 
     const weatherElements = data.records.location[0]?.weatherElement
-    const resultInitial = { MinT: '', MaxT: '' }
-    const result = weatherElements?.reduce<Result>((acc, current) => {
-      if (current.elementName === 'MinT' || current.elementName === 'MaxT') {
-        acc[current.elementName] = current?.time[0]?.parameter.parameterName
+    const resultInitial = { MinT: '', MaxT: '', Wx: '' }
+    const result =
+      weatherElements?.reduce<Result>((acc, current) => {
+        if (current.elementName === 'MinT' || current.elementName === 'MaxT') {
+          acc[current.elementName] =
+            current?.time[0]?.parameter.parameterName || ''
+          return acc
+        }
+        if (current.elementName === 'Wx')
+          acc[current.elementName] =
+            current?.time[0]?.parameter.parameterValue || ''
         return acc
-      }
-      acc[current.elementName] = current?.time[0]?.parameter.parameterValue
-      return acc
-    }, resultInitial)
+      }, resultInitial) || resultInitial
 
     return result
   } catch (error) {
@@ -77,7 +81,7 @@ export default async function Weather() {
       ) || []
     return weatherType
   }
-  const weatherCode = weatherCode2Type(Wx)
+  const weatherCode = Wx && weatherCode2Type(Wx)
   const CurrentWeatherIcon =
     weatherCode && WeatherIcon[weatherCode as WeatherIconType]
 
@@ -86,7 +90,7 @@ export default async function Weather() {
       <div className='-translate-y-[2px]'>
         {CurrentWeatherIcon && <CurrentWeatherIcon />}
       </div>
-      <div className='ml-2'>{`Taipei ${MinT}°C-${MaxT}°C`}</div>
+      <div className='ml-2'>{MinT && MaxT && `Taipei ${MinT}°C-${MaxT}°C`}</div>
     </div>
   )
 }

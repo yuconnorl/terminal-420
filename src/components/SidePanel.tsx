@@ -76,7 +76,7 @@ const SidePanel = ({ rawPost = '' }) => {
             <a
               className='text-left text-sm'
               onClick={(e) => {
-                e.preventDefault()
+                // e.preventDefault()
                 document.getElementById(`${id}`)?.scrollIntoView({
                   behavior: 'smooth',
                   block: 'start',
