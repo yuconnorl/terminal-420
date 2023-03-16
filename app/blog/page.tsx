@@ -6,8 +6,8 @@ import Link from 'next/link'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'Blog posts',
-  description: 'blog postas',
+  title: 'Blog',
+  description: 'Blog posts',
 }
 
 const BlogPage = () => {
