@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import Footer from '@/components/Footer'
+import { Folder } from '@/components/Icon'
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -22,21 +23,27 @@ const BlogPage = () => {
           })
           .map((post) => {
             return (
-              <Link
+              <div
                 key={post.id}
-                className='flex flex-col font-mono tracking-tight transition-opacity hover:opacity-60'
-                href={post.url}
+                className='flex flex-col font-mono tracking-tight'
               >
-                <div className='flex w-full flex-col text-2xl tracking-tight lg:text-3xl'>
+                <Link
+                  href={post.url}
+                  className='flex w-full flex-col text-2xl tracking-tight transition-opacity hover:opacity-60 lg:text-3xl'
+                >
                   <p>{post.title}</p>
-                </div>
-                <div className='my-2 text-sm tracking-tighter text-main-gray'>
+                </Link>
+                <div className='my-2 flex gap-4 text-sm tracking-tighter text-main-gray'>
                   <p>{dayjs(post.date).format('MMM DD, YYYY')}</p>
+                  <div className='flex items-center tracking-tight'>
+                    <Folder />
+                    <p className='ml-1'>{post.category}</p>
+                  </div>
                 </div>
-                <div className=' mt-1 max-w-xl font-sans-serif tracking-tight text-main-gray'>
+                <div className=' mt-1 max-w-xl font-sans-serif tracking-wide text-main-gray'>
                   <p>{post.description}</p>
                 </div>
-              </Link>
+              </div>
             )
           })}
       </div>

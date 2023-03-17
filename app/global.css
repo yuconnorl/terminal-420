@@ -3,10 +3,8 @@
 @tailwind utilities;
 
 .prose .anchor {
-  @apply absolute invisible no-underline;
+  @apply absolute invisible no-underline -ml-4 md:-ml-6 pr-1 md:pr-2;
 
-  margin-left: -1.5rem;
-  padding-right: 0.5rem;
   width: 80%;
   height: 100%;
   cursor: pointer;

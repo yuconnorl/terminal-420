@@ -6,6 +6,7 @@ import Balancer from 'react-wrap-balancer'
 
 import CommentSection from '@/components/CommentSection'
 import Footer from '@/components/Footer'
+import { Folder } from '@/components/Icon'
 import Mdx from '@/components/Mdx'
 import SidePanel from '@/components/SidePanel'
 
@@ -30,13 +31,17 @@ export default async function Blog({ params }: Props) {
   }
 
   return (
-    <div className='relative flex max-w-6xl pt-8 font-sans-serif xl:grid xl:grid-cols-section xl:gap-7'>
+    <div className='relative w-full max-w-6xl pt-8 font-sans-serif xl:grid xl:grid-cols-section xl:gap-7'>
       <section className='col-start-2 mx-auto max-w-4xl'>
         <h1 className='font-mono text-2xl font-bold tracking-tight md:text-3xl'>
           <Balancer>{post?.title}</Balancer>
         </h1>
-        <div className='mb-6 mt-4 font-mono tracking-tighter text-main-gray'>
+        <div className='mb-6 mt-4 flex gap-4 font-mono tracking-tighter text-main-gray'>
           <p>{dayjs(post?.date).format('MMM DD, YYYY')}</p>
+          <div className='flex items-center tracking-tight'>
+            <Folder />
+            <p className='ml-1'>{post?.category}</p>
+          </div>
         </div>
         <Mdx code={post?.body.code} />
         <CommentSection />

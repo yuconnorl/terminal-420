@@ -8,7 +8,7 @@ const config = {
         mono: ['var(--font-jet-brain)'],
       },
       colors: {
-        'main-black': '#111010',
+        'main-black': '#1d1b1b',
         'main-gray': '#999999',
         mallard: {
           50: '#f5f8f1',
