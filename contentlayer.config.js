@@ -14,6 +14,11 @@ export const Post = defineDocumentType(() => ({
       description: 'The id of the post',
       required: true,
     },
+    description: {
+      type: 'string',
+      description: 'Short description of the post',
+      required: true,
+    },
     title: {
       type: 'string',
       description: 'The title of the post',

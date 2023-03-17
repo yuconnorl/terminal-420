@@ -30,7 +30,7 @@ const jetBrain = localFont({
 export const metadata: Metadata = {
   title: {
     default: 'Terminal 420',
-    template: '%s | Terminal 420',
+    template: '%s - Terminal 420',
   },
   description: 'description',
   robots: {
@@ -59,7 +59,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         jetBrain.variable,
       )}
     >
-      <body className='h-full w-full p-6 antialiased'>
+      <body className='h-full w-full py-4 px-6 antialiased'>
         <div className='flex h-full w-full flex-col'>
           <Header />
           <main className='relative flex w-full flex-[1_0_0] justify-center'>

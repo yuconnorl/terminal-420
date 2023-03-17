@@ -76,3 +76,7 @@ svg:hover #fire {
   background-color: #111010;
   padding: 5px;
 }
+
+[data-rehype-pretty-code-fragment] > pre > code {
+  @apply bg-transparent;
+}
