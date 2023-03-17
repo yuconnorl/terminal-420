@@ -34,3 +34,45 @@
   @apply relative
 }
 
+#lid,
+#rocket,
+#fire {
+  transition: all 0.2s ease;
+}
+
+#fire {
+  opacity: 0
+}
+
+#lid {
+  transform-origin: bottom left;
+}
+
+svg:hover #lid {
+  transform: translateY(-10%) rotate(-10deg);
+}
+
+svg:hover #rocket {
+  transform: translate(10%, -10%);
+}
+
+svg:hover #fire {
+  transform: translate(10%, -10%);
+  opacity: 1
+}
+
+.scrollbar::-webkit-scrollbar {
+  background-color: #111010;
+  width: 3px;
+  height: 5px;
+ }
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color:#999999;
+  border-radius: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background-color: #111010;
+  padding: 5px;
+}

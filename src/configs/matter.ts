@@ -13,3 +13,14 @@ export const WALL_THICKNESS = 60
 
 // magic number for size adjustment
 export const RATIO_CONSTANT = 1.33
+
+export const removeSensorOptions = {
+  isStatic: true,
+  isSensor: true,
+  label: 'ground-sensor',
+  render: {
+    strokeStyle: '#fff',
+    fillStyle: 'transparent',
+    lineWidth: 3,
+  },
+}

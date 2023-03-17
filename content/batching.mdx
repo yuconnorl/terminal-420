@@ -1,0 +1,126 @@
+---
+title: batching
+description: Batching is when React groups multiple state updates into a single re-render for better performance
+id: 825718dd-58ee-4b2b-b416-0f1b837ff1ff
+date: 2022-Oct-17 14:32:19+08:00
+---
+
+# batching
+
+> Batching is when React **groups multiple state updates into a single re-render** for better performance.
+
+舉例來說，以下的例子中，就算我們在一個click事件中改變了兩次state的值，[[React]] 只會進行一次的re-render，而這個將多次re-render「捆」在一起更新的方法，稱為*batching update*
+
+```jsx
+function App() {
+  const [count, setCount] = useState(0);
+  const [flag, setFlag] = useState(false);
+
+  function handleClick() {
+    setCount(c => c + 1); // Does not re-render yet
+    setFlag(f => !f); // Does not re-render yet
+    // React will only re-render once at the end (that's batching!)
+  }
+
+  return (
+    <div>
+      <button onClick={handleClick}>Next</button>
+      <h1 style={{ color: flag ? "blue" : "black" }}>{count}</h1>
+    </div>
+  );
+}
+```
+
+## 這帶來什麼好處
+
+很顯然的，降低不必要的重新渲染讓整體效能得到提升。此外，[[#batching]] 也避免 component 渲染出「半成品」(half-finished) 的 state，避免意料之外的 bug 產生。
+
+在 [[React]] 18之前，[[React]] 只會打包正處於 browser event 的更新，如點擊事件，而不會打包在事件發生過後的更新，如 [[Promise]]、setTimeout、native event handlers。下面的例子在回傳 [[Promise]] 後呼叫 state 更新，此時 [[React]] 就不會將這兩次更新打包，而是 re-render 兩次
+
+```jsx
+function App() {
+  const [count, setCount] = useState(0);
+  const [flag, setFlag] = useState(false);
+
+  function handleClick() {
+    fetchSomething().then(() => {
+      // React 17 and earlier does NOT batch these because
+      // they run *after* the event in a callback, not *during* it
+      setCount(c => c + 1); // Causes a re-render
+      setFlag(f => !f); // Causes a re-render
+    });
+  }
+
+  return (
+    <div>
+      <button onClick={handleClick}>Next</button>
+      <h1 style={{ color: flag ? "blue" : "black" }}>{count}</h1>
+    </div>
+  );
+}
+```
+
+但在 [[React]] 18之後，事情有了轉變
+
+## Automatic batching
+
+在 [[React]] 18的更新中，所有的更新都會被batched，包含 promises、setTimeout、native event handlers 等其他事件，都會如同 [[React]] 當中的事件一般被 batched。
+
+- click event
+  ```javascript
+  function handleClick() {
+    setCount(c => c + 1);
+    setFlag(f => !f);
+    // React will only re-render once at the end (that's batching!)
+  }
+  ```
+
+- setTimeout
+  ```javascript
+  setTimeout(() => {
+    setCount(c => c + 1);
+    setFlag(f => !f);
+    // React will only re-render once at the end (that's batching!)
+  }, 1000);
+  ```
+
+- fetch
+  ```javascript
+  fetch(/*...*/).then(() => {
+    setCount(c => c + 1);
+    setFlag(f => !f);
+    // React will only re-render once at the end (that's batching!)
+  })
+  ```
+
+- event listener
+  ```javascript
+  elm.addEventListener('click', () => {
+    setCount(c => c + 1);
+    setFlag(f => !f);
+    // React will only re-render once at the end (that's batching!)
+  });
+  ```
+
+## 那如果**不想要**更新被batch呢
+
+通常來說，batch 是安全的，但如果想要在某個 state 更新後緊接著讀取某些 DOM 的值，那可以使用 `flushSync`
+
+```jsx
+import { flushSync } from 'react-dom'; // Note: react-dom, not react
+
+function handleClick() {
+  flushSync(() => {
+    setCounter(c => c + 1);
+  });
+  // React has updated the DOM by now
+  flushSync(() => {
+    setFlag(f => !f);
+  });
+  // React has updated the DOM by now
+}
+```
+
+## Reference
+
+[Automatic batching for fewer renders in React 18](https://github.com/reactwg/react-18/discussions/21)

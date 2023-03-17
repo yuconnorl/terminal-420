@@ -4,8 +4,8 @@ import Giscus from '@giscus/react'
 import { giscusConfig } from '@/configs/giscus'
 
 const CommentSection = () => (
-  <div className='border-t border-t-mallard-50 border-opacity-40 py-16'>
-    <h1 className='mb-5 font-mono text-3xl font-bold'>Comment</h1>
+  <div className='border-t border-t-mallard-50 border-opacity-40 py-10 md:py-16'>
+    <h1 className='mb-5 font-mono text-2xl font-bold md:text-3xl'>Comment</h1>
     <Giscus
       id='comments'
       repo={giscusConfig.repo}
@@ -14,12 +14,11 @@ const CommentSection = () => (
       categoryId={giscusConfig.categoryId}
       mapping='pathname'
       term='Welcome to @giscus/react component!'
-      reactionsEnabled='1'
+      reactionsEnabled='0'
       emitMetadata='0'
       inputPosition='top'
       theme='dark'
       lang='en'
-      loading='lazy'
     />
   </div>
 )

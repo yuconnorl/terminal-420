@@ -17,6 +17,7 @@ import { useEffect, useRef } from 'react'
 import {
   BODIES_DIMENSION,
   RATIO_CONSTANT,
+  removeSensorOptions,
   WALL_THICKNESS,
 } from '@/configs/matter'
 
@@ -29,17 +30,22 @@ const BackgroundCanvas = () => {
 
   function onPartyStart(number: number) {
     for (let i = 0; i < number; i++) {
-      const cc = Bodies.circle(300, 500, Math.random() * 50, {
-        friction: 0.3,
-        frictionAir: 0.0001,
-        restitution: 0.8,
-      })
-      Composite.add(engine.current.world, cc)
+      const circle = Bodies.circle(
+        scene.current ? scene.current.clientWidth / 2 : window.innerWidth / 2,
+        10,
+        10 + Math.random() * 25,
+        {
+          friction: 0.3,
+          frictionAir: 0.0001,
+          restitution: 0.8,
+        },
+      )
+      Composite.add(engine.current.world, circle)
     }
   }
 
   function onRemoveClick() {
-    engine.current.gravity = { x: 0, y: 1, scale: 0.005 }
+    engine.current.gravity = { x: 0, y: 1, scale: 0.001 }
     isSpaceMode.current = false
     if (!engine.current) return
     const ground = Composite.allComposites(
@@ -158,20 +164,21 @@ const BackgroundCanvas = () => {
     const removeSensor = Bodies.rectangle(
       scene.current ? scene.current.clientWidth / 2 : window.innerWidth / 2,
       scene.current
-        ? scene.current.clientHeight + WALL_THICKNESS * 3
-        : window.innerHeight + WALL_THICKNESS * 3,
+        ? scene.current.clientHeight + WALL_THICKNESS * 5
+        : window.innerHeight + WALL_THICKNESS * 5,
       10000,
       WALL_THICKNESS * 3,
-      {
-        isStatic: true,
-        isSensor: true,
-        label: 'ground-sensor',
-        render: {
-          strokeStyle: '#fff',
-          fillStyle: 'transparent',
-          lineWidth: 3,
-        },
-      },
+      removeSensorOptions,
+    )
+
+    const removeSensorRight = Bodies.rectangle(
+      scene.current
+        ? scene.current.clientWidth + WALL_THICKNESS * 3
+        : window.innerWidth + WALL_THICKNESS * 3,
+      scene.current ? scene.current.clientHeight / 2 : window.innerHeight / 2,
+      WALL_THICKNESS * 3,
+      scene.current ? scene.current.clientHeight * 7 : window.innerHeight * 7,
+      removeSensorOptions,
     )
 
     // remove any elements collide with removeSensor
@@ -181,11 +188,17 @@ const BackgroundCanvas = () => {
       for (let i = 0, j = pairs.length; i != j; ++i) {
         const pair = pairs[i]
 
-        if (pair && pair.bodyA === removeSensor) {
+        if (
+          (pair && pair.bodyA === removeSensor) ||
+          (pair && pair.bodyA === removeSensorRight)
+        ) {
           Composite.remove(engine.current.world, pair.bodyB)
         }
 
-        if (pair && pair.bodyB === removeSensor) {
+        if (
+          (pair && pair.bodyB === removeSensor) ||
+          (pair && pair.bodyA === removeSensorRight)
+        ) {
           Composite.remove(engine.current.world, pair.bodyA)
         }
       }
@@ -205,7 +218,13 @@ const BackgroundCanvas = () => {
       )
     })
 
-    Composite.add(wallComposite, [ground, leftWall, rightWall, removeSensor])
+    Composite.add(wallComposite, [
+      ground,
+      leftWall,
+      rightWall,
+      removeSensor,
+      removeSensorRight,
+    ])
     Composite.add(engine.current.world, wallComposite)
 
     function handleResize() {
@@ -252,8 +271,8 @@ const BackgroundCanvas = () => {
       ratio: number,
     ) => {
       const body = Bodies.rectangle(
-        300 + index + Math.random() * 100,
-        40 * index + index * Math.random() * 100,
+        100 + (index * scene.current.clientWidth) / 6,
+        -scene.current.clientHeight,
         BODIES_DIMENSION[word].width * ratio,
         BODIES_DIMENSION[word].height * ratio,
         {

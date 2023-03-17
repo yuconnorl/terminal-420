@@ -9,8 +9,11 @@ interface MenuData {
 }
 
 const SidePanel = ({ rawPost = '' }) => {
+  const [isScrolling, setIsScrolling] = useState(false)
+  const timeout = useRef<NodeJS.Timeout | null>(null)
   const slugger = new GithubSlugger()
   const observer = useRef<IntersectionObserver | null>(null)
+  const sidebar = useRef<HTMLDivElement>(null)
 
   // retain only headings at level 2 and 3
   const filterHeadingList: string[] = rawPost
@@ -38,7 +41,21 @@ const SidePanel = ({ rawPost = '' }) => {
     }
   }
 
+  const handleScroll = () => {
+    if (isScrolling) return
+    setIsScrolling(true)
+
+    if (timeout.current) return
+    const timeoutId = setTimeout(() => {
+      setIsScrolling(false)
+      timeout.current = null
+    }, 5000)
+    timeout.current = timeoutId
+  }
+
   useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+
     const observerOptions = {
       rootMargin: '0% 0px -75% 0px',
       threshold: 1.0,
@@ -59,9 +76,19 @@ const SidePanel = ({ rawPost = '' }) => {
   }, [menuData])
 
   return (
-    <aside className='sticky top-16 ml-10 hidden h-fit shrink-0 grow-[3] basis-0 flex-col lg:flex'>
+    <aside
+      ref={sidebar}
+      className={clsx(
+        'sticky top-16 hidden h-fit shrink-0 grow-[3] basis-0 flex-col lg:flex',
+      )}
+    >
       <p className='mb-3 font-mono font-bold'>On this page</p>
-      <ul className='flex flex-col gap-2 border-l border-l-[#2c2c2c59] pl-4'>
+      <ul
+        className={clsx(
+          isScrolling ? 'opacity-100' : 'opacity-20',
+          'flex flex-col gap-2 border-l border-l-[#2c2c2c59] pl-4 transition-opacity duration-300 hover:opacity-100',
+        )}
+      >
         {menuData.map(({ id, heading, headingLevel }: MenuData) => (
           <li
             className={clsx(

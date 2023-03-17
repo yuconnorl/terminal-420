@@ -26,7 +26,7 @@ const BlogPage = () => {
               className='mb-4 flex flex-col space-y-1 font-mono tracking-tight'
               href={post.url}
             >
-              <div className='flex w-full flex-col text-3xl tracking-tight'>
+              <div className='flex w-full flex-col text-2xl tracking-tight lg:text-3xl'>
                 <p>{post.title}</p>
               </div>
               <div className='text-sm text-main-gray'>

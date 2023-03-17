@@ -23,6 +23,10 @@ const config = {
           900: '#233618',
         },
       },
+      gridTemplateColumns: {
+        // Complex site-specific column configuration
+        'section': '1fr minmax(700px,3fr) 1fr',
+      }
     },
   },
   future: {

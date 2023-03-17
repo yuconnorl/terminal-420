@@ -17,7 +17,7 @@ const routes = [
 
 const Navbar = () => {
   return (
-    <div className='flex justify-between'>
+    <div className='flex max-w-5xl justify-between'>
       <div className='flex justify-around gap-4'>
         {routes.map(({ name, path }) => (
           <div key={name} className='font-mono text-mallard-50'>
