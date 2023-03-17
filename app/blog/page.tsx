@@ -33,7 +33,7 @@ const BlogPage = () => {
                 <div className='my-2 text-sm tracking-tighter text-main-gray'>
                   <p>{dayjs(post.date).format('MMM DD, YYYY')}</p>
                 </div>
-                <div className='mt-1 max-w-xl font-mono tracking-tight text-main-gray'>
+                <div className=' mt-1 max-w-xl font-sans-serif tracking-tight text-main-gray'>
                   <p>{post.description}</p>
                 </div>
               </Link>

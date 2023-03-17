@@ -30,8 +30,8 @@ export default async function Blog({ params }: Props) {
   }
 
   return (
-    <div className='relative grid max-w-6xl grid-cols-section pt-8 font-sans-serif md:gap-8'>
-      <section className='col-start-2 mx-auto max-w-4xl shrink-0 grow-[10] basis-0'>
+    <div className='relative flex max-w-6xl pt-8 font-sans-serif xl:grid xl:grid-cols-section xl:gap-7'>
+      <section className='col-start-2 mx-auto max-w-4xl'>
         <h1 className='font-mono text-2xl font-bold tracking-tight md:text-3xl'>
           <Balancer>{post?.title}</Balancer>
         </h1>

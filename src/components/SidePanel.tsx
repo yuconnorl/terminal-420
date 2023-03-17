@@ -78,9 +78,7 @@ const SidePanel = ({ rawPost = '' }) => {
   return (
     <aside
       ref={sidebar}
-      className={clsx(
-        'sticky top-16 hidden h-fit shrink-0 grow-[3] basis-0 flex-col lg:flex',
-      )}
+      className={clsx('sticky top-16 hidden h-fit flex-col xl:flex')}
     >
       <p className='mb-3 font-mono font-bold'>On this page</p>
       <ul

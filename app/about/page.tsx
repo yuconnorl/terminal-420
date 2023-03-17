@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 
+import Footer from '@/components/Footer'
+
 export const metadata: Metadata = {
   title: 'About',
   description: 'About pages',
@@ -7,9 +9,12 @@ export const metadata: Metadata = {
 
 const AboutPage = () => {
   return (
-    <div>
-      <div>this is a about page</div>
-    </div>
+    <section className='pt-8'>
+      <div>
+        Welcome to Terminal 420, I am still working so hard on this one 😓 🏗️
+      </div>
+      <Footer />
+    </section>
   )
 }
 
