@@ -20,10 +20,12 @@ const CustomLink = (props: CustomLinkProps) => {
   }
 
   return (
-    <span className='not-prose m-0 inline-flex text-mallard-400 transition-opacity hover:opacity-70'>
-      <a target='_blank' rel='noopener noreferrer' {...props} />
+    <>
+      <span className='not-prose m-0 inline-flex text-mallard-400 transition-opacity hover:opacity-70'>
+        <a target='_blank' rel='noopener noreferrer' {...props} />
+      </span>
       <RoundRightUpArrow />
-    </span>
+    </>
   )
 }
 
