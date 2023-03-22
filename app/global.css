@@ -33,7 +33,7 @@ html, body {
 .prose h4,
 .prose h5,
 .prose h6 {
-  @apply relative
+  @apply relative text-mallard-50
 }
 
 #lid,

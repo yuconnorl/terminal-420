@@ -264,15 +264,16 @@ const BackgroundCanvas = () => {
     // create runner
     const runner = Runner.create()
 
-    // TODO: arrange these bodies
     const createWordBody = (
       word: keyof typeof BODIES_DIMENSION,
       index: number,
       ratio: number,
     ) => {
       const body = Bodies.rectangle(
-        scene.current ? 100 + (index * scene.current.clientWidth) / 6 : 100 + (index * window.innerWidth) / 6 ,
-        scene.current ? - scene.current.clientHeight : - window.innerHeight,
+        scene.current
+          ? 100 + (index * scene.current.clientWidth) / 6
+          : 100 + (index * window.innerWidth) / 6,
+        scene.current ? -scene.current.clientHeight : -window.innerHeight,
         BODIES_DIMENSION[word].width * ratio,
         BODIES_DIMENSION[word].height * ratio,
         {
@@ -340,6 +341,7 @@ const BackgroundCanvas = () => {
     Runner.run(runner, engine.current)
 
     return () => {
+      window.removeEventListener('resize', handleResize)
       Render.stop(render)
       Composite.clear(engine.current.world, true)
       Engine.clear(engine.current)
