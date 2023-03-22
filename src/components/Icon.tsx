@@ -128,7 +128,7 @@ export const Folder = () => (
     viewBox='0 0 24 24'
     strokeWidth={1.3}
     stroke='currentColor'
-    className='h-4 w-4'
+    className='h-3 w-3'
   >
     <path
       strokeLinecap='round'

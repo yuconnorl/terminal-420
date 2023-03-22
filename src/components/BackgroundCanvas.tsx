@@ -271,8 +271,8 @@ const BackgroundCanvas = () => {
       ratio: number,
     ) => {
       const body = Bodies.rectangle(
-        100 + (index * scene.current.clientWidth) / 6,
-        -scene.current.clientHeight,
+        scene.current ? 100 + (index * scene.current.clientWidth) / 6 : 100 + (index * window.innerWidth) / 6 ,
+        scene.current ? - scene.current.clientHeight : - window.innerHeight,
         BODIES_DIMENSION[word].width * ratio,
         BODIES_DIMENSION[word].height * ratio,
         {

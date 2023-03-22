@@ -48,6 +48,7 @@ const SidePanel = ({ rawPost = '' }) => {
     if (timeout.current) return
     const timeoutId = setTimeout(() => {
       setIsScrolling(false)
+
       timeout.current = null
     }, 5000)
     timeout.current = timeoutId
