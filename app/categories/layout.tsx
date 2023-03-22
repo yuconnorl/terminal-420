@@ -24,7 +24,7 @@ const Categories = ({ children }: { children: React.ReactNode }) => {
     <div className='w-full max-w-3xl pt-8 pb-24'>
       <div className='mb-7'>
         <h1 className='font-mono text-2xl font-bold tracking-tight md:text-3xl'>
-          Categories
+          {currentRoute}
         </h1>
         <div className='flex flex-wrap gap-4 pt-4'>
           {Object.entries(categories).map(([category, count]) => (
