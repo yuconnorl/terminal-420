@@ -33,8 +33,10 @@ const Navbar = () => {
           <div
             key={name}
             className={clsx(
-              'font-mono',
-              rootPath === path ? 'text-mallard-400' : 'text-mallard-50',
+              'font-mono transition-opacity',
+              rootPath === path
+                ? 'text-mallard-400'
+                : 'text-mallard-50 hover:opacity-70',
             )}
           >
             <Link href={path}>{name}</Link>

@@ -8,7 +8,9 @@ const Callout = (props: CalloutProps) => {
       <div className='mr-6 flex w-4 items-center text-2xl md:mr-8'>
         {props.emoji}
       </div>
-      <div className='not-prose m-0 w-full'>{props.children}</div>
+      <div className='not-prose m-0 flex w-full items-center'>
+        {props.children}
+      </div>
     </div>
   )
 }
