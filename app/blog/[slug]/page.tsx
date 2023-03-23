@@ -30,12 +30,12 @@ export default async function Blog({ params }: Props) {
   }
 
   return (
-    <div className='relative w-full max-w-6xl pt-8 font-sans-serif xl:grid xl:grid-cols-section xl:gap-7'>
+    <div className='relative w-full max-w-6xl pt-8 font-sans-serif xl:grid xl:grid-cols-section xl:gap-7 3xl:gap-12'>
       <section className='col-start-2 mx-auto max-w-4xl'>
         <h1 className='font-mono text-2xl font-bold tracking-tight md:text-3xl'>
           <Balancer>{post?.title}</Balancer>
         </h1>
-        <div className='mb-10 mt-4 flex gap-4 font-mono text-sm tracking-tighter text-main-gray'>
+        <div className='mb-10 mt-4 flex items-center gap-4 font-mono text-sm tracking-tighter text-main-gray'>
           <p>{dayjs(post?.date).format('MMM DD, YYYY')}</p>
           <CategoryLink category={post?.category} />
         </div>

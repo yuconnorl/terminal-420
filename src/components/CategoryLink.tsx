@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 
-import { Folder } from '@/components/Icon'
+import { Folder } from '@/components/Icons'
 
 interface Props {
   category?: string

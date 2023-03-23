@@ -21,7 +21,7 @@ import {
   WALL_THICKNESS,
 } from '@/configs/matter'
 
-import { OuterSpace, PartyRocket, TrashBin } from './Icon'
+import { OuterSpace, PartyRocket, TrashBin } from './Icons'
 
 const BackgroundCanvas = () => {
   const scene = useRef<HTMLDivElement>(null)

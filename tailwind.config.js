@@ -24,8 +24,15 @@ const config = {
         },
       },
       gridTemplateColumns: {
-        // Complex site-specific column configuration
         'section': '1fr minmax(700px,3fr) 1fr',
+      },
+      screens: {
+        '2xl': '1536px',
+        '3xl': '1842px',
+        '4xl': '2380px',
+      },
+      backgroundImage: {
+        'link-arrow': "url('/images/link-arrow.svg')",
       }
     },
   },
