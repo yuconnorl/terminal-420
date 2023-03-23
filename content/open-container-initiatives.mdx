@@ -75,8 +75,16 @@ Many things that once required time-consuming and error-prone human effort can n
 
 這份 configuration 包含兩個 section，*common* 及 [*platform-specific*](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config.md#platform-specific-configuration)。common section 包含通用的設定，像是 `ociVersion`, `root` filesystem path within the bundle, additional `mounts` beyond the `root`, a `process` to start in the container, a `user`, and a `hostname`；*platform-specific* section 則用來設置各個平台特有的參數，像是 [Linux](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-linux.md), [Solaris](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-solaris.md), [Windows](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-windows.md), [z/OS](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-zos.md), 及 [Virtual Machine](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-vm.md)。而熟知的 cgroups 及 namespace 的設置則被包含在 [Linux-specific section](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/config-linux.md) 之中。
 
+> 顯示只有 Linux 的 Container 需要依賴 namespace 及 cgroups 來實作，但不是所有標準化容器都是 Linux based
 
-> 顯示只有 Linux 的 Container 需要依賴 namespace 及 cgroups 來實作，但不是所有標準化容器都是 Linux based。
+## Open Container Initiatives 如何定義一個 Container 
+
+在 Open Container Initiatives (OCI) Spec 中提到：「container 是一個用來執行程序的環境，且此環境的獨立性及可取用資源可以經由調控加以限制。」
+
+> *An environment for executing processes with configurable isolation and resource limitations. For example, namespaces, resource limits, and mounts are all part of the container environment.* -- [OCI Spec#container](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/glossary.md#container)
+
+在 [runtime & Lifecycle Spec](https://github.com/opencontainers/runtime-spec/blob/20a2d9782986ec2a7e0812ebe1515f73736c6a0c/glossary.md) 中提到，任何使用合規 Container runtime 來建立的 Container **必須** 能夠使用 Spec 中定義的所有 Container Lifecycle method。
+
 
 ## Virtual Machines are actually containers?!
 

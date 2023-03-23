@@ -85,17 +85,17 @@ const SidePanel = ({ rawPost = '' }) => {
       <ul
         className={clsx(
           isScrolling ? 'opacity-100' : 'opacity-20',
-          'flex flex-col gap-2 border-l border-l-[#2c2c2c59] pl-4 transition-opacity duration-300 hover:opacity-100',
+          'flex flex-col gap-3 border-l border-l-[#2c2c2c59] pl-4 transition-opacity duration-300 hover:opacity-100',
         )}
       >
         {menuData.map(({ id, heading, headingLevel }: MenuData) => (
           <li
             className={clsx(
-              headingLevel === 3 ? 'pl-4' : '',
+              headingLevel === 3 && 'pl-4',
               currentId === id
                 ? 'font-bold text-mallard-400 before:absolute before:-left-4 before:h-full before:w-[1px] before:bg-mallard-400 before:content-[""]'
                 : 'text-main-gray',
-              'relative cursor-pointer',
+              'relative cursor-pointer leading-4',
             )}
             key={id}
           >

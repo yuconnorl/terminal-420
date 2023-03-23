@@ -5,8 +5,6 @@ type CustomLinkProps = React.ComponentPropsWithoutRef<'a'>
 const CustomLink = (props: CustomLinkProps) => {
   const href = props.href
 
-  console.log(props)
-
   if (href?.startsWith('/')) {
     return (
       <Link href={href} {...props}>

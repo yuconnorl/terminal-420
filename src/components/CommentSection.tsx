@@ -19,7 +19,6 @@ const CommentSection = () => (
       inputPosition='top'
       theme='dark'
       lang='en'
-      loading='lazy'
     />
   </div>
 )
