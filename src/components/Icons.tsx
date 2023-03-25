@@ -52,6 +52,7 @@ export const TrashBin = () => (
     className='h-8 w-8'
     viewBox='0 0 32 32'
     stroke='currentColor'
+    strokeOpacity={0.7}
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
@@ -80,6 +81,7 @@ export const OuterSpace = () => (
     viewBox='0 0 32 32'
     fill='none'
     stroke='currentColor'
+    strokeOpacity={0.7}
     xmlns='http://www.w3.org/2000/svg'
   >
     <g id='earth'>
@@ -100,6 +102,7 @@ export const PartyRocket = () => (
     viewBox='0 0 32 32'
     fill='none'
     stroke='currentColor'
+    strokeOpacity={0.7}
     xmlns='http://www.w3.org/2000/svg'
   >
     <g>

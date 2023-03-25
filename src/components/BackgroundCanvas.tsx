@@ -12,7 +12,7 @@ import {
   Runner,
   Vector,
 } from 'matter-js'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import {
   BODIES_DIMENSION,
@@ -21,12 +21,12 @@ import {
   WALL_THICKNESS,
 } from '@/configs/matter'
 
-import { OuterSpace, PartyRocket, TrashBin } from './Icons'
+import Tooltip from './Tooltip'
 
 const BackgroundCanvas = () => {
   const scene = useRef<HTMLDivElement>(null)
   const engine = useRef<Engine>(Engine.create())
-  const isSpaceMode = useRef<boolean>(false)
+  const [isSpaceMode, setIsSpaceMode] = useState<boolean>(false)
 
   function onPartyStart(number: number) {
     for (let i = 0; i < number; i++) {
@@ -46,7 +46,7 @@ const BackgroundCanvas = () => {
 
   function onRemoveClick() {
     engine.current.gravity = { x: 0, y: 1, scale: 0.001 }
-    isSpaceMode.current = false
+    setIsSpaceMode(false)
     if (!engine.current) return
     const ground = Composite.allComposites(
       engine.current.world,
@@ -66,14 +66,14 @@ const BackgroundCanvas = () => {
   }
 
   function toggleOuterSpaceMode() {
-    if (!isSpaceMode.current) {
+    if (!isSpaceMode) {
       engine.current.gravity = { x: 0, y: 0, scale: 0.001 }
-      isSpaceMode.current = !isSpaceMode.current
+      setIsSpaceMode((state) => !state)
       return
     }
 
     engine.current.gravity = { x: 0, y: 1, scale: 0.001 }
-    isSpaceMode.current = !isSpaceMode.current
+    setIsSpaceMode((state) => !state)
   }
 
   useEffect(() => {
@@ -353,16 +353,25 @@ const BackgroundCanvas = () => {
   return (
     <>
       <div ref={scene} className='absolute top-0 left-0 z-0 h-full w-full' />
-      <div className='absolute right-4 top-4 flex flex-col gap-4'>
-        <button className='' type='button' onClick={onRemoveClick}>
-          <TrashBin />
-        </button>
-        <button className='' type='button' onClick={toggleOuterSpaceMode}>
-          <OuterSpace />
-        </button>
-        <button className='' type='button' onClick={() => onPartyStart(50)}>
-          <PartyRocket />
-        </button>
+      <div className='absolute right-0 top-2 flex flex-col gap-3 md:right-4 md:top-4 md:gap-4'>
+        <Tooltip
+          title='Remove'
+          icon='TrashBin'
+          onClick={onRemoveClick}
+          isSpaceMode
+        />
+        <Tooltip
+          title='Space Mode'
+          icon='OuterSpace'
+          onClick={toggleOuterSpaceMode}
+          isSpaceMode={isSpaceMode}
+        />
+        <Tooltip
+          title='Party Time'
+          icon='PartyRocket'
+          onClick={() => onPartyStart(50)}
+          isSpaceMode
+        />
       </div>
     </>
   )

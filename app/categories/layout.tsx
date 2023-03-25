@@ -4,7 +4,6 @@ import { usePathname } from 'next/navigation'
 import { useMemo } from 'react'
 
 import CategoryLink from '@/components/CategoryLink'
-import Footer from '@/components/Footer'
 
 interface initialValue {
   [categories: string]: number
@@ -34,6 +33,7 @@ const Categories = ({ children }: { children: React.ReactNode }) => {
           {Object.entries(categories).map(([category, count]) => (
             <CategoryLink
               isActive={category === currentRoute}
+              isTitle
               key={category}
               category={category}
               count={count}
@@ -42,7 +42,6 @@ const Categories = ({ children }: { children: React.ReactNode }) => {
         </div>
       </div>
       {children}
-      <Footer />
     </div>
   )
 }

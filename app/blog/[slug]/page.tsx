@@ -5,7 +5,6 @@ import Balancer from 'react-wrap-balancer'
 
 import CategoryLink from '@/components/CategoryLink'
 import CommentSection from '@/components/CommentSection'
-import Footer from '@/components/Footer'
 import Mdx from '@/components/Mdx'
 import SidePanel from '@/components/SidePanel'
 
@@ -41,7 +40,6 @@ export default async function Blog({ params }: Props) {
         </div>
         <Mdx code={post?.body.code} />
         <CommentSection />
-        <Footer />
       </section>
       <SidePanel rawPost={post?.body.raw} />
     </div>

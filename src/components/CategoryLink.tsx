@@ -7,16 +7,18 @@ interface Props {
   category?: string
   count?: number
   isActive?: boolean
+  isTitle?: boolean
 }
 
-const CategoryLink = ({ category, count, isActive }: Props) => (
+const CategoryLink = ({ category, count, isActive, isTitle }: Props) => (
   <Link
     href={`categories/${category ? category : ''}`}
     className={clsx(
-      'flex items-center rounded-xl border border-mallard-50 border-opacity-30 px-2 py-[1px] font-mono text-sm tracking-tight transition-all',
+      'flex items-center rounded-xl border border-mallard-50 border-opacity-30 px-2 py-[1px] font-mono tracking-tight transition-all',
       isActive
         ? 'bg-mallard-50 text-main-black'
         : 'text-main-gray hover:border-main-black hover:bg-mallard-50 hover:bg-opacity-50 hover:text-main-black',
+      isTitle ? 'text-sm' : ' text-xs',
     )}
   >
     <Folder />

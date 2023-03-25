@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 
+import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 
 // loading local fonts
@@ -54,17 +55,18 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html
       lang='zh-TW'
       className={clsx(
-        'scrollbar h-full w-full bg-main-black font-sans-serif text-mallard-50 3xl:text-[20px]',
+        'scrollbar w-full bg-main-black font-sans-serif text-mallard-50 3xl:text-[20px]',
         notoTc.variable,
         jetBrain.variable,
       )}
     >
-      <body className='h-full w-full py-4 px-6 antialiased'>
-        <div className='flex h-full w-full flex-col'>
+      <body className='w-full antialiased'>
+        <div className='flex min-h-screen w-full flex-col justify-between'>
           <Header />
           <main className='relative flex w-full flex-[1_0_0] justify-center'>
             {children}
           </main>
+          <Footer />
         </div>
       </body>
     </html>

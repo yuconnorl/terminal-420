@@ -2,7 +2,6 @@ import { allPosts } from 'contentlayer/generated'
 import type { Metadata } from 'next'
 
 import ArticleCard from '@/components/ArticleCard'
-import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -25,7 +24,6 @@ const BlogPage = () => {
           <ArticleCard key={post.id} post={post} />
         ))}
       </div>
-      <Footer />
     </section>
   )
 }
