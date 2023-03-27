@@ -291,11 +291,6 @@ const BackgroundCanvas = () => {
     // TODO: clean me
     window.addEventListener('resize', handleResize)
 
-    Render.run(render)
-
-    // create runner
-    const runner = Runner.create()
-
     const createWordBody = (
       word: keyof typeof BODIES_DIMENSION,
       index: number,
@@ -369,6 +364,10 @@ const BackgroundCanvas = () => {
       frontConstraint,
     ])
 
+    Render.run(render)
+
+    // create runner
+    const runner = Runner.create()
     // run the engine
     Runner.run(runner, engine.current)
 
