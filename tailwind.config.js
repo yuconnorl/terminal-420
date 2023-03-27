@@ -33,6 +33,7 @@ const config = {
       },
       backgroundImage: {
         'link-arrow': "url('/images/link-arrow.svg')",
+        'galaxy': "url('/images/galaxy.webp')",
       }
     },
   },

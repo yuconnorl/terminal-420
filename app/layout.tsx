@@ -53,6 +53,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html
+      id='root'
       lang='zh-TW'
       className={clsx(
         'scrollbar w-full bg-main-black font-sans-serif text-mallard-50 3xl:text-[20px]',
@@ -63,7 +64,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className='w-full antialiased'>
         <div className='flex min-h-screen w-full flex-col justify-between'>
           <Header />
-          <main className='relative flex w-full flex-[1_0_0] justify-center'>
+          <main className='relative flex w-full flex-[1_0_0] justify-center px-4'>
             {children}
           </main>
           <Footer />

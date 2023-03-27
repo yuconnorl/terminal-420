@@ -24,3 +24,17 @@ export const removeSensorOptions = {
     lineWidth: 3,
   },
 }
+
+export const COLOR_ARRAY = [
+  '#f5f8f1',
+  '#cfdebc',
+  '#abc68f',
+  '#81a760',
+  '#486e2d',
+  '#2e461f',
+  '#A7CD2C',
+  '#BADA5F',
+  '#CEE891',
+  '#E1F5C4',
+  '#50C8C6',
+]

@@ -1,7 +1,9 @@
 'use client'
+import clsx from 'clsx'
 import {
   Bodies,
   Body,
+  Common,
   Composite,
   Constraint,
   Engine,
@@ -12,14 +14,16 @@ import {
   Runner,
   Vector,
 } from 'matter-js'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import {
   BODIES_DIMENSION,
+  COLOR_ARRAY,
   RATIO_CONSTANT,
   removeSensorOptions,
   WALL_THICKNESS,
 } from '@/configs/matter'
+import { getAngle } from '@/helper/angle'
 
 import Tooltip from './Tooltip'
 
@@ -30,6 +34,8 @@ const BackgroundCanvas = () => {
 
   function onPartyStart(number: number) {
     for (let i = 0; i < number; i++) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const color: string = Common.choose(COLOR_ARRAY)
       const circle = Bodies.circle(
         scene.current ? scene.current.clientWidth / 2 : window.innerWidth / 2,
         10,
@@ -38,6 +44,11 @@ const BackgroundCanvas = () => {
           friction: 0.3,
           frictionAir: 0.0001,
           restitution: 0.8,
+          render: {
+            fillStyle: color,
+            strokeStyle: color,
+            lineWidth: 1,
+          },
         },
       )
       Composite.add(engine.current.world, circle)
@@ -45,8 +56,11 @@ const BackgroundCanvas = () => {
   }
 
   function onRemoveClick() {
+    // turn space mode off
     engine.current.gravity = { x: 0, y: 1, scale: 0.001 }
     setIsSpaceMode(false)
+    document.removeEventListener('mousemove', onMousemove)
+
     if (!engine.current) return
     const ground = Composite.allComposites(
       engine.current.world,
@@ -65,15 +79,33 @@ const BackgroundCanvas = () => {
     )
   }
 
+  const onMousemove = useCallback((e: MouseEvent) => {
+    const html = document.getElementById('root')
+    const mouseX = e.clientX
+    const mouseY = e.clientY
+    const centerX = scene.current
+      ? scene.current.clientWidth / 2
+      : window.innerWidth
+    const centerY = scene.current
+      ? scene.current.clientHeight / 2
+      : window.innerHeight
+
+    const angleDeg = getAngle(mouseX, mouseY, centerX, centerY)
+    if (!html) return
+    html.style.filter = `hue-rotate(${angleDeg}deg)`
+  }, [])
+
   function toggleOuterSpaceMode() {
     if (!isSpaceMode) {
       engine.current.gravity = { x: 0, y: 0, scale: 0.001 }
-      setIsSpaceMode((state) => !state)
+      setIsSpaceMode(true)
+      document.addEventListener('mousemove', onMousemove)
       return
     }
 
     engine.current.gravity = { x: 0, y: 1, scale: 0.001 }
-    setIsSpaceMode((state) => !state)
+    setIsSpaceMode(false)
+    document.removeEventListener('mousemove', onMousemove)
   }
 
   useEffect(() => {
@@ -204,7 +236,7 @@ const BackgroundCanvas = () => {
       }
     })
 
-    // make ground return after all elements removed
+    // After removing all elements, return the ground
     Events.on(engine.current.world, 'afterRemove', () => {
       if (engine.current.world.bodies.length) return
       Body.setPosition(
@@ -342,18 +374,28 @@ const BackgroundCanvas = () => {
 
     return () => {
       window.removeEventListener('resize', handleResize)
+      window.removeEventListener('mousemove', onMousemove)
+
       Render.stop(render)
       Composite.clear(engine.current.world, true)
       Engine.clear(engine.current)
       render.canvas.remove()
       render.textures = {}
     }
-  }, [])
+  }, [onMousemove])
 
   return (
     <>
-      <div ref={scene} className='absolute top-0 left-0 z-0 h-full w-full' />
-      <div className='absolute right-0 top-2 flex flex-col gap-3 md:right-4 md:top-4 md:gap-4'>
+      <div
+        ref={scene}
+        className={clsx(
+          'absolute top-0 left-0 z-0 h-full w-full bg-galaxy',
+          isSpaceMode
+            ? 'bg-cover bg-center bg-no-repeat'
+            : 'bg-[length:0px_0px]',
+        )}
+      />
+      <div className='absolute right-2 top-2 flex flex-col gap-3 md:right-4 md:top-4 md:gap-4'>
         <Tooltip
           title='Remove'
           icon='TrashBin'

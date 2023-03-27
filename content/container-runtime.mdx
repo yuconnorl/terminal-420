@@ -22,7 +22,7 @@ aka Container manager，用來啟動、停止或刪除 container。
 
 ## Low-level and High-level Container Runtimes
 
-當提到 container runtimes 時，幾個名字可能會出現在腦中，像是 runC、LXC、lmctfy、Docker (containerd), rkt, cri-o 等等，但其實這些工具都各自為了不同的情境而生、也時做了不同的功能。像是 containerd 及 cri-o 使用 runC 來運行一個 container，但另外還實作了 higher level 的功能，像是 image 管理及 APIs。對比於 runC 的 low-level implementation，這些 high-level 的功能包含
+當提到 container runtimes 時，幾個名字可能會出現在腦中，像是 runC、LXC、lmctfy、Docker (containerd), rkt, cri-o 等等，但其實這些工具都各自為了不同的情境而生、也實作了不同的功能。像是 containerd 及 cri-o 使用 runC 來運行一個 container，但另外還實作了 higher level 的功能，像是 image 管理及 APIs。對比於 runC 的 low-level implementation，這些 high-level 的功能包含
 
 - image transport
 - image management

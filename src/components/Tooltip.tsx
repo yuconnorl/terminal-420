@@ -2,11 +2,11 @@ import clsx from 'clsx'
 
 import { OuterSpace, PartyRocket, TrashBin } from './Icons'
 
-// FIXME: types
 interface Props {
   title: string
   icon: keyof typeof IconMap
   isSpaceMode?: boolean
+  onClick: (event: React.MouseEvent<HTMLElement>) => void
 }
 
 const IconMap = {
@@ -28,7 +28,7 @@ const Tooltip = ({ title, onClick, icon, isSpaceMode }: Props) => {
       >
         <Icon />
       </div>
-      <div className='tooltip invisible absolute top-1/2 -translate-x-full -translate-y-1/2 whitespace-nowrap rounded-lg bg-[#6D6D6D] px-2 py-1 text-xs text-mallard-100 group-hover:visible'>
+      <div className='tooltip invisible absolute top-1/2 -translate-x-full -translate-y-1/2 whitespace-nowrap rounded-lg bg-[#383838] px-2 pb-[2px] pt-1 text-xs text-mallard-100 group-hover:visible'>
         <p>{title}</p>
       </div>
     </button>
