@@ -52,11 +52,11 @@ const Navbar = () => {
 
   return (
     <div className='mx-auto flex items-center justify-between'>
-      <Link href={'/'}>
+      <Link href='/'>
         <Image
           ref={logoRef}
           alt='logo'
-          src='images/logo.svg'
+          src='/images/logo.svg'
           width={32}
           height={32}
         />
@@ -66,7 +66,7 @@ const Navbar = () => {
           <div
             key={name}
             className={clsx(
-              'font-mono transition-opacity',
+              'font-mono tracking-tight transition-opacity',
               rootPath === path
                 ? 'text-mallard-400'
                 : 'text-main-gray hover:opacity-70',

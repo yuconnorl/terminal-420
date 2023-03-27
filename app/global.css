@@ -89,3 +89,8 @@ body::-webkit-scrollbar {
 .sober {
   @apply after:absolute after:-right-4 after:top-4 after:h-[1px] after:w-3 after:rotate-[315deg] after:bg-slate-100 after:content-[""] before:absolute before:-left-4 before:top-4 before:h-[1px] before:w-3 before:rotate-[35deg] before:bg-slate-100 before:content-[""]
 }
+
+.main {
+  @apply h-fit;
+  min-height: 100svh;
+}
