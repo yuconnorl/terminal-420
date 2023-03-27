@@ -64,7 +64,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className='w-full antialiased'>
         <div className='flex min-h-screen w-full flex-col justify-between'>
           <Header />
-          <main className='relative flex w-full flex-[1_0_0] justify-center px-4'>
+          <main className='relative flex w-full flex-[1_0_0] justify-center px-6'>
             {children}
           </main>
           <Footer />
