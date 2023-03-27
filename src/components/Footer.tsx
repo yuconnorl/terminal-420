@@ -2,7 +2,12 @@
 
 import Image from 'next/image'
 
+import versionLogger from '@/helper/versionLogger'
+
 const Footer = () => {
+  // generate log
+  versionLogger('#81a760')
+
   const soberUp = () => {
     const html = document.getElementById('root')
     if (!html) return

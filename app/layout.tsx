@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     default: 'Terminal 420',
     template: '%s - Terminal 420',
   },
-  description: 'description',
+  description: 'This is terminal-420, have a safe flight!',
   robots: {
     index: true,
     follow: true,
