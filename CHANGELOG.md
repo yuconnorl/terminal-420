@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/yuconnorl/terminal-420/compare/v0.2.0...v0.2.1) (2023-03-28)
+
+
+### Features
+
+* adjusting README pic ([9cf08bb](https://github.com/yuconnorl/terminal-420/commit/9cf08bb32cd5671bcc1ccea8a958b45417348940))
+
+
+### Bug Fixes
+
+* replace min height of screen with fit-content ([bc9b3d7](https://github.com/yuconnorl/terminal-420/commit/bc9b3d7f93b0aebc04d6a26a979a792118f039ec))
+
 ## 0.2.0 (2023-03-27)
 
 
