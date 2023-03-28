@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'About pages',
+  description: "Hi! I'm Yu-Chun Liu, frontend developer based in Taiwan",
 }
 
 const AboutPage = () => {

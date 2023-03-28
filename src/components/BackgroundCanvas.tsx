@@ -263,9 +263,11 @@ const BackgroundCanvas = () => {
       render.canvas.width = scene.current
         ? scene.current.clientWidth
         : window.innerWidth
+
       render.canvas.height = scene.current
         ? scene.current.clientHeight
         : window.innerHeight
+
       Body.setPosition(
         ground,
         Vector.create(
@@ -281,6 +283,28 @@ const BackgroundCanvas = () => {
           scene.current
             ? scene.current.clientWidth + WALL_THICKNESS / 2
             : window.innerWidth + WALL_THICKNESS / 2,
+          scene.current
+            ? scene.current.clientHeight / 2
+            : window.innerHeight / 2,
+        ),
+      )
+
+      Body.setPosition(
+        removeSensor,
+        Vector.create(
+          scene.current ? scene.current.clientWidth / 2 : window.innerWidth / 2,
+          scene.current
+            ? scene.current.clientHeight + WALL_THICKNESS * 5
+            : window.innerHeight + WALL_THICKNESS * 5,
+        ),
+      )
+
+      Body.setPosition(
+        removeSensorRight,
+        Vector.create(
+          scene.current
+            ? scene.current.clientWidth + WALL_THICKNESS * 3
+            : window.innerWidth + WALL_THICKNESS * 3,
           scene.current
             ? scene.current.clientHeight / 2
             : window.innerHeight / 2,
