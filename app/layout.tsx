@@ -3,6 +3,7 @@ import './global.css'
 import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
+import Script from 'next/script'
 
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
@@ -61,6 +62,15 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         jetBrain.variable,
       )}
     >
+      <Script src='https://www.googletagmanager.com/gtag/js?id=G-SW8V57V39R' />
+      <Script id='google-analytics'>
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-SW8V57V39R');
+        `}
+      </Script>
       <body className='w-full antialiased'>
         <div className='main flex w-full flex-col justify-between'>
           <Header />
