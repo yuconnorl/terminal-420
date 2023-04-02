@@ -61,7 +61,7 @@ const Navbar = () => {
           height={32}
         />
       </Link>
-      <div className='flex gap-4'>
+      <div className='flex gap-4 md:gap-5'>
         {routes.map(({ name, path }) => (
           <div
             key={name}
