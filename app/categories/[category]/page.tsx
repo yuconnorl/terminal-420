@@ -13,7 +13,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `Category: ${params.category}`,
-    description: 'Category',
+    description: `All Posts of ${params.category}`,
   }
 }
 

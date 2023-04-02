@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { allPosts, type Post } from 'contentlayer/generated'
 import dayjs from 'dayjs'
+import type { Metadata } from 'next'
 import Balancer from 'react-wrap-balancer'
 
 import CategoryLink from '@/components/CategoryLink'
@@ -14,6 +15,16 @@ export async function generateStaticParams() {
   }))
 }
 
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const post: Post | undefined = allPosts.find(
+    (post) => post.slug === params.slug,
+  )
+
+  return {
+    title: post?.title,
+    description: post?.description,
+  }
+}
 interface Props {
   params: Post
 }
