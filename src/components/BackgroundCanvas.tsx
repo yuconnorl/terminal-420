@@ -32,10 +32,37 @@ const BackgroundCanvas = () => {
   const engine = useRef<Engine>(Engine.create())
   const [isSpaceMode, setIsSpaceMode] = useState<boolean>(false)
 
+  const resizeRatio = !scene.current
+    ? 0.5 * RATIO_CONSTANT
+    : scene.current.clientWidth > 1200
+    ? (scene.current.clientWidth / 2560) * RATIO_CONSTANT
+    : (scene.current.clientWidth / 1380) * RATIO_CONSTANT
+
   function onPartyStart(number: number) {
+    // FIXME: ratio
     for (let i = 0; i < number; i++) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const color: string = Common.choose(COLOR_ARRAY)
+      const random = Math.random() * 1.33
+      const weedBody = Bodies.rectangle(
+        scene.current ? scene.current.clientWidth / 2 : window.innerWidth / 2,
+        30,
+        (300 * resizeRatio - 20) * random,
+        (300 * resizeRatio - 20) * random,
+        {
+          friction: 0.3,
+          frictionAir: 0.001,
+          restitution: 0.8,
+          label: 'weed',
+          render: {
+            sprite: {
+              texture: `images/weedpng.png`,
+              xScale: resizeRatio * random,
+              yScale: resizeRatio * random,
+            },
+          },
+        },
+      )
       const circle = Bodies.circle(
         scene.current ? scene.current.clientWidth / 2 : window.innerWidth / 2,
         10,
@@ -51,6 +78,9 @@ const BackgroundCanvas = () => {
           },
         },
       )
+      if (random < 0.5) {
+        Composite.add(engine.current.world, weedBody)
+      }
       Composite.add(engine.current.world, circle)
     }
   }
@@ -352,11 +382,11 @@ const BackgroundCanvas = () => {
       'taiwan',
       'hand',
     ]
-    const resizeRatio = !scene.current
-      ? 0.5 * RATIO_CONSTANT
-      : scene.current.clientWidth > 1200
-      ? (scene.current.clientWidth / 2560) * RATIO_CONSTANT
-      : (scene.current.clientWidth / 1380) * RATIO_CONSTANT
+    // const resizeRatio = !scene.current
+    //   ? 0.5 * RATIO_CONSTANT
+    //   : scene.current.clientWidth > 1200
+    //   ? (scene.current.clientWidth / 2560) * RATIO_CONSTANT
+    //   : (scene.current.clientWidth / 1380) * RATIO_CONSTANT
 
     words.forEach((word, index) => {
       const wordBody = createWordBody(word, index, resizeRatio)
@@ -434,7 +464,7 @@ const BackgroundCanvas = () => {
         <Tooltip
           title='Party Time'
           icon='PartyRocket'
-          onClick={() => onPartyStart(50)}
+          onClick={() => onPartyStart(10)}
           isSpaceMode
         />
       </div>
