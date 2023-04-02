@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/yuconnorl/terminal-420/compare/v0.2.2...v0.3.0) (2023-04-02)
+
+
+### Features
+
+* adding error page, adjusting metadata ([9dc1382](https://github.com/yuconnorl/terminal-420/commit/9dc138224d0056080610f4c503bfed9e87dbc382))
+* adding little weeed bro to canvas ([2af8502](https://github.com/yuconnorl/terminal-420/commit/2af85028aeaebe6681feb199277426ecdc3014bb))
+
+
+### Bug Fixes
+
+* adjusting next config for GA ([7e7e7ac](https://github.com/yuconnorl/terminal-420/commit/7e7e7ac6056487aee4e3fa89d0ab9bb4f1e81f20))
+
 ### [0.2.2](https://github.com/yuconnorl/terminal-420/compare/v0.2.0...v0.2.2) (2023-03-28)
 
 
