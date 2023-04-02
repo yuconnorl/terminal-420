@@ -1,18 +1,21 @@
 'use client'
 
 import Image from 'next/image'
+import { useEffect } from 'react'
 
 import versionLogger from '@/helper/versionLogger'
 
 const Footer = () => {
   // generate log
-  versionLogger('#81a760')
-
   const soberUp = () => {
     const html = document.getElementById('root')
     if (!html) return
     html.style.filter = `hue-rotate(${0}deg)`
   }
+
+  useEffect(() => {
+    versionLogger('#81a760')
+  }, [])
 
   return (
     <footer className='relative mb-6 mt-4 flex justify-center text-sm'>
@@ -25,6 +28,7 @@ const Footer = () => {
         onClick={soberUp}
       >
         <Image
+          priority
           className='relative h-16 w-16 transition-all md:h-max md:w-max md:group-hover:-translate-y-3 md:group-hover:rotate-6'
           src='/images/weed.svg'
           width={100}
