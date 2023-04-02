@@ -62,19 +62,23 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         jetBrain.variable,
       )}
     >
-      <Script src='https://www.googletagmanager.com/gtag/js?id=G-SW8V57V39R' />
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${
+          process.env.GA_TRACKING_ID || ''
+        }`}
+      />
       <Script id='google-analytics'>
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-SW8V57V39R');
+          gtag('config', ${process.env.GA_TRACKING_ID || ''});
         `}
       </Script>
       <body className='w-full antialiased'>
         <div className='main flex w-full flex-col justify-between'>
           <Header />
-          <main className='relative flex w-full flex-[1_0_0] justify-center px-6'>
+          <main className='relative flex w-full flex-[1_0_0] justify-center px-8'>
             {children}
           </main>
           <Footer />
