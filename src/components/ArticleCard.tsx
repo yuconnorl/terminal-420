@@ -16,7 +16,7 @@ const ArticleCard = ({ post }: Props) => {
     >
       <Link
         href={post.url}
-        className='flex flex-col text-xl tracking-tight transition-opacity hover:opacity-60 lg:text-2xl'
+        className='flex flex-col text-2xl tracking-tight transition-opacity hover:opacity-60 lg:text-3xl'
       >
         <p>{post.title}</p>
       </Link>

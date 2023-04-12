@@ -57,7 +57,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       id='root'
       lang='zh-TW'
       className={clsx(
-        'scrollbar w-full bg-main-black font-sans-serif text-mallard-50 3xl:text-[20px]',
+        'scrollbar w-full bg-main-black font-sans-serif text-mallard-50 3xl:text-[1.1rem]',
         notoTc.variable,
         jetBrain.variable,
       )}
