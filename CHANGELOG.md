@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.4](https://github.com/yuconnorl/terminal-420/compare/v0.3.3...v0.3.4) (2023-04-12)
+
+
+### Features
+
+* adjust prose theme ([cb1e959](https://github.com/yuconnorl/terminal-420/commit/cb1e95992d1fb9f1d9e5c9715c53917bca5062f4))
+
 ### [0.3.3](https://github.com/yuconnorl/terminal-420/compare/v0.3.2...v0.3.3) (2023-04-12)
 
 
