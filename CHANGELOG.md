@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.3](https://github.com/yuconnorl/terminal-420/compare/v0.3.2...v0.3.3) (2023-04-12)
+
+
+### Features
+
+* update alt ([ce8b280](https://github.com/yuconnorl/terminal-420/commit/ce8b280bd2928960b85b0fc86d5b5571d0ae69d2))
+
 ### [0.3.2](https://github.com/yuconnorl/terminal-420/compare/v0.3.1...v0.3.2) (2023-04-12)
 
 
