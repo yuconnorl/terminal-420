@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.2](https://github.com/yuconnorl/terminal-420/compare/v0.3.1...v0.3.2) (2023-04-12)
+
+
+### Features
+
+* new post, adding custom image and caption ([e70ba66](https://github.com/yuconnorl/terminal-420/commit/e70ba660ca7d1e2fdef259dbc9d099861d109630))
+* update captions ([ade27c5](https://github.com/yuconnorl/terminal-420/commit/ade27c5f3c1dca8da1cacffe8e6b3b94afda24c2))
+
 ### [0.3.1](https://github.com/yuconnorl/terminal-420/compare/v0.3.0...v0.3.1) (2023-04-02)
 
 
