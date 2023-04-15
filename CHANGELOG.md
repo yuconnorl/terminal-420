@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/yuconnorl/terminal-420/compare/v0.3.4...v0.4.0) (2023-04-15)
+
+
+### Features
+
+* add admonition ([d383db8](https://github.com/yuconnorl/terminal-420/commit/d383db86f0181e6eb661e728bf89bf8cbd433eda))
+
 ### [0.3.4](https://github.com/yuconnorl/terminal-420/compare/v0.3.3...v0.3.4) (2023-04-12)
 
 
