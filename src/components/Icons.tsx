@@ -141,6 +141,58 @@ export const Folder = () => (
   </svg>
 )
 
-// export const Logo = () => (
+export const Info = () => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    fill='none'
+    viewBox='0 0 24 24'
+    strokeWidth={1.3}
+    stroke='currentColor'
+    className='h-5 w-5'
+  >
+    <path
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      d='M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z'
+    />
+  </svg>
+)
 
-// )
+export const Warn = () => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    fill='none'
+    viewBox='0 0 24 24'
+    strokeWidth={1.3}
+    stroke='currentColor'
+    className='h-5 w-5'
+  >
+    <path
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      d='M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z'
+    />
+  </svg>
+)
+
+export const Danger = () => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    fill='none'
+    viewBox='0 0 24 24'
+    strokeWidth={1.3}
+    stroke='currentColor'
+    className='h-5 w-5'
+  >
+    <path
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      d='M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z'
+    />
+    <path
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      d='M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z'
+    />
+  </svg>
+)

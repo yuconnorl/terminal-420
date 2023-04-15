@@ -3,6 +3,8 @@ import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import remarkGfm from 'remark-gfm';
+import { visit } from "unist-util-visit"
+import remarkDirective from "remark-directive"
 
 export const Post = defineDocumentType(() => ({
   name: 'Post',
@@ -80,11 +82,33 @@ const autolinkHeadingsOptions = {
   },
 }
 
+// plugin for adding admonition
+function remarkAdmonition() {
+  return (tree) => {
+    visit(tree, (node) => {
+      if (
+        node.type === "textDirective" ||
+        node.type === "leafDirective" ||
+        node.type === "containerDirective"
+      ) {
+        if (!["info", "warn", "danger"].includes(node.attributes?.class)) return
+
+        const title = node.name
+        const data = node.data || (node.data = {})
+        const types = node.attributes?.class
+        node.type = "mdxJsxFlowElement"
+        node.name = "Admonition"
+        node.attributes = [{ type: "mdxJsxAttribute", name: "title", value: title }, { type: "mdxJsxAttribute", name: "types", value: types }]
+      }
+    })
+  }
+}
+
 export default makeSource({
   contentDirPath: 'content',
   documentTypes: [Post],
   mdx: { 
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [remarkGfm, remarkDirective, remarkAdmonition],
     rehypePlugins: [
       rehypeSlug,
       [rehypeAutolinkHeadings, autolinkHeadingsOptions],

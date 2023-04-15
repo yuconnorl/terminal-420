@@ -22,6 +22,9 @@ const config = {
           800: '#2e461f',
           900: '#233618',
         },
+        info: '#12b59d',
+        warn: '#f59e0b',
+        danger: '#e53e3e',
       },
       gridTemplateColumns: {
         'section': '1fr minmax(700px,3fr) 1fr',

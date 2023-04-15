@@ -93,7 +93,7 @@ const SidePanel = ({ rawPost = '' }) => {
             className={clsx(
               headingLevel === 3 && 'pl-4',
               currentId === id
-                ? 'font-bold text-mallard-400 before:absolute before:-left-4 before:h-full before:w-[1px] before:bg-mallard-400 before:content-[""]'
+                ? 'text-mallard-50 before:absolute before:-left-4 before:h-full before:w-[1px] before:bg-mallard-400 before:content-[""]'
                 : 'text-main-gray',
               'relative cursor-pointer leading-4',
             )}
