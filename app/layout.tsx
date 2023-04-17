@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     siteName: 'Terminal 420',
     images: [
       {
-        url: '/images/og.jpeg',
+        url: 'https://terminal-420.space/images/og.jpeg',
         width: 1200,
         height: 630,
       },
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Terminal 420',
     description: 'Terminal 420, a place of cannabis and web tech',
-    images: '/images/og.jpeg',
+    images: 'https://terminal-420.space/images/og.jpeg',
   },
   robots: {
     index: true,
