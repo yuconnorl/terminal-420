@@ -19,7 +19,7 @@ const themes = {
   info: 'bg-info/10 text-info border-info/50',
   warn: 'bg-warn/10 text-warn border-warn/50',
   danger: 'bg-danger/10 text-danger border-danger/50',
-  weed: 'overflow-hidden relative bg-weed/10 bg-auto bg-repeat text-mallard-50 border-weed/50 py-8 before:content-[""] before:absolute before:top-0 before:left-0 before:w-[200%] before:h-[200%] before:bg-weed-boi before:animate-weed before:translate-x-[0%]',
+  weed: 'overflow-hidden relative bg-weed/10 bg-auto bg-repeat text-mallard-50 border-weed/50 py-8 before:content-[""] before:absolute before:bg-[length:12%] before:top-0 before:left-0 before:w-[200%] before:h-[200%] before:bg-weed-boi before:animate-weed before:translate-x-[0%]',
 }
 
 const Admonition = ({ title, children, types }: Props) => {
