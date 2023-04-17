@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://github.com/yuconnorl/terminal-420/compare/v0.4.0...v0.4.1) (2023-04-17)
+
+
+### Features
+
+* add weed type for admonition ([989e8a8](https://github.com/yuconnorl/terminal-420/commit/989e8a86aa953456714f51ab606e48454cb62e86))
+* update metadata and meta image ([358f5b8](https://github.com/yuconnorl/terminal-420/commit/358f5b8902da5fd7ad9893e658a19dd3350a3530))
+
 ## [0.4.0](https://github.com/yuconnorl/terminal-420/compare/v0.3.4...v0.4.0) (2023-04-15)
 
 
