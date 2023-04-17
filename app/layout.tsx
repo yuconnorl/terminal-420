@@ -54,8 +54,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Terminal 420',
-    description:
-      'Welcome to Terminal 420, a blog that focuses on web-related tech and cannabis research. Pull up a chair and have fun!',
+    description: 'Terminal 420, a place of cannabis and web tech',
     images: '/images/og.jpeg',
   },
   robots: {
