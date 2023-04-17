@@ -25,6 +25,7 @@ const config = {
         info: '#12b59d',
         warn: '#f59e0b',
         danger: '#e53e3e',
+        weed: '#5b9764',
       },
       gridTemplateColumns: {
         'section': '1fr minmax(700px,3fr) 1fr',
@@ -37,6 +38,7 @@ const config = {
       backgroundImage: {
         'link-arrow': "url('/images/link-arrow.svg')",
         'galaxy': "url('/images/galaxy.webp')",
+        'weed-boi': "url('/images/weed-boi-bg.png')",
       },
       typography: ({ theme }) => ({
         'only-dark': {
@@ -76,6 +78,16 @@ const config = {
           },
         },
       }),
+      keyframes: {
+        weed: {
+          '0%': { transform: 'translate(-10%, 0%)'},
+          '50%': { transform: 'translate(-40.5%, -40.5%)' },
+          '100%': { transform: 'translate(-10%, 0%)'},
+        }
+      },
+      animation: {
+        'weed': 'weed 30s ease-in-out infinite',
+      }
     },
   },
   future: {

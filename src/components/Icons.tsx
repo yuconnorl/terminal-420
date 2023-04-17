@@ -141,6 +141,50 @@ export const Folder = () => (
   </svg>
 )
 
+// export const Chevron = () => (
+//   <svg
+//     xmlns='http://www.w3.org/2000/svg'
+//     fill='none'
+//     viewBox='0 0 24 24'
+//     strokeWidth={2}
+//     stroke='currentColor'
+//     className='h-4 w-4'
+//   >
+//     <path
+//       strokeLinecap='round'
+//       strokeLinejoin='round'
+//       d='M4.5 15.75l7.5-7.5 7.5 7.5'
+//     />
+//   </svg>
+// )
+
+export const Chevron = ({ className }: { className: string }) => (
+  <svg
+    className={`h-5 w-5 ${className}`}
+    viewBox='0 0 24 24'
+    stroke='currentColor'
+    xmlns='http://www.w3.org/2000/svg'
+    strokeWidth={1.5}
+  >
+    <g id='Frame'>
+      <path
+        className='transition-transform'
+        id='down'
+        d='M8 14.5L11.75 18.25L15.5 14.5'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        className='transition-transform'
+        id='up'
+        d='M8.25 8.75L12 5L15.75 8.75'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+    </g>
+  </svg>
+)
+
 export const Info = () => (
   <svg
     xmlns='http://www.w3.org/2000/svg'

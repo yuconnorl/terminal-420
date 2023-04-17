@@ -2,6 +2,8 @@
 import clsx from 'clsx'
 import GithubSlugger from 'github-slugger'
 import { useEffect, useRef, useState } from 'react'
+
+import { Chevron } from '@/components/Icons'
 interface MenuData {
   id: string
   heading: string
@@ -9,7 +11,8 @@ interface MenuData {
 }
 
 const SidePanel = ({ rawPost = '' }) => {
-  const [isScrolling, setIsScrolling] = useState(false)
+  const [isScrolling, setIsScrolling] = useState<boolean>(false)
+  const [isAsideOpen, setIsAsideOpen] = useState<boolean>(true)
   const timeout = useRef<NodeJS.Timeout | null>(null)
   const slugger = new GithubSlugger()
   const observer = useRef<IntersectionObserver | null>(null)
@@ -54,6 +57,10 @@ const SidePanel = ({ rawPost = '' }) => {
     timeout.current = timeoutId
   }
 
+  function onChevronClick() {
+    setIsAsideOpen((state) => !state)
+  }
+
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)
 
@@ -81,11 +88,19 @@ const SidePanel = ({ rawPost = '' }) => {
       ref={sidebar}
       className={clsx('sticky top-16 hidden h-fit flex-col xl:flex')}
     >
-      <p className='mb-3 font-mono font-bold'>On this page</p>
+      <div className='mb-3 flex pl-2'>
+        <p className='font-mono text-sm font-bold'>On this page</p>
+        <div className='relative top-[1px] ml-1' onClick={onChevronClick}>
+          <Chevron
+            className={clsx(isAsideOpen && 'rotate-45', 'transition-transform')}
+          />
+        </div>
+      </div>
       <ul
         className={clsx(
           isScrolling ? 'opacity-100' : 'opacity-20',
-          'flex flex-col gap-3 border-l border-l-[#2c2c2c59] pl-4 transition-opacity duration-300 hover:opacity-100',
+          isAsideOpen ? ' visible' : 'invisible',
+          'flex flex-col gap-[0.65rem] border-l border-l-[#2c2c2c59] pl-4 transition-opacity duration-300 hover:opacity-100',
         )}
       >
         {menuData.map(({ id, heading, headingLevel }: MenuData) => (
