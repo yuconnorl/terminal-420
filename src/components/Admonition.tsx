@@ -9,13 +9,13 @@ interface Props {
   types: Status
 }
 
-const IconMap = {
+const iconMap = {
   info: Info,
   warn: Warn,
   danger: Danger,
 }
 
-const ADMONITION_STYLES = {
+const themes = {
   info: 'bg-info/10 text-info border-info/50',
   warn: 'bg-warn/10 text-warn border-warn/50',
   danger: 'bg-danger/10 text-danger border-danger/50',
@@ -24,11 +24,11 @@ const ADMONITION_STYLES = {
 
 const Admonition = ({ title, children, types }: Props) => {
   const isTypeWeed = types === 'weed'
-  const color = ADMONITION_STYLES[types]
-  const Icon = isTypeWeed ? null : IconMap[types]
+  const theme = themes[types]
+  const Icon = isTypeWeed ? null : iconMap[types]
 
   return (
-    <div className={clsx('my-8 rounded-xl border py-4 px-5 text-sm', color)}>
+    <div className={clsx('my-8 rounded-xl border py-4 px-5 text-sm', theme)}>
       {title && (
         <div className='mb-3 flex gap-1'>
           {Icon && <Icon />}

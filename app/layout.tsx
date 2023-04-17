@@ -34,7 +34,30 @@ export const metadata: Metadata = {
     default: 'Terminal 420',
     template: '%s - Terminal 420',
   },
-  description: 'This is terminal-420, have a safe flight!',
+  description:
+    'Welcome to Terminal 420, a blog that focuses on web-related tech and cannabis research. Pull up a chair and have fun!',
+  openGraph: {
+    title: 'Terminal 420',
+    description: 'Terminal 420, a place of cannabis and web tech',
+    url: 'https://terminal-420.space',
+    siteName: 'Terminal 420',
+    images: [
+      {
+        url: '/images/og.jpeg',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'zh-Tw',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Terminal 420',
+    description:
+      'Welcome to Terminal 420, a blog that focuses on web-related tech and cannabis research. Pull up a chair and have fun!',
+    images: '/images/og.jpeg',
+  },
   robots: {
     index: true,
     follow: true,
