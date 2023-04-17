@@ -2,15 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --info: '#3182ce';
-  --info-text: 'rgb(18, 181, 157)';
-  --info-border: 'rgba(18, 181, 157, .5)';
-
-  --warn: '#e6a700';
-  --danger: '#e53e3e';
-}
-
 html, body {
   scrollbar-gutter: stable;
 }
@@ -72,6 +63,14 @@ svg:hover #fire {
   opacity: 1
 }
 
+svg:hover #up {
+  transform: translateY(-8%);
+}
+
+svg:hover #down {
+  transform: translateY(8%);
+}
+
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   background-color: #1d1b1b;
@@ -102,8 +101,4 @@ body::-webkit-scrollbar {
 .main {
   @apply h-fit;
   min-height: 100svh;
-}
-
-.admonition-info {
-  
 }

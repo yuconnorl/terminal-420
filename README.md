@@ -1,8 +1,8 @@
 # Terminal-420
 
-![Terminal 420](public/images/Terminal420.png)
+![Terminal 420](public/images/og.jpeg)
 
-Personal website and blog
+Terminal 420, a blog that focuses on web-related tech and cannabis research.
 
 ## Tech Stack
 

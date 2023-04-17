@@ -91,9 +91,8 @@ function remarkAdmonition() {
         node.type === "leafDirective" ||
         node.type === "containerDirective"
       ) {
-        if (!["info", "warn", "danger"].includes(node.attributes?.class)) return
-
-        const title = node.name
+        if (!["info", "warn", "danger", "weed"].includes(node.attributes?.class)) return
+        const title = node.name === 'skip-title' ? '' : node.name
         const data = node.data || (node.data = {})
         const types = node.attributes?.class
         node.type = "mdxJsxFlowElement"
