@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: post?.title,
       description: post?.description,
-      url: `https://terminal-420.space/${post ? post?.slug : ''}`,
+      url: `https://terminal-420.space/blog/${post ? post?.slug : ''}`,
       publishedTime: post?.date,
       type: 'article',
     },
