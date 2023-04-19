@@ -1,6 +1,5 @@
 'use client'
 import { allPosts } from 'contentlayer/generated'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useMemo } from 'react'
 
@@ -43,14 +42,6 @@ const Categories = ({ children }: { children: React.ReactNode }) => {
         </div>
       </div>
       {children}
-      <Image
-        src='/images/boi.png'
-        className='fixed left-1/2 top-1/2'
-        width={1080 / 2}
-        height={1051 / 2}
-        alt='weed boi'
-        priority
-      />
     </div>
   )
 }
