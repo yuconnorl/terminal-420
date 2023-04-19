@@ -27,10 +27,12 @@ export default async function Blog({ params }: Props) {
   )
 
   return (
-    <div className='flex w-full flex-col divide-y divide-mallard-50 divide-opacity-10'>
-      {filterPosts.map((post) => (
-        <PostTitle key={post.id} post={post} />
-      ))}
-    </div>
+    <>
+      <div className='flex w-full flex-col divide-y divide-mallard-50 divide-opacity-10'>
+        {filterPosts.map((post) => (
+          <PostTitle key={post.id} post={post} />
+        ))}
+      </div>
+    </>
   )
 }

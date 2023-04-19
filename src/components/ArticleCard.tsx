@@ -12,7 +12,7 @@ const ArticleCard = ({ post }: Props) => {
   return (
     <article
       key={post.id}
-      className='flex flex-col pt-5 pb-9 font-mono tracking-tight'
+      className='flex flex-col pb-9 pt-7 font-mono tracking-tight'
     >
       <Link
         href={post.url}
