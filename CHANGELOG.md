@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.2](https://github.com/yuconnorl/terminal-420/compare/v0.4.1...v0.4.2) (2023-04-19)
+
+
+### Features
+
+* add sitemap and robots, update about page ([bc68ad2](https://github.com/yuconnorl/terminal-420/commit/bc68ad2ac8b32aaa3ea39f31566b11d7b3db0428))
+* change admonition type weed background size ([07a72f4](https://github.com/yuconnorl/terminal-420/commit/07a72f4b011b0b7faedb9ccf0e92dd827d7e3d6e))
+* update og and twitter metadata ([dae806b](https://github.com/yuconnorl/terminal-420/commit/dae806b60fd88027ca6c7b7b85091c4231bdc107))
+
+
+### Bug Fixes
+
+* fix wrong route in metadata, adding placeholde image ([2e53bdd](https://github.com/yuconnorl/terminal-420/commit/2e53bddcd1a4c02b7c58aac6c0b96387071b0c73))
+* update image dimensions ([531735f](https://github.com/yuconnorl/terminal-420/commit/531735f27e0499f7f2b3751d49405e741ea1e733))
+* update og image url ([de73ac5](https://github.com/yuconnorl/terminal-420/commit/de73ac55d29844a47f00862611bdb4d613dd074a))
+
 ### [0.4.1](https://github.com/yuconnorl/terminal-420/compare/v0.4.0...v0.4.1) (2023-04-17)
 
 
