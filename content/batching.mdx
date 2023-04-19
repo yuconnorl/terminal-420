@@ -8,7 +8,7 @@ category: Frontend
 
 > Batching is when React **groups multiple state updates into a single re-render** for better performance.
 
-舉例來說，以下的例子中，就算我們在一個click事件中改變了兩次state的值，React 只會進行一次的 re-render，而這個將多次 re-render「捆」在一起更新的方法，稱為 *batching update*
+舉例來說，以下的例子中，就算我們在一個 click 事件中改變了兩次 state 的值，React 只會進行一次的 re-render，而這個將多次 re-render「捆」在一起更新的方法，稱為 *batching update*
 
 ```jsx
 function App() {
@@ -34,7 +34,7 @@ function App() {
 
 很顯然的，降低不必要的重新渲染會讓整體效能得到提升。此外，batching 也避免 component 渲染出「半成品」(half-finished) 的 state，避免意料之外的 bug 產生。
 
-在 React 18之前，React 只會打包正處於 browser event 的更新，如點擊事件，而不會打包在事件發生過後的更新，如 `Promise`、`setTimeout`、native event handlers。下面的例子在回傳 `Promise` 後呼叫 state 更新，此時 React 就不會將這兩次更新打包，而是 re-render 兩次
+在 [React](https://react.dev/blog/2022/03/29/react-v18) 18 之前，React 只會打包正處於 browser event 的更新，如點擊事件，而不會打包在事件發生過後的更新，如 `Promise`、`setTimeout`、native event handlers。下面的例子在回傳 `Promise` 後呼叫 state 更新，此時 React 就不會將這兩次更新打包，而是 re-render 兩次
 
 ```jsx
 function App() {

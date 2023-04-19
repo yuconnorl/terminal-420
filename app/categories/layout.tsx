@@ -1,5 +1,6 @@
 'use client'
 import { allPosts } from 'contentlayer/generated'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useMemo } from 'react'
 
@@ -24,7 +25,7 @@ const Categories = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   return (
-    <div className='w-full max-w-3xl pt-8 pb-24'>
+    <div className='w-full max-w-3xl pb-24 pt-8'>
       <div className='mb-7'>
         <h1 className='font-mono text-3xl font-bold tracking-tight md:text-4xl'>
           {title}
@@ -42,6 +43,14 @@ const Categories = ({ children }: { children: React.ReactNode }) => {
         </div>
       </div>
       {children}
+      <Image
+        src='/images/boi.png'
+        className='fixed left-1/2 top-1/2'
+        width={1080 / 2}
+        height={1051 / 2}
+        alt='weed boi'
+        priority
+      />
     </div>
   )
 }
