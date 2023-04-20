@@ -7,16 +7,16 @@ type Sitemap = Array<{
 }>;
 
 // eslint-disable-next-line @typescript-eslint/require-await
-async function generateSitemap(): Promise<Sitemap> {
+async function generateSitemap(): Promise<Sitemap> {  
   const postData = allPosts.map((post) => (
     {
       url: `https://terminal-420/blog/${post.slug}`,
-      lastModified: post.date
+      lastModified: dayjs(post.modifiedDate).format('YYYY-MM-DD').toString(),
     }
   ))
  
   const routeData = ['', '/blog', '/categories', '/about'].map((route) => {
-    const now = dayjs().format('YYYY-M-DD')     
+    const now = dayjs().format('YYYY-MM-DD')     
   
     return (
     {
