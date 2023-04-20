@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.3](https://github.com/yuconnorl/terminal-420/compare/v0.4.2...v0.4.3) (2023-04-20)
+
+
+### Features
+
+* update next version to canary for sitemap generation ([1c91c33](https://github.com/yuconnorl/terminal-420/commit/1c91c33beb88b7a20fe1ee19925293c68b39f59b))
+
+
+### Bug Fixes
+
+* remove unused Image ([14a8e49](https://github.com/yuconnorl/terminal-420/commit/14a8e49b50f7ebe202887860f3ff48fdeaeb27e7))
+
 ### [0.4.2](https://github.com/yuconnorl/terminal-420/compare/v0.4.1...v0.4.2) (2023-04-19)
 
 
