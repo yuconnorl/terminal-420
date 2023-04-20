@@ -20,7 +20,7 @@ async function generateSitemap(): Promise<Sitemap> {
   
     return (
     {
-      url: `https://terminal-420.sapce/blog${route}`,
+      url: `https://terminal-420.sapce${route}`,
       lastModified: now
     }
   )})
