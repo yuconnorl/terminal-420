@@ -1,7 +1,7 @@
 'use client'
 import { allPosts } from 'contentlayer/generated'
 import { usePathname } from 'next/navigation'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import CategoryLink from '@/components/CategoryLink'
 
@@ -11,8 +11,9 @@ interface initialValue {
 
 const Categories = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname()
-  const currentRoute = pathname && pathname.match(/\/([\w-]+)$/)?.[0].slice(1)
-  const title = currentRoute === 'categories' ? 'Categories' : currentRoute
+  const [title, setTitle] = useState('')
+  const currentRoute =
+    (pathname && pathname.match(/\/([\w-]+)$/)?.[0].slice(1)) || ''
   const categories = useMemo(() => {
     const initObj: initialValue = {}
     return allPosts
@@ -23,8 +24,22 @@ const Categories = ({ children }: { children: React.ReactNode }) => {
       }, initObj)
   }, [])
 
+  useEffect(() => {
+    if (currentRoute === 'categories') {
+      setTitle('Categories')
+      return
+    }
+    const filterTitle = Object.keys(categories).find(
+      (category) => category === currentRoute,
+    )
+      ? currentRoute
+      : 'Could not found this category 😢'
+
+    setTitle(filterTitle)
+  }, [currentRoute, categories])
+
   return (
-    <div className='w-full max-w-3xl pb-24 pt-8'>
+    <div className='w-full max-w-3xl pt-8'>
       <div className='mb-7'>
         <h1 className='font-mono text-3xl font-bold tracking-tight md:text-4xl'>
           {title}

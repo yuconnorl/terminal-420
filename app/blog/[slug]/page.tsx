@@ -2,6 +2,7 @@
 import { allPosts, type Post } from 'contentlayer/generated'
 import dayjs from 'dayjs'
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import Balancer from 'react-wrap-balancer'
 
 import CategoryLink from '@/components/CategoryLink'
@@ -47,8 +48,7 @@ export default async function Blog({ params }: Props) {
   )
 
   if (!post) {
-    // TODO: handle no post
-    console.log('no post')
+    notFound()
   }
 
   return (

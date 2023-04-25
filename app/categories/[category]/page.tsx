@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { allPosts, type Post } from 'contentlayer/generated'
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
 import PostTitle from '@/components/ArticleCard'
 
@@ -25,6 +26,10 @@ export default async function Blog({ params }: Props) {
   const filterPosts: Post[] | undefined = allPosts.filter(
     (post) => post.category === params.category,
   )
+
+  if (!filterPosts.length) {
+    notFound()
+  }
 
   return (
     <>
