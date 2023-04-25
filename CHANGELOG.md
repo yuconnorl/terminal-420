@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.4](https://github.com/yuconnorl/terminal-420/compare/v0.4.3...v0.4.4) (2023-04-25)
+
+
+### Features
+
+* add not found function ([567e033](https://github.com/yuconnorl/terminal-420/commit/567e033d8677252c0633b5c7e1be7dce7750e45a))
+* fix date format of sitemap, add modified date for posts ([30068e0](https://github.com/yuconnorl/terminal-420/commit/30068e0e8c2d8cab3b8ceab24d031384ac01423f))
+
+
+### Bug Fixes
+
+* fix wrong url of sitemap.ts ([bb459b3](https://github.com/yuconnorl/terminal-420/commit/bb459b3f7d71d6b7a6564ef96ae6aa233c5347bf))
+* fix wrong url of sitemap.ts again ([27b73a9](https://github.com/yuconnorl/terminal-420/commit/27b73a9e7e94d0cd16b0cd15b3d609d5773e4a66))
+* fix wrong url of sitemap.ts again and again ([5764f69](https://github.com/yuconnorl/terminal-420/commit/5764f693a2b38c237525a985e7a0603e3bc1b712))
+
 ### [0.4.3](https://github.com/yuconnorl/terminal-420/compare/v0.4.2...v0.4.3) (2023-04-20)
 
 
