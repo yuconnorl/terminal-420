@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.5](https://github.com/yuconnorl/terminal-420/compare/v0.4.4...v0.4.5) (2023-07-03)
+
+
+### Features
+
+* new posts - merge sort and singly linked list, adding latex syntax support ([c5c94a5](https://github.com/yuconnorl/terminal-420/commit/c5c94a517042137adab62979ab854ed357513269))
+* update README ([1fe3244](https://github.com/yuconnorl/terminal-420/commit/1fe32449cf3c75fb1779c6cd05846c8550e0b31c))
+
 ### [0.4.4](https://github.com/yuconnorl/terminal-420/compare/v0.4.3...v0.4.4) (2023-04-25)
 
 
