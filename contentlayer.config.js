@@ -99,7 +99,7 @@ function remarkAdmonition() {
         node.type === "leafDirective" ||
         node.type === "containerDirective"
       ) {
-        if (!["info", "warn", "danger", "weed"].includes(node.attributes?.class)) return
+        if (!["info", "warn", "danger", "weed", "mushroom"].includes(node.attributes?.class)) return
         const title = node.name === 'skip-title' ? '' : node.name
         const data = node.data || (node.data = {})
         const types = node.attributes?.class

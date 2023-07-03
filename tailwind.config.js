@@ -26,6 +26,7 @@ const config = {
         warn: '#f59e0b',
         danger: '#e53e3e',
         weed: '#5b9764',
+        mushroom: '#e293db',
       },
       gridTemplateColumns: {
         'section': '1fr minmax(700px,3fr) 1fr',
@@ -39,6 +40,7 @@ const config = {
         'link-arrow': "url('/images/link-arrow.svg')",
         'galaxy': "url('/images/galaxy.webp')",
         'weed-boi': "url('/images/weed-boi-bg.png')",
+        'mushroom-img': "url('/images/mushroom-bg.png')",
       },
       typography: ({ theme }) => ({
         'only-dark': {
