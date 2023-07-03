@@ -102,3 +102,7 @@ body::-webkit-scrollbar {
   @apply h-fit;
   min-height: 100svh;
 }
+
+.katex-html {
+  display: none;
+}

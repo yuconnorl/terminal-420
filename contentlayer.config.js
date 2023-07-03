@@ -5,6 +5,9 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import remarkGfm from 'remark-gfm';
 import { visit } from "unist-util-visit"
 import remarkDirective from "remark-directive"
+import rehypeKatex from 'rehype-katex'
+import remarkMath from 'remark-math'
+
 
 export const Post = defineDocumentType(() => ({
   name: 'Post',
@@ -112,11 +115,12 @@ export default makeSource({
   contentDirPath: 'content',
   documentTypes: [Post],
   mdx: { 
-    remarkPlugins: [remarkGfm, remarkDirective, remarkAdmonition],
+    remarkPlugins: [remarkGfm, remarkDirective, remarkAdmonition, remarkMath],
     rehypePlugins: [
       rehypeSlug,
       [rehypeAutolinkHeadings, autolinkHeadingsOptions],
       [rehypePrettyCode, prettyCodeOptions], 
+      rehypeKatex,
     ] 
   },
 })

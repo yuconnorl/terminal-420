@@ -1,0 +1,479 @@
+---
+title: Singly Linked List
+id: ff80f316-782a-459c-84ed-6964d330a2c9
+date: 2023-Jul-02 21:45:47+08:00
+description: index？太天真了，我可是 Linked List 啊!
+modifiedDate: 2023-Jul-03 15:55:05+08:00
+category: Algorithm
+---
+
+就像是 array 一般的資料結構，但沒有 index，只有資料的上下串連關係。所以如果我們想要找 linked list 裡面的第五個東西，就要先從第一個開始一路找到第五個。
+
+在 linked list 裡面的每一個 element 稱為 `node`。每個 node 除了儲存自己的資料之外，還會指向下一個 node。
+
+Linked list 的第一個 node 稱為 **head**，最後一個稱為 **tail**，並記錄 linked list 的長度，我們就知道整個 linked list 的樣貌了。
+
+Singly Linked List 顧名思義是單向的，所以只有上一個 node 指向下一個 node 的單向關係，而 Doubly Linked List 就有雙向的關係。
+
+> 比方說有兩棟超高的摩天大樓，Array 和 Linked List。Array 是有電梯的大樓，按按鈕就可以到達特定樓層；而 Linked list 只有樓梯可以爬，需要一步一腳印才能抵達該樓層。
+
+## Arrays vs linked lists
+
+### Arrays
+
+- 有 index，且具有順序
+- 插入或刪除某個值是很「expensive」的操作，因為在某個地方插入值，代表後面的 index 都要跟著變動
+
+### Linked lists
+
+- 沒有 index，取而代之的是 head 代表 list 的開頭、tail 代表 list 的結尾（事實上 tail 非必要）
+- node 和 node 之間用 pointer 相連，即前一個 node 會指向下一個 node
+- 因為沒有 index，代表沒辦法隨機存取值。如果要某一個值，必須要遍歷整個 list 直到到達該值
+- 插入或刪除某個值是很「cheap」的操作，在某個地方插入值不會影響 index（因為根本沒有 index，只有不停指向下一個 node）
+
+接下來，我們來用 JavaScript 實作一個 linked list 吧！
+
+## Singly Linked List 的各種操作
+
+- [push](#push)
+- [pop](#pop)
+- [shift](#shift)
+- [unshift](#unshift)
+- [get](#get)
+- [set](#set)
+- [insert](#insert)
+- [remove](#remove)
+- [reverse](#reverse)
+
+### Push
+
+`Push()` 會將 node 加到整個 list 的最後，成為新的 tail
+
+1. 這個 function 會接收一個 value
+2. 新增一個 node，其值為傳入 function 的 value
+3. 如果 list 中沒有 head，那麼將這個新增的 node 設為 head
+4. 如果 list 中已經有 head，那麼將目前的 tail 裡面的 next 指向新增的這個 node，並且將 tail 設為新增的這個 node
+5. 最後，將 list 的長度加一
+
+```js
+push(val) {
+	let newNode = new Node(val)
+	// if this is the first node of list
+	if (!this.head && !this.tail) {
+		this.head = newNode
+	} else {
+		this.tail.next = newNode
+	}
+
+	this.tail = newNode
+	this.length++
+	// return the list
+	return this
+}
+```
+
+### Pop
+
+`Pop()` 會將 list 目前的 tail 移除，並回傳移除的 node
+
+這聽起來好像很容易，不就是把目前的 tail 移除，然後把前一個 node 指定為新的 tail 就好了嗎？
+
+是...這樣說沒錯啦，但是我們的 pointer 是指向「下一個 node」，也就是說，我們無法透過 tail node 來取得前一個 node，只能從頭開始遍歷整個 list 直到最後一個 node，再把它指定為新的 tail
+
+```js
+pop() {
+  let popNode
+  if (!this.head) return
+  if (this.length === 1) {
+    popNode = this.head
+    this.head = null
+    this.tail = null
+  } else {
+    // store the tail for later return
+    popNode = this.tail
+    let current = this.head
+    let newTail = current
+
+    while (current.next) {
+      newTail = current
+      // move current forward
+      current = current.next
+    }
+    // set the tail to the second last item, and remove its next property
+    this.tail = newTail
+    this.tail.next = null
+  }
+
+  this.length--
+  return popNode
+}
+```
+
+### Shift
+
+`shift()` 會將 list 的第一個 node 移除
+
+```js
+shift() {
+  if (!this.head) return
+  let currentHead = this.head
+  if (this.length === 1) {
+    this.head = null
+    this.tail = null
+  } else {
+    this.head = currentHead.next
+  }
+
+  this.length--
+  return currentHead
+}
+```
+
+### Unshift
+
+`unshift()` 會新增一個 node，作為 list 新的 head
+
+```js
+unshift(val) {
+  let newNode = new Node(val)
+  if (!this.head) {
+    this.head = newNode
+    this.tail = newNode
+  }
+
+  newNode.next = this.head
+  // update the head of list
+  this.head = newNode
+  this.length++
+  return this
+}
+```
+
+上面的這段 code 看似沒什麼大問題，但在 list 沒有值的時候呼叫 `unshift()` 雖然會新增一個 node 並作為 head 以及 tail，但同時這個 node 的 next 也會指向自己，讓我們來調整一下
+
+```js
+unshift(val) {
+  let newNode = new Node(val)
+  if (!this.head) {
+    this.head = newNode
+    this.tail = newNode
+  } else {
+    newNode.next = this.head
+    // update the head of list
+    this.head = newNode
+  }
+
+  this.length++
+  return this
+}
+```
+
+這樣就成功解決上面提到的問題了！
+
+### Get
+
+`get()` 就像 array 取某一個 index 的值一樣，會回傳該位置的值
+
+```js
+get(index) {
+  if (index < 0 || index >= this.length) return null
+  let counter = 0
+  let currentNode = this.head
+  while (counter < index) {
+    counter++
+    currentNode = currentNode.next
+  }
+
+  return currentNode
+}
+```
+
+### Set
+
+`set()` 會改變特定 index 的值。`set()` function 會接收兩個參數，分別是 index 及要寫入的值。我們可以使用上面寫好的 `get()` 來幫助我們找到值
+
+```js
+set(index, val) {
+  let currentNode = this.get(index)
+
+  if (!currentNode) {
+    return false
+  } else {
+    currentNode.val = val
+    return true
+  }
+}
+```
+
+### Insert
+
+`insert()` 在特定 index 的位置插入某一個值。
+
+1. 如果 index 小於零或大於 list 的長度，`return false`
+2. 如果 index 等於 list 的長度，代表要在整個 list 的最後加入一個 node，等同於 `push` function
+3. 如果 index 等於零，代表要在整個 list 的最前面、也就是 head，加入一個 node，等同於 `unshift` function
+4. 如果上述條件都不符合，代表要插入的值在兩個 node 之間。使用 `get()` function 取回 `index-1` 的 node
+5. 將該 node 的 `next` 用變數存起來
+6. 以傳入的 val 建立新的 node
+7. 將 `get()` 方法取回的 node 的 `next` 設為新的 node
+8. 將插入的 node 指向原先在該位置的 node
+9. list length++
+10. return `true`
+
+```js
+insert(index, val) {
+  // if index less than zero or greater than the length of list, return false
+  if (index < 0 || index > this.length) return false
+
+  // if index equal to the length of list, which means to insert node at the end of list, which is push
+  if (index === this.length) return !!this.push(val)
+
+  // if index equal to zero, which means to insert node at the start of list, which is unshift
+  if (index === 0) return !!this.unshift(val)
+
+  // get the item before our index
+  let currentNode = this.get(index - 1)
+  let temp = currentNode.next
+  let newNode = new Node(val)
+  currentNode.next = newNode
+  newNode.next = temp
+  this.length++
+  return true
+}
+```
+
+### Remove
+
+移除位於該 index 上的 node
+
+```js
+remove(index) {
+  if (index < 0 || index > this.length) return
+  if (index === 0) this.shift()
+  if (index === this.length - 1) this.pop()
+
+  let prev = this.get(index - 1)
+  let removeNode = prev.next
+  // point the previous node to next next
+  prev.next = removeNode.next
+  this.length--
+  return removeNode
+}
+```
+
+### Reverse
+
+反轉整個 linked list，前提是要在原地完成（in-place）反轉，不能做一個 copy 然後回傳。
+
+首先先將 head 及 tail 對調，由於反轉過後 head 和 tail 會互換，而 head 的前一個 node 為 null，因此將 `prev` 變數的初始值設為 `null`。
+
+用 `node` 變數儲存最一開始的 head，`prev` 變數儲存反轉後 node 應該要指向的新 node，`next` 變數將原先 node 的 `next` 保存，避免在交換的時候被覆蓋。
+
+```js
+reverse() {
+  // swap head and tail
+  let node = this.head
+  this.head = this.tail
+  this.tail = node
+  
+  // 將 prev 初始設為 null，因為 tail (head 的反轉) 應該要指向 null
+  let prev = null
+  let next
+
+  for (let i = 0; i < this.length; i++) {
+    // 把當前 node 的 next node 以 next 變數存起來
+    next = node.next
+    // 把當前 node 指向前一個 node，也就是 prev 變數存的 node
+    node.next = prev
+    // 此時的 node 變成下一個 node 應該要指向的前一個 node，因此把 prev 的值改為當前 node
+    prev = node
+    // 繼續處理下一個 node，也就是最一開始儲存的 next
+    node = next
+  }
+
+  return this
+}
+```
+
+`reverse` 的 code 看起來很簡單，但想的過程挺燒腦的 🫠
+
+## Whole singly linked list
+
+把上面所有的方法綜合起來，就是完整的 singly linked lists 了 🎉！
+
+```js
+class Node {
+  constructor(val) {
+    this.val = val
+    this.next = null
+  }
+}
+
+class SinglyLinkedList {
+  constructor() {
+    this.head = null
+    this.tail = null
+    this.length = 0
+  }
+
+  push(val) {
+    let newNode = new Node(val)
+    // if this is the first node of list
+    if (!this.head && !this.tail) {
+      this.head = newNode
+    } else {
+      this.tail.next = newNode
+    }
+
+    this.tail = newNode
+    this.length++
+    // return the list
+    return this
+  }
+
+  pop() {
+    let popNode
+    if (!this.head) return
+    if (this.length === 1) {
+      popNode = this.head
+      this.head = null
+      this.tail = null
+    } else {
+      // store the tail for later return
+      popNode = this.tail
+      let current = this.head
+      let newTail = current
+
+      while (current.next) {
+        newTail = current
+        // move current forward
+        current = current.next
+      }
+      // set the tail to the second last item, and remove its next property
+      this.tail = newTail
+      this.tail.next = null
+    }
+
+    this.length--
+    return popNode
+  }
+
+  shift() {
+    if (!this.head) return
+    let currentHead = this.head
+    if (this.length === 1) {
+      this.head = null
+      this.tail = null
+    } else {
+      this.head = currentHead.next
+    }
+
+    this.length--
+    return currentHead
+  }
+
+  unshift(val) {
+    let newNode = new Node(val)
+    if (!this.head) {
+      this.head = newNode
+      this.tail = newNode
+    }
+
+    newNode.next = this.head
+    // update the head of list
+    this.head = newNode
+    this.length++
+    return this
+  }
+
+  get(index) {
+    if (index < 0 || index >= this.length) return null
+    let counter = 0
+    let currentNode = this.head
+    while (counter < index) {
+      counter++
+      currentNode = currentNode.next
+    }
+
+    return currentNode
+  }
+
+  set(index, val) {
+    let currentNode = this.get(index)
+
+    if (!currentNode) {
+      return false
+    } else {
+      currentNode.val = val
+      return true
+    }
+  }
+
+  insert(index, val) {
+    // if index less than zero or greater than the length of list, return false
+    if (index < 0 || index > this.length) return false
+
+    // if index equal to the length of list, which means to insert node at the end of list, which is push
+    if (index === this.length) return !!this.push(val)
+
+    // if index equal to zero, which means to insert node at the start of list, which is unshift
+    if (index === 0) return !!this.unshift(val)
+
+    // get the item before our index
+    let currentNode = this.get(index - 1)
+    let temp = currentNode.next
+    let newNode = new Node(val)
+    currentNode.next = newNode
+    newNode.next = temp
+    this.length++
+    return true
+  }
+
+  remove(index) {
+    if (index < 0 || index > this.length) return
+    if (index === 0) this.shift()
+    if (index === this.length - 1) this.pop()
+
+    let prev = this.get(index - 1)
+    let removeNode = prev.next
+    // point the previous node to next next
+    prev.next = removeNode.next
+    this.length--
+    return removeNode
+  }
+
+  reverse() {
+    // swap head and tail
+    let node = this.head
+    this.head = this.tail
+    this.tail = node
+    
+    // 將 prev 初始設為 null，因為 tail (head 的反轉) 應該要指向 null
+    let prev = null
+    let next
+
+    for (let i = 0; i < this.length; i++) {
+      // 把當前 node 的 next node 以 next 變數存起來
+      next = node.next
+      // 把當前 node 指向前一個 node，也就是 prev 變數存的 node
+      node.next = prev
+      // 此時的 node 變成下一個 node 應該要指向的前一個 node，因此把 prev 的值改為當前 node
+      prev = node
+      // 繼續處理下一個 node，也就是最一開始儲存的 next
+      node = next
+    }
+
+    return this
+  }
+}
+```
+
+## Singly Linked Lists 的時間複雜度
+
+- 插入（Insertion）：singly linked list 在插入某個值之後不會影響其他值的 index，所以時間複雜度為 $O(1)$，而對 array 進行值的插入為 $O(n)$。
+- 移除（Removal）：把某個元素移除 singly linked list。如果移除的元素是 head，那麼時間複雜度為 $O(1)$，因為我們只需要把舊的 head 指向 null，並把 `head.next` 設為新的 head 即可；如果移除的元素是 tail，那就必須遍歷整個 linked list 直到 tail 的前一個 node，並把它指定為新的 tail，此時的時間複雜度為 $O(n)$。
+- 尋找（Searching）及取得（Acces）：要尋找某個特定的 node，必須要遍歷整個 list，因此時間複雜度為 $O(n)$。相比之下，array 取得某個特定 index 值的時間複雜度為 $O(1)$。
+
+## 總結
+
+Singly Linked Lists 沒有 index，所以和 array 相比之下，取得某個 index 之值的時間就遜色許多，但也因為如此，linked lists 在執行插入動作時就比 array 快上不少。

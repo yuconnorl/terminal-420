@@ -1,0 +1,108 @@
+---
+title: Merge Sort
+id: c4dcbd6a-9b3c-4aea-b758-d362aca466d1
+date: 2023-Jul-03 17:53:53+08:00
+description: Merge sort 是其中一個時間複雜度較佳的比較排序演算法。其核心概念若一個 array 中只有一個或零個元素時，代表已經排序完了！
+modifiedDate: 2023-Jul-03 23:10:07+08:00
+category: Algorithm
+---
+
+## 什麼是 Merge sort
+
+Merge sort 包含三個概念，把東西拆開（splitting up）、合起來（merging）及排序（sorting）。
+
+其核心概念是：如果一個 array 裡面只有一個或零個元素時，代表他已經排序完了！(怎麼聽起來有點像幹話)
+
+所以 merge sort 會逐次將 array 拆分成一個個包含 1 或 0 個元素的小 array，最後合起來變成一個新的排序好的 array。也因為這個拆分再合起來的的過程，所以 merge sort 又被稱為 *Divide-and-conquer algorithm*。
+
+## 以 JavaScript 實作 merge sort function
+
+首先，先實作將兩個 sort array 合在一起的 merge function，思路大概是：
+
+1. 創建一個 array
+2. 如果兩個 array 中還有元素沒有被迭代
+   - 若 arr1 的元素**小於** arr2 的元素，則將 arr1 的元素 push 至新的 array 中，並繼續檢查 arr1 中的下一個元素
+   - 若 arr1 的元素**大於** arr2 的元素，則將 arr2 的元素 push 至新的 array 中，並繼續檢查 arr2 中的下一個元素
+   - 若兩個 array 其中之一已經迭代完畢，則將另一個 array 中剩下的所有元素 push 到新的 array 中
+
+```javascript
+function merge(arr1, arr2) {
+   let res = []
+   let i = 0;
+   let j = 0;
+
+// consider the case that arr1[i] equal to arr2[j]
+   while (i < arr1.length && j < arr2.length) {
+      if (arr1[i] < arr2[j]) {
+         res.push(arr1[i])
+         i++
+      } else {
+         res.push(arr2[j])
+         j++
+      }
+   }
+   
+   // if one array exhaust to the end, deal with another one
+   if (i === arr1.length) {
+      res = [...res, ...arr2.slice(j)]
+   }
+
+   if (j === arr2.length) {
+      res = [...res, ...arr1.slice(i)]
+   }
+   
+   return res
+}
+```
+
+接著來完成剩下的功能，也就是把 array 不停地拆分，直到每個 array 中只有 1 或 0 個值，同時呼叫 `merge` function，就完成了 merge sort！程式碼如下：
+
+```javascript
+function merge(arr1, arr2) {
+   let res = []
+   let i = 0;
+   let j = 0;
+
+   while (i < arr1.length && j < arr2.length) {
+      if (arr1[i] < arr2[j]) {
+         res.push(arr1[i])
+         i++
+      } else {
+         res.push(arr2[j])
+         j++
+      }
+   }
+   if (i === arr1.length) {
+      res = [...res, ...arr2.slice(j)]
+   }
+   if (j === arr2.length) {
+      res = [...res, ...arr1.slice(i)]
+   }
+   return res
+}
+
+function mergeSort(arr) {
+   if (arr.length <= 1) return arr
+   let middlePoint = Math.floor(arr.length / 2) // find the middle point of array
+
+   let left = mergeSort(arr.slice(0, middlePoint)) // extract the left part of array, and call mergeSort recursively until the length of array equal to 1 or 0
+   let right = mergeSort(arr.slice(middlePoint)) // extract the right part of array, and call mergeSort recursively until the length of array equal to 1 or 0
+
+   return merge(left, right) // finally, merge the left and right together
+}
+```
+
+## Merge Sort 的時間複雜度為何
+
+Merge sort 的時間複雜度是 $O(n\,log\,n)$，且不會隨著資料的排序程度而有所改變，因為無論如何都是要拆分成一堆 array 最後再合起來。
+
+### 為什麼是 O(nlogn)？
+
+如果 array 當中有 8 個元素，那把他們拆分到最小需要 3 次，時間複雜度為 $O(log\,n)$。此外，每一次在合併之前的比較的時間複雜度為 $O(n)$，像是 8 個元素的 array 在最後一步會是兩個 4 個元素的 array 相互比較，此時大約需要 $O(n)$ 的比較。最後得到 Merge sort 的時間複雜度為 $O(n\,log\,n)$。
+
+##  Call Stacks of Merge sort
+
+如果將 merge sort 的每一步拆解開來，程式碼運行的順序大致上會長得像這樣（建議以新分頁開啟 gif 圖片）：
+
+<CustomImage src='/images/merge-sort/merge-sort-call-stack.gif' width={1920} height={1080} alt='Merge sorting' caption='Step by step merge sorting'/>
+

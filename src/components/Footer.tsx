@@ -6,7 +6,6 @@ import { useEffect } from 'react'
 import versionLogger from '@/helper/versionLogger'
 
 const Footer = () => {
-  // generate log
   const soberUp = () => {
     const html = document.getElementById('root')
     if (!html) return
@@ -24,7 +23,7 @@ const Footer = () => {
       </div>
       <button
         type='button'
-        className='group absolute right-4 bottom-0 flex animate-bounce md:animate-none'
+        className='group absolute bottom-0 right-4 flex animate-bounce md:animate-none'
         onClick={soberUp}
       >
         <Image
@@ -35,7 +34,7 @@ const Footer = () => {
           height={100}
           alt='weeeed boy'
         />
-        <div className='sober absolute -top-5 -left-5 h-fit rotate-[345deg] font-mono text-mallard-50 transition-opacity md:opacity-0 md:group-hover:opacity-100'>
+        <div className='sober absolute -left-5 -top-5 h-fit rotate-[345deg] font-mono text-mallard-50 transition-opacity md:opacity-0 md:group-hover:opacity-100'>
           <p>Sober Up!</p>
         </div>
       </button>

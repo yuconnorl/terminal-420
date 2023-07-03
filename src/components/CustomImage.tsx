@@ -22,6 +22,7 @@ const CustomImage = ({ src, caption, alt, width, height }: Props) => {
         height={height}
         placeholder='blur'
         blurDataURL={placeholder}
+        // unoptimized
       />
       {caption && (
         <figcaption className=' mt-3 border-l border-main-gray/40 pl-3 text-sm text-main-gray'>
