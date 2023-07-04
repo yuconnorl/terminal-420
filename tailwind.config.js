@@ -3,6 +3,10 @@ const config = {
   content: ['./app/**/*.{ts,tsx}', './src/**/*.{ts,tsx}', './content/**/*.mdx'],
   theme: {
     extend: {
+      fontSize: {
+        m: ['0.95rem', '1.4rem'],
+        "2.5xl": ['1.7rem', '2.1rem'],
+      },
       fontFamily: {
         'sans-serif': ['var(--font-noto)', 'sans-serif'],
         mono: ['var(--font-jet-brain)'],
@@ -26,7 +30,9 @@ const config = {
         warn: '#f59e0b',
         danger: '#e53e3e',
         weed: '#5b9764',
+        "weed-200": '#bedcbf',
         mushroom: '#e293db',
+        "mushroom-200": '#f6d8f5',
       },
       gridTemplateColumns: {
         'section': '1fr minmax(700px,3fr) 1fr',
@@ -82,13 +88,19 @@ const config = {
       }),
       keyframes: {
         weed: {
-          '0%': { transform: 'translate(-10%, 0%)'},
+          '0%': { transform: 'translate(-10%, -10%)'},
           '50%': { transform: 'translate(-40.5%, -40.5%)' },
-          '100%': { transform: 'translate(-10%, 0%)'},
+          '100%': { transform: 'translate(-10%, -10%)'},
+        },
+        mushroom: {
+          '0%': { transform: 'translate(-10%, -10%)'},
+          '50%': { transform: 'translate(-40.5%, -40.5%)' },
+          '100%': { transform: 'translate(-10%, -10%)'},
         }
       },
       animation: {
         'weed': 'weed 30s ease-in-out infinite',
+        'mushroom': 'mushroom 25s ease-in-out infinite',
       }
     },
   },

@@ -16,7 +16,7 @@ const ArticleCard = ({ post }: Props) => {
     >
       <Link
         href={post.url}
-        className='flex flex-col text-2xl tracking-tight transition-opacity hover:opacity-60 lg:text-3xl'
+        className='flex flex-col text-2xl tracking-tight transition-opacity hover:opacity-60 lg:text-2.5xl'
       >
         <p>{post.title}</p>
       </Link>
@@ -24,7 +24,7 @@ const ArticleCard = ({ post }: Props) => {
         <p>{dayjs(post.date).format('MMM DD, YYYY')}</p>
         <CategoryLink category={post?.category} />
       </div>
-      <div className='font-sans-serif tracking-wide text-main-gray'>
+      <div className='font-sans-serif text-m tracking-wide text-main-gray'>
         <p>{post.description}</p>
       </div>
     </article>
