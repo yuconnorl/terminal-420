@@ -53,7 +53,7 @@ export default async function Blog({ params }: Props) {
 
   return (
     <div className='3xl:max-w-8xl relative w-full max-w-6xl pt-8 font-sans-serif xl:grid xl:grid-cols-section xl:gap-7 2xl:gap-10 3xl:gap-12'>
-      <section className='col-start-2 mx-auto w-full'>
+      <section className='col-start-2 mx-auto w-full max-w-3xl'>
         <h1 className='font-mono text-2xl font-bold tracking-tight md:text-3xl'>
           <Balancer>{post?.title}</Balancer>
         </h1>
@@ -62,6 +62,12 @@ export default async function Blog({ params }: Props) {
           <CategoryLink category={post?.category} />
         </div>
         <Mdx code={post?.body.code} />
+        <div className='pb-2 pt-1 text-right italic text-mallard-100'>
+          <span>Last updated on</span>
+          <span className='ml-1.5 font-bold'>
+            {dayjs(post?.modifiedDate).format('MMM DD, YYYY')}
+          </span>
+        </div>
         <CommentSection />
       </section>
       <SidePanel rawPost={post?.body.raw} />

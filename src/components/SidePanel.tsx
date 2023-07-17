@@ -106,7 +106,7 @@ const SidePanel = ({ rawPost = '' }) => {
         {menuData.map(({ id, heading, headingLevel }: MenuData) => (
           <li
             className={clsx(
-              headingLevel === 3 && 'pl-4',
+              headingLevel === 3 && 'pl-2',
               currentId === id
                 ? 'text-mallard-50 before:absolute before:-left-4 before:h-full before:w-[1px] before:bg-mallard-400 before:content-[""]'
                 : 'text-main-gray',
