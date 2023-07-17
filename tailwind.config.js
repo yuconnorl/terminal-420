@@ -5,6 +5,7 @@ const config = {
     extend: {
       fontSize: {
         m: ['0.95rem', '1.4rem'],
+        "1.5xl": ['1.35rem', '1.85rem'],
         "2.5xl": ['1.7rem', '2.1rem'],
       },
       fontFamily: {

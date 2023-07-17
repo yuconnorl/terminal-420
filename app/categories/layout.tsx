@@ -41,10 +41,10 @@ const Categories = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className='w-full max-w-3xl pt-8'>
       <div className='mb-7'>
-        <h1 className='font-mono text-3xl font-bold tracking-tight md:text-4xl'>
+        <h1 className='font-mono text-3xl tracking-tight md:text-4xl'>
           {title}
         </h1>
-        <div className='flex flex-wrap gap-3 pt-4 md:gap-4'>
+        <div className='flex flex-wrap gap-2 pt-4 md:gap-4'>
           {Object.entries(categories).map(([category, count]) => (
             <CategoryLink
               isActive={category === currentRoute}
