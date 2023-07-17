@@ -44,9 +44,7 @@ const Admonition = ({ title, children, types }: Props) => {
           </span>
         </div>
       )}
-      <div
-        className={clsx('not-prose', isSpecialType && 'text-center text-base')}
-      >
+      <div className={clsx(isSpecialType && 'not-prose text-center text-base')}>
         {children}
       </div>
     </div>

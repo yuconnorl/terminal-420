@@ -62,6 +62,12 @@ export default async function Blog({ params }: Props) {
           <CategoryLink category={post?.category} />
         </div>
         <Mdx code={post?.body.code} />
+        <div className='pb-2 pt-1 text-right italic text-mallard-100'>
+          <span>Last updated on</span>
+          <span className='ml-1.5 font-bold'>
+            {dayjs(post?.modifiedDate).format('MMM DD, YYYY')}
+          </span>
+        </div>
         <CommentSection />
       </section>
       <SidePanel rawPost={post?.body.raw} />

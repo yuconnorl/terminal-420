@@ -9,9 +9,14 @@ export const metadata: Metadata = {
 }
 
 const Category = () => {
+  const sortPosts = allPosts.sort((a, b) => {
+    if (new Date(a.date) > new Date(b.date)) return -1
+    return 1
+  })
+
   return (
     <div className='flex w-full flex-col divide-y divide-mallard-50 divide-opacity-10'>
-      {allPosts.map((post) => (
+      {sortPosts.map((post) => (
         <ArticleCard key={post.id} post={post} />
       ))}
     </div>
