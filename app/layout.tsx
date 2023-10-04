@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     template: '%s - Terminal 420',
   },
   description:
-    'Welcome to Terminal 420, a blog that focuses on web-related tech and cannabis research. Pull up a chair and have fun!',
+    'Welcome to Terminal 420, a blog that focuses on web-related tech, cannabis and psychedelic research. Pull up a chair and have fun!',
   openGraph: {
     title: 'Terminal 420',
     description: 'Terminal 420, a place of cannabis and web tech',

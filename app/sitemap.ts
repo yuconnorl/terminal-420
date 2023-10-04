@@ -10,7 +10,7 @@ type Sitemap = Array<{
 async function generateSitemap(): Promise<Sitemap> {  
   const postData = allPosts.map((post) => (
     {
-      url: `https://terminal-420.space/blog/${post.slug}`,
+      url: `https://terminal-420.space/blog/${post.slug}/`,
       lastModified: dayjs(post.modifiedDate).format('YYYY-MM-DD').toString(),
     }
   ))
@@ -20,7 +20,7 @@ async function generateSitemap(): Promise<Sitemap> {
   
     return (
     {
-      url: `https://terminal-420.space${route}`,
+      url: `https://terminal-420.space${route}/`,
       lastModified: now
     }
   )})
