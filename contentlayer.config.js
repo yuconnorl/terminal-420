@@ -100,7 +100,15 @@ function remarkAdmonition() {
         node.type === "containerDirective"
       ) {
         if (!["info", "warn", "danger", "weed", "mushroom"].includes(node.attributes?.class)) return
-        const title = node.name === 'skip-title' ? '' : node.name
+
+        function titleFormatter(title) {
+          if (title === 'skip-title') return ''
+          if (!/_/.test(title)) return title
+          
+          return title.replace(/_/g, ' ');
+        }
+
+        const title = titleFormatter(node.name)
         const data = node.data || (node.data = {})
         const types = node.attributes?.class
         node.type = "mdxJsxFlowElement"
