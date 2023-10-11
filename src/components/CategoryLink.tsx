@@ -8,9 +8,16 @@ interface Props {
   count?: number
   isActive?: boolean
   isTitle?: boolean
+  categoryDisplayName: string
 }
 
-const CategoryLink = ({ category, count, isActive, isTitle }: Props) => (
+const CategoryLink = ({
+  category,
+  count,
+  isActive,
+  isTitle,
+  categoryDisplayName,
+}: Props) => (
   <Link
     href={`categories/${category ? category : ''}`}
     className={clsx(
@@ -23,7 +30,7 @@ const CategoryLink = ({ category, count, isActive, isTitle }: Props) => (
   >
     <Folder />
     <p className='ml-1'>
-      <span>{category}</span>
+      <span>{categoryDisplayName}</span>
       {count && <span className='ml-1'>{`(${count})`}</span>}
     </p>
   </Link>

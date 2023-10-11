@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 
 import CategoryLink from '@/components/CategoryLink'
+import { categoryTextFormatter } from '@/helper/text'
 
 interface initialValue {
   [categories: string]: number
@@ -33,9 +34,9 @@ const Categories = ({ children }: { children: React.ReactNode }) => {
       (category) => category === currentRoute,
     )
       ? currentRoute
-      : 'Could not found this category 😢'
+      : 'Category not found 😢'
 
-    setTitle(filterTitle)
+    setTitle(categoryTextFormatter(filterTitle))
   }, [currentRoute, categories])
 
   return (
@@ -47,6 +48,7 @@ const Categories = ({ children }: { children: React.ReactNode }) => {
         <div className='flex flex-wrap gap-2 pt-4 md:gap-4'>
           {Object.entries(categories).map(([category, count]) => (
             <CategoryLink
+              categoryDisplayName={categoryTextFormatter(category)}
               isActive={category === currentRoute}
               isTitle
               key={category}

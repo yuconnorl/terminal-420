@@ -59,7 +59,10 @@ export default async function Blog({ params }: Props) {
         </h1>
         <div className='mb-10 mt-4 flex items-center gap-4 font-mono text-sm tracking-tighter text-main-gray'>
           <p>{dayjs(post?.date).format('MMM DD, YYYY')}</p>
-          <CategoryLink category={post?.category} />
+          <CategoryLink
+            categoryDisplayName={post?.categoryDisplayName}
+            category={post?.category}
+          />
         </div>
         <Mdx code={post?.body.code} />
         <div className='pb-2 pt-1 text-right italic text-mallard-100'>

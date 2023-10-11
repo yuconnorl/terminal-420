@@ -7,7 +7,7 @@ import { visit } from "unist-util-visit"
 import remarkDirective from "remark-directive"
 import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
-
+import { categoryTextFormatter } from './src/helper/text'
 
 export const Post = defineDocumentType(() => ({
   name: 'Post',
@@ -53,6 +53,10 @@ export const Post = defineDocumentType(() => ({
     slug: {
       type: 'string',
       resolve: (doc) => doc._raw.flattenedPath,
+    },
+    categoryDisplayName: {
+      type: 'string',
+      resolve: (post) => categoryTextFormatter(post.category),
     },
   },
 }))

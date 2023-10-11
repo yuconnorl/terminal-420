@@ -22,7 +22,10 @@ const ArticleCard = ({ post }: Props) => {
       </Link>
       <div className='mb-4 mt-3 flex items-center gap-3 text-sm tracking-tighter text-main-gray md:mb-6 md:mt-4 md:gap-4'>
         <p>{dayjs(post.date).format('MMM DD, YYYY')}</p>
-        <CategoryLink category={post?.category} />
+        <CategoryLink
+          category={post?.category}
+          categoryDisplayName={post?.categoryDisplayName}
+        />
       </div>
       <div className='font-sans-serif text-m tracking-wide text-main-gray'>
         <p>{post.description}</p>

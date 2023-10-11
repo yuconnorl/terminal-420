@@ -14,6 +14,8 @@ const BlogPage = () => {
     return 1
   })
 
+  console.log(allPosts[0])
+
   return (
     <section className='w-full max-w-3xl pt-8'>
       <h1 className='mb-8 font-mono text-3xl font-bold md:text-4xl'>

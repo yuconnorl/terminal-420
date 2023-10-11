@@ -16,7 +16,7 @@ async function generateSitemap(): Promise<Sitemap> {
   ))
  
   const routeData = ['', '/blog', '/categories', '/about'].map((route) => {
-    const now = dayjs().format('YYYY-MM-DD')     
+    const now = dayjs().format('YYYY-MM-DD')
   
     return (
     {
@@ -25,7 +25,19 @@ async function generateSitemap(): Promise<Sitemap> {
     }
   )})
 
-  return [...postData, ...routeData]
+  const categories = [...new Set(allPosts.map((post) => post.category))]
+  const categoriesDate = Array.from(categories).map((category) => {
+    const now = dayjs().format('YYYY-MM-DD')
+
+    return (
+      {
+        url: `https://terminal-420.space/categories/${category}/`,
+        lastModified: now
+      }
+    )
+  })
+
+  return [...postData, ...routeData, ...categoriesDate]
 }
 
 export default generateSitemap
