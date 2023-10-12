@@ -19,7 +19,7 @@ const CategoryLink = ({
   categoryDisplayName,
 }: Props) => (
   <Link
-    href={`categories/${category ? category : ''}`}
+    href={`/categories/${category ? category : ''}`}
     className={clsx(
       'flex items-center rounded-xl border border-mallard-50 border-opacity-30 px-2 py-[1px] font-mono tracking-tight transition-all',
       isActive

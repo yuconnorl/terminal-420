@@ -30,6 +30,7 @@ const jetBrain = localFont({
 
 // built-in SEO helper
 export const metadata: Metadata = {
+  metadataBase: new URL('https://terminal-420.space'),
   title: {
     default: 'Terminal 420',
     template: '%s - Terminal 420',

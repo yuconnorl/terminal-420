@@ -1,4 +1,4 @@
-const { withContentlayer } = require('next-contentlayer');
+const { withContentlayer } = require('next-contentlayer')
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -6,18 +6,15 @@ const config = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
-  experimental: { 
-    appDir: true 
-  },
   async headers() {
     return [
       {
         source: '/(.*)',
         headers: securityHeaders,
       },
-    ];
+    ]
   },
-};
+}
 
 // https://nextjs.org/docs/advanced-features/security-headers
 // removed 'default-src 'self' vercel.live' for giscus
@@ -28,7 +25,7 @@ const ContentSecurityPolicy = `
     media-src 'none';
     connect-src *;
     font-src 'self';
-`;
+`
 
 const securityHeaders = [
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
@@ -66,6 +63,6 @@ const securityHeaders = [
     key: 'Permissions-Policy',
     value: 'camera=(), microphone=(), geolocation=()',
   },
-];
+]
 
-module.exports = withContentlayer(config);
+module.exports = withContentlayer(config)

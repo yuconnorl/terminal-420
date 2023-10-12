@@ -8,6 +8,7 @@ import Balancer from 'react-wrap-balancer'
 import CategoryLink from '@/components/CategoryLink'
 import CommentSection from '@/components/CommentSection'
 import Mdx from '@/components/Mdx'
+import PostPeekerButton from '@/components/PostPeekerButton'
 import SidePanel from '@/components/SidePanel'
 
 export async function generateStaticParams() {
@@ -47,6 +48,14 @@ export default async function Blog({ params }: Props) {
     (post) => post.slug === params.slug,
   )
 
+  const currentPostId = post?.id
+  const allPostWithoutCurrent = allPosts.filter(
+    (post) => post.id !== currentPostId,
+  )
+
+  const randomIndex = Math.floor(Math.random() * allPostWithoutCurrent.length)
+  const randomPost = allPostWithoutCurrent[randomIndex]
+
   if (!post) {
     notFound()
   }
@@ -65,12 +74,19 @@ export default async function Blog({ params }: Props) {
           />
         </div>
         <Mdx code={post?.body.code} />
-        <div className='pb-2 pt-1 text-right italic text-mallard-100'>
+        <div className='pb-4 pt-1 text-right italic text-mallard-100'>
           <span>Last updated on</span>
           <span className='ml-1.5 font-bold'>
             {dayjs(post?.modifiedDate).format('MMM DD, YYYY')}
           </span>
         </div>
+        {randomPost?.id && (
+          <PostPeekerButton
+            title={randomPost.title}
+            description={randomPost.description}
+            slug={randomPost.slug}
+          />
+        )}
         <CommentSection />
       </section>
       <SidePanel rawPost={post?.body.raw} />
