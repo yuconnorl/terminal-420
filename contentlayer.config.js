@@ -65,7 +65,7 @@ export const Post = defineDocumentType(() => ({
       resolve: (post) => categoryTextFormatter(post.category),
     },
     modifiedDate: {
-      type: 'date',
+      type: 'Date',
       resolve: (post) => {
         const lastModifiedDate = getLastModifiedDate(
           `./content/${post._raw.flattenedPath}.mdx`,
