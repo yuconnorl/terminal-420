@@ -116,6 +116,7 @@ const PostPeekerButton = ({ title, slug, description }: Props) => {
                 height={66}
                 alt='Eyes'
                 className='max-w-fit'
+                priority
               />
               <div className='absolute top-5 left-3 w-5 h-5' ref={leftEyetRef}>
                 <motion.div
