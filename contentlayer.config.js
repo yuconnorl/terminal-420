@@ -8,6 +8,7 @@ import remarkDirective from 'remark-directive'
 import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
 import { categoryTextFormatter } from './src/helper/text'
+
 import fs from 'fs'
 
 function getLastModifiedDate(filepath) {
@@ -147,11 +148,25 @@ function remarkAdmonition() {
   }
 }
 
+// function remarkHeading() {
+//   return (tree) => {
+//     visit(tree, (node) => {
+//       if (node.type === 'heading') console.log(node.children[0].value)
+//     })
+//   }
+// }
+
 export default makeSource({
   contentDirPath: 'content',
   documentTypes: [Post],
   mdx: {
-    remarkPlugins: [remarkGfm, remarkDirective, remarkAdmonition, remarkMath],
+    remarkPlugins: [
+      // remarkHeading,
+      remarkGfm,
+      remarkDirective,
+      remarkAdmonition,
+      remarkMath,
+    ],
     rehypePlugins: [
       rehypeSlug,
       [rehypeAutolinkHeadings, autolinkHeadingsOptions],
