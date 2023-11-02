@@ -36,6 +36,10 @@ html, body {
   @apply relative text-mallard-50
 }
 
+.inline-code {
+  @apply px-2
+}
+
 #lid,
 #rocket,
 #fire {
@@ -91,7 +95,7 @@ body::-webkit-scrollbar {
 }
 
 [data-rehype-pretty-code-fragment] > pre > code {
-  @apply bg-transparent;
+  @apply bg-transparent inline-block;
 }
 
 .sober {

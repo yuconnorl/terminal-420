@@ -8,6 +8,7 @@ import remarkDirective from 'remark-directive'
 import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
 import { categoryTextFormatter } from './src/helper/text'
+import addClasses from 'rehype-add-classes'
 
 import fs from 'fs'
 
@@ -148,30 +149,23 @@ function remarkAdmonition() {
   }
 }
 
-// function remarkHeading() {
-//   return (tree) => {
-//     visit(tree, (node) => {
-//       if (node.type === 'heading') console.log(node.children[0].value)
-//     })
-//   }
-// }
-
 export default makeSource({
   contentDirPath: 'content',
   documentTypes: [Post],
   mdx: {
-    remarkPlugins: [
-      // remarkHeading,
-      remarkGfm,
-      remarkDirective,
-      remarkAdmonition,
-      remarkMath,
-    ],
+    remarkPlugins: [remarkGfm, remarkDirective, remarkAdmonition, remarkMath],
     rehypePlugins: [
       rehypeSlug,
       [rehypeAutolinkHeadings, autolinkHeadingsOptions],
       [rehypePrettyCode, prettyCodeOptions],
       rehypeKatex,
+      [
+        addClasses,
+        {
+          code: 'inline-code',
+          pre: 'code-block',
+        },
+      ],
     ],
   },
 })
