@@ -1,0 +1,95 @@
+---
+title: Markdown to HTML
+description: Convert Markdown to HTML
+id: 97790ed3-12f5-44b9-ab43-221ac56be150
+date: 2023-Oct-18 17:43:58+08:00
+category: frontend
+---
+
+架好 blog 也有幾個月的時間，但說來慚愧，一直沒有好好搞懂專案裡面用到的 unified、remark 還有 rehype 之間的關係，以及這些傢伙究竟是如何把 Markdown（更精確地來說是 MDX）轉變成 HTML 的。所以今天，就讓我們來看看他們到底變了什麼把戲！
+
+首先，要從一切的根源 — unified 開始說起。
+
+## 什麼是 unified
+
+unified 是一整包由 plugins 所組成的生態系，用來產出及操縱 contents。這裡的 contents 指的是 Markdown、HTML 或純文字，這些可以用來表達或承裝某些資料的格式。
+
+而 [[unified]] 可以將這些不同格式的資料轉變成 syntax tree，再交給各式各樣的 plugins 進行轉換。在 [[unified]] 的使用情境下，我們不需要手動處理 syntax 該如何解析，而是如同生產線般，將一個個 plugins 給「串」起來。
+
+在 [[unified]] 當中有四個主要的生態系，分別用來解析及處理不同的資料格式：
+
+- [[remark]] — Markdown
+- [[rehype]] — HTML
+- [retext](https://unifiedjs.com/explore/project/retextjs/retext/) — Natural language
+- [redot](https://unifiedjs.com/explore/project/redotjs/redot/) — Graphviz
+
+而這些解析工具，則會依據不同的規範（specification），將資料解析成 syntax tree。這些 spec 分別為：
+
+- [unist](https://github.com/syntax-tree/unist) — Universal Syntax Tree
+- [mdast](https://github.com/syntax-tree/mdast) — Markdown Abstract Syntax Tree format
+- [hast](https://github.com/syntax-tree/hast) — HTML Abstract Syntax Tree format
+- [xast](https://github.com/syntax-tree/xast) — XML Abstract Syntax Tree format
+- [esast](https://github.com/syntax-tree/esast) — ECMAScript Abstract Syntax Tree format
+- [nlcst](https://github.com/syntax-tree/nlcst) — Natural Language Concrete Syntax Tree format
+
+因此，一個檔案會歷經以下的步驟：
+
+1. 解析（Parse）：無論檔案是 [[markdown]]、[[HyperText Markup Language (HTML)|HTML]] 或是純文字，都須經過解析並轉換成 Syntax Tree，才能被接下來的步驟使用。舉例來說，一份 [[markdown]] 檔案就會交由 [[remark]] 這個處理工具，並遵循 [mdast](https://github.com/syntax-tree/mdast) 這份規範，來將 [[markdown]] 解析成 Syntax Tree。
+2. 轉換（Transform）：在這個階段，使用者可以將各式各樣的 plugins，依照不同的順序轉換成心目中的模樣。也就是變魔術的階段，DO RE MI SO！
+3. Stringify：最後將調整過的資料 stringify，經由 Compiler 產出 [[markdown]]、[[HyperText Markup Language (HTML)|HTML]] 或是純文字。
+
+在 [[unified]] 的 [document](https://github.com/unifiedjs/unified) 中的圖，描繪了這些步驟：
+
+```text
+| ........................ process ........................... |
+| .......... parse ... | ... run ... | ... stringify ..........|
+
+          +--------+                     +----------+
+Input ->- | Parser | ->- Syntax Tree ->- | Compiler | ->- Output
+          +--------+          |          +----------+
+                              X
+                              |
+                       +--------------+
+                       | Transformers |
+                       +--------------+
+```
+
+此外，不單單只是將原有的資料格式加油添醋。在不同 plugin 的幫助下，[[unified]] 還可以將資料在不同格式間轉換。像是將 [[markdown]] 轉成 [[HyperText Markup Language (HTML)|HTML]]、或是將 [[HyperText Markup Language (HTML)|HTML]] 轉成純文字等等。轉換所依賴的 plugin 如下：
+
+- [`remark-rehype`](https://unifiedjs.com/explore/package/remark-rehype/) — Markdown to HTML
+- [`rehype-remark`](https://unifiedjs.com/explore/package/rehype-remark/) — HTML to Markdown
+- [`remark-retext`](https://unifiedjs.com/explore/package/remark-retext/) — Markdown to prose
+- [`rehype-retext`](https://unifiedjs.com/explore/package/rehype-retext/) — HTML to prose
+
+另外，加強版的 [[markdown]] — MDX，也是藉由 [[unified]] 及 [[remark]] 的力量才得以完成！（晨晨靠我力量.jpg）
+
+前面解析我明白，後面編譯我也了然，但中間的 syntax tree 是什麼？
+
+## Syntax tree？ 那是什麼
+
+Syntax tree 又稱為語法樹，通常是透過解析程式碼後生成。這種樹狀結構可以用來表示原先的程式碼，讓我們可以更方便地對程式碼進行分析及轉換等操作。
+
+依據細節的保留程度，Syntax tree 可以分為 Concrete Syntax Trees（CST, a.k.a. Parse Trees）及 Abstract Syntax Trees（AST, a.k.a. Syntax Trees） 兩種類型。
+
+Concrete Syntax Trees 會將程式碼的每個細節原封不動地保留下來，讓我們可以很清楚的了解 parser 如何看待我們的程式碼。而有時候我們可能不在乎這麼多細節，只需要知道程式碼大致上且不失精準的輪廓，此時 Abstract Syntax Trees 就派上用場了！ AST 會過濾掉一些對於程式碼分析無用的細節，像是句尾的分號，或是 JavaScript 的單引號/雙引號，留下程式碼的精華。
+
+而這些 Syntax tree 該如何表達，則需要一份統一的 spec 來規範，才能讓解析出來的 Syntax tree 在各個 plugins 之間暢行無阻。
+
+因此 [unifiedjs.com](https://unifiedjs.com/ "https://unifiedjs.com") 定義了一份規範，稱為 **unist（Universal Syntax Tree）**，並讓不同格式的資料基於這份規範，衍生出各自的 spec。
+
+## 各式各樣的 Specs
+
+[unist](https://github.com/syntax-tree/unist#syntax-tree) 本身並不是一個完整的規範，而是作為基底，讓其他規範們可以依循 unist，並各自衍生出符合不同語言特殊要求的 specs。像是 [hast (Hypertext Abstract Syntax Tree format)](https://github.com/syntax-tree/hast) 為 HTML spec、[nlcst (Natural Language Concrete Syntax Tree format)](https://github.com/syntax-tree/nlcst) 為自然語言的 spec、[mdast (Markdown Abstract Syntax Tree)](https://github.com/syntax-tree/mdast) 為 Markdown spec、以及 [xast (Extensible Abstract Syntax Tree format)](https://github.com/syntax-tree/xast) 為 XML 的規範。
+
+> 題外話，剛開始查找資料，看到一堆霧煞煞的縮寫，像是 hast、mdast、remark，而且每一個都有各自的 github repo，越往下點頭越大 😭
+
+接著，來瞧瞧 unist 裡面說了什麼
+
+## 初見 unist
+
+
+
+## Reference
+
+- [Introduction to unified](https://unifiedjs.com/learn/guide/introduction-to-unified/)
+- [Abstract vs. Concrete Syntax Trees](https://eli.thegreenplace.net/2009/02/16/abstract-vs-concrete-syntax-trees "Permalink to Abstract vs. Concrete Syntax Trees")
