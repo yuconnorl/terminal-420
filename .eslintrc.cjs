@@ -29,7 +29,7 @@ const config = {
     'simple-import-sort/exports': 'error', // sorting exports
     '@typescript-eslint/require-await': 'off',
   },
-  ignorePatterns: ['**/*.mdx', '**/*.js'],
+  ignorePatterns: ['**/*.mdx', '**/*.js', '*.mdx', 'src/components/ui/*.tsx'],
 }
 
 module.exports = config

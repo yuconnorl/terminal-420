@@ -153,7 +153,7 @@ export default makeSource({
   contentDirPath: 'content',
   documentTypes: [Post],
   mdx: {
-    remarkPlugins: [remarkGfm, remarkDirective, remarkAdmonition, remarkMath],
+    remarkPlugins: [remarkGfm, remarkDirective, remarkMath],
     rehypePlugins: [
       rehypeSlug,
       [rehypeAutolinkHeadings, autolinkHeadingsOptions],

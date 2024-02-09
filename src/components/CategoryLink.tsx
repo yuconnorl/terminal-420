@@ -21,7 +21,7 @@ const CategoryLink = ({
   <Link
     href={`/categories/${category ? category : ''}`}
     className={clsx(
-      'flex items-center rounded-xl border border-mallard-50 border-opacity-30 px-2 py-[1px] font-mono tracking-tight transition-all',
+      'flex items-center rounded-xl border border-mallard-50 border-opacity-30 px-2 py-[2px] font-mono tracking-tight transition-all',
       isActive
         ? 'bg-mallard-50 text-main-black'
         : 'text-main-gray hover:border-main-black hover:bg-mallard-50 hover:bg-opacity-50 hover:text-main-black',
@@ -29,10 +29,10 @@ const CategoryLink = ({
     )}
   >
     <Folder />
-    <p className='ml-1'>
+    <span className='ml-1 tracking-tight'>
       <span>{categoryDisplayName}</span>
       {count && <span className='ml-1'>{`(${count})`}</span>}
-    </p>
+    </span>
   </Link>
 )
 

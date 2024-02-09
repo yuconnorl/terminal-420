@@ -1,5 +1,7 @@
 import clsx from 'clsx'
 
+import { cn } from '@/lib/utils'
+
 import { Danger, Info, Warn } from './Icons'
 type Status = 'info' | 'warn' | 'danger' | 'weed' | 'mushroom'
 
@@ -31,20 +33,20 @@ const Admonition = ({ title, children, types }: Props) => {
 
   return (
     <div
-      className={clsx(
-        'my-8 rounded-xl border px-5 py-4 text-m leading-relaxed',
+      className={cn(
+        'my-8 rounded-xl border px-5 pb-2 pt-6 text-m leading-relaxed',
         theme,
       )}
     >
       {title && (
-        <div className='mb-3 flex gap-1'>
+        <div className='mb-3 flex gap-1 items-center'>
           {Icon && <Icon />}
           <span className='text-base font-bold capitalize tracking-wide'>
             {title}
           </span>
         </div>
       )}
-      <div className={clsx(isSpecialType && 'not-prose text-center text-base')}>
+      <div className={cn(isSpecialType && 'not-prose text-center text-base')}>
         {children}
       </div>
     </div>

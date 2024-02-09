@@ -2,6 +2,7 @@ import { useMDXComponent } from 'next-contentlayer/hooks'
 
 import Admonition from './Admonition'
 import Callout from './Callout'
+import CustomAccordion from './CustomAccordion'
 import CustomImage from './CustomImage'
 import CustomLink from './CustomLink'
 
@@ -10,6 +11,7 @@ const components = {
   Callout,
   CustomImage,
   Admonition,
+  CustomAccordion,
 }
 
 const Mdx = ({ code = '' }) => {

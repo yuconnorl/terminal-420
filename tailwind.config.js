@@ -5,8 +5,8 @@ const config = {
     extend: {
       fontSize: {
         m: ['0.95rem', '1.4rem'],
-        "1.5xl": ['1.35rem', '1.85rem'],
-        "2.5xl": ['1.7rem', '2.1rem'],
+        '1.5xl': ['1.35rem', '1.85rem'],
+        '2.5xl': ['1.7rem', '2.1rem'],
       },
       fontFamily: {
         'sans-serif': ['var(--font-noto)', 'sans-serif'],
@@ -31,12 +31,12 @@ const config = {
         warn: '#f59e0b',
         danger: '#e53e3e',
         weed: '#5b9764',
-        "weed-200": '#bedcbf',
+        'weed-200': '#bedcbf',
         mushroom: '#e293db',
-        "mushroom-200": '#f6d8f5',
+        'mushroom-200': '#f6d8f5',
       },
       gridTemplateColumns: {
-        'section': '1fr minmax(700px,3fr) 1fr',
+        section: '1fr minmax(700px,3fr) 1fr',
       },
       screens: {
         '2xl': '1536px',
@@ -45,7 +45,7 @@ const config = {
       },
       backgroundImage: {
         'link-arrow': "url('/images/link-arrow.svg')",
-        'galaxy': "url('/images/galaxy.webp')",
+        galaxy: "url('/images/galaxy.webp')",
         'weed-boi': "url('/images/weed-boi-bg.png')",
         'mushroom-img': "url('/images/mushroom-bg.png')",
       },
@@ -89,26 +89,36 @@ const config = {
       }),
       keyframes: {
         weed: {
-          '0%': { transform: 'translate(-10%, -10%)'},
+          '0%': { transform: 'translate(-10%, -10%)' },
           '50%': { transform: 'translate(-40.5%, -40.5%)' },
-          '100%': { transform: 'translate(-10%, -10%)'},
+          '100%': { transform: 'translate(-10%, -10%)' },
         },
         mushroom: {
-          '0%': { transform: 'translate(-10%, -10%)'},
+          '0%': { transform: 'translate(-10%, -10%)' },
           '50%': { transform: 'translate(-40.5%, -40.5%)' },
-          '100%': { transform: 'translate(-10%, -10%)'},
-        }
+          '100%': { transform: 'translate(-10%, -10%)' },
+        },
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
+        },
       },
       animation: {
-        'weed': 'weed 30s ease-in-out infinite',
-        'mushroom': 'mushroom 25s ease-in-out infinite',
-      }
+        weed: 'weed 30s ease-in-out infinite',
+        mushroom: 'mushroom 25s ease-in-out infinite',
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+      },
     },
   },
   future: {
     hoverOnlyWhenSupported: true,
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [require('@tailwindcss/typography'), require('tailwindcss-animate')],
 }
 
 module.exports = config

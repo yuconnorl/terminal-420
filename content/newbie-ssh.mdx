@@ -157,10 +157,12 @@ sudo systemctl restart sshd
 
 Systemd 使用 `systemctl` 這個指令來管理各種系統服務。在這邊，我們用來重啟（`restart`）sshd 這個服務。
 
-
-:::note{.info}
+<Admonition
+  title="Note"
+  types="info"
+>
 sshd 是 OpenSSH daemon，會持續聽取來自 client 的 SSH 連線，並做出相對應的處理。另外可以對服務進行的操作還有停止（`stop`）、啟動（`start`）、檢查狀態（`status`）等等。`sudo systemctl restart sshd` 這個指令等同於 `sudo systemctl restart sshd.service`，省略了後面的 `.service`。
-:::
+</Admonition>
 
 5. 新增一條規則，讓剛剛調整過的 Port 可以通過防火牆
 

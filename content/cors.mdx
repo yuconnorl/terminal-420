@@ -248,9 +248,12 @@ app.use(cors({
 
 最後，在這些類別以外的網路均屬於公開網路。
 
-:::What_is_loopback_address{.info}
+<Admonition
+  title="什麼是 loopback address"
+  types="info"
+>
 Loopback address 讓一個系統可以傳送訊息給自己的一段 IP address，可用來確認 TCP/IP stack 是否安裝及正常運作，其實就是 `localhost`。IPv4 以 `127` 作為開頭的 IP address 均為 loopback address。
-:::
+</Admonition>
 
 在這三種 IP address 之中，區域網路最為私密，接著是私有網路，最後是公開網路。三者間的關係如下圖所示
 
