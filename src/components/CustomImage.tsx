@@ -1,5 +1,7 @@
 import Image from 'next/image'
 
+import { cn } from '@/lib/utils'
+
 import { IMAGE_PLACEHOLDER_URL } from '@/configs/general'
 
 interface Props {
@@ -8,13 +10,21 @@ interface Props {
   alt: string
   width: number
   height: number
+  isOutOfFrame?: boolean
 }
 
-const CustomImage = ({ src, caption, alt, width, height }: Props) => {
+const CustomImage = ({
+  src,
+  caption,
+  alt,
+  width,
+  height,
+  isOutOfFrame = false,
+}: Props) => {
   return (
     <figure className='mb-8'>
       <Image
-        className='rounded-lg'
+        className={cn('rounded-lg', isOutOfFrame && 'w-[725px]')}
         src={src}
         alt={alt}
         width={width}

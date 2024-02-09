@@ -1,16 +1,16 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files'
+import fs from 'fs'
+import addClasses from 'rehype-add-classes'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypeKatex from 'rehype-katex'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import remarkGfm from 'remark-gfm'
-import { visit } from 'unist-util-visit'
 import remarkDirective from 'remark-directive'
-import rehypeKatex from 'rehype-katex'
+import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
-import { categoryTextFormatter } from './src/helper/text'
-import addClasses from 'rehype-add-classes'
+import { visit } from 'unist-util-visit'
 
-import fs from 'fs'
+import { categoryTextFormatter } from './src/helper/text'
 
 function getLastModifiedDate(filepath) {
   try {
@@ -112,6 +112,13 @@ const autolinkHeadingsOptions = {
   },
 }
 
+function titleFormatter(title) {
+  if (title === 'skip-title') return ''
+  if (!/_/.test(title)) return title
+
+  return title.replace(/_/g, ' ')
+}
+
 // plugin for adding admonition
 function remarkAdmonition() {
   return (tree) => {
@@ -128,13 +135,6 @@ function remarkAdmonition() {
         )
           return
 
-        function titleFormatter(title) {
-          if (title === 'skip-title') return ''
-          if (!/_/.test(title)) return title
-
-          return title.replace(/_/g, ' ')
-        }
-
         const title = titleFormatter(node.name)
         const data = node.data || (node.data = {})
         const types = node.attributes?.class
@@ -149,11 +149,49 @@ function remarkAdmonition() {
   }
 }
 
+// plugin for adding admonition
+function transformParagraphsToDivs() {
+  return (tree) => {
+    visit(tree, 'paragraph', (node) => {
+      const originalChildren = node.children
+
+      // node.data = {
+      //   hProperties: {
+      //     class: 'paragraph',
+      //   },
+      // }
+      // node.type = 'div'
+      // node.children = [
+      //   {
+      //     type: 'span',
+      //     children: originalChildren,
+      //   },
+      // ]
+      // node.children = [
+      //   {
+      //     type: 'element',
+      //     tagName: 'span',
+      //     properties: { className: 'my-class' }, // Optional properties like class name
+      //     children: originalChildren,
+      //   },
+      // ]
+      console.log(node)
+
+      return node
+    })
+  }
+}
+
 export default makeSource({
   contentDirPath: 'content',
   documentTypes: [Post],
   mdx: {
-    remarkPlugins: [remarkGfm, remarkDirective, remarkMath],
+    remarkPlugins: [
+      remarkGfm,
+      remarkDirective,
+      remarkMath,
+      transformParagraphsToDivs,
+    ],
     rehypePlugins: [
       rehypeSlug,
       [rehypeAutolinkHeadings, autolinkHeadingsOptions],
