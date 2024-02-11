@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 
 import CategoryLink from '@/components/CategoryLink'
+
 import { categoryTextFormatter } from '@/helper/text'
 
 interface initialValue {

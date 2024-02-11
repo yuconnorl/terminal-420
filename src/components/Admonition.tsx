@@ -39,7 +39,7 @@ const Admonition = ({ title, children, types }: Props) => {
       )}
     >
       {title && (
-        <div className='mb-3 flex gap-1 items-center'>
+        <div className='mb-3 flex items-center gap-1'>
           {Icon && <Icon />}
           <span className='text-base font-bold capitalize tracking-wide'>
             {title}

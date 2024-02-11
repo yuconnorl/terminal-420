@@ -37,8 +37,8 @@ const BackgroundCanvas = () => {
       window.innerWidth < 500
         ? (window.innerWidth / 1380) * RATIO_CONSTANT
         : window.innerWidth < 1380
-        ? window.innerWidth / 1680
-        : (window.innerWidth / 2560) * RATIO_CONSTANT
+          ? window.innerWidth / 1680
+          : (window.innerWidth / 2560) * RATIO_CONSTANT
 
     for (let i = 0; i < number; i++) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -145,10 +145,10 @@ const BackgroundCanvas = () => {
       window.innerWidth < 500
         ? (window.innerWidth / 1380) * RATIO_CONSTANT
         : window.innerWidth < 875
-        ? (window.innerWidth / 1680) * RATIO_CONSTANT
-        : window.innerWidth < 1380
-        ? window.innerWidth / 1680
-        : (window.innerWidth / 2560) * RATIO_CONSTANT
+          ? (window.innerWidth / 1680) * RATIO_CONSTANT
+          : window.innerWidth < 1380
+            ? window.innerWidth / 1680
+            : (window.innerWidth / 2560) * RATIO_CONSTANT
 
     const render = Render.create({
       element: scene.current as HTMLElement,
@@ -448,7 +448,7 @@ const BackgroundCanvas = () => {
       <div
         ref={scene}
         className={clsx(
-          'absolute top-0 left-0 z-0 h-full w-full bg-galaxy',
+          'absolute left-0 top-0 z-0 h-full w-full bg-galaxy',
           isSpaceMode
             ? 'bg-cover bg-center bg-no-repeat'
             : 'bg-[length:0px_0px]',

@@ -3,7 +3,9 @@ import { IS_DEV } from '@/configs/general'
 import pkg from '../../package.json'
 
 const versionLogger = (bgColor: string) => {
-  const version = IS_DEV ? 'development' : (process.env.REACT_APP_VERSION || pkg.version)
+  const version = IS_DEV
+    ? 'development'
+    : process.env.REACT_APP_VERSION || pkg.version
 
   console.log(
     `%c${'Terminal-420'}%c${version}`,

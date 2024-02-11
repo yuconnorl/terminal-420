@@ -1,9 +1,9 @@
-import './global.css'
-
 import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import Script from 'next/script'
+
+import './global.css'
 
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'

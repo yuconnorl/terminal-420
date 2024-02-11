@@ -19,7 +19,7 @@ export const SquareRightUpArrow = () => (
     viewBox='0 0 24 24'
     strokeWidth='1.5'
     stroke='currentColor'
-    className='mt-[6px] ml-[2px] h-4 w-4 text-slate-200'
+    className='ml-[2px] mt-[6px] h-4 w-4 text-slate-200'
   >
     <path
       strokeLinecap='round'
@@ -31,7 +31,7 @@ export const SquareRightUpArrow = () => (
 
 export const RoundRightUpArrow = () => (
   <svg
-    className='mr-[3.5px] ml-[3px] mt-[3.5px] h-5 w-5 text-slate-200'
+    className='ml-[3px] mr-[3.5px] mt-[3.5px] h-5 w-5 text-slate-200'
     strokeWidth='1'
     stroke='currentColor'
     fill='none'

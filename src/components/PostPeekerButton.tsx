@@ -85,20 +85,20 @@ const PostPeekerButton = ({ title, slug, description }: Props) => {
         whileHover='animate'
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className='border-b border-t overflow-hidden border-mallard-50 border-opacity-20 py-4 xl:py-6 px-2'
+        className='overflow-hidden border-b border-t border-mallard-50 border-opacity-20 px-2 py-4 xl:py-6'
       >
         <Link
-          className='flex text-lg tracking-tight transition-opacity hover:opacity-60 lg:text-xl items-center'
+          className='flex items-center text-lg tracking-tight transition-opacity hover:opacity-60 lg:text-xl'
           href={`/blog/${slug}`}
         >
-          <div className='flex flex-col w-[75%] md:w-[90%] font-mono'>
-            <div className=' text-sm text-main-gray opacity-50 mb-1 xl:mb-2'>
+          <div className='flex w-[75%] flex-col font-mono md:w-[90%]'>
+            <div className=' mb-1 text-sm text-main-gray opacity-50 xl:mb-2'>
               <p>Next</p>
             </div>
             <div className='mb-2 xl:mb-2'>
               <p>{title}</p>
             </div>
-            <div className='font-sans-serif text-m tracking-wide w-2/3 text-main-gray truncate'>
+            <div className='w-2/3 truncate font-sans-serif text-m tracking-wide text-main-gray'>
               {description}
             </div>
           </div>
@@ -118,21 +118,21 @@ const PostPeekerButton = ({ title, slug, description }: Props) => {
                 className='max-w-fit'
                 priority
               />
-              <div className='absolute top-5 left-3 w-5 h-5' ref={leftEyetRef}>
+              <div className='absolute left-3 top-5 h-5 w-5' ref={leftEyetRef}>
                 <motion.div
                   variants={eyeballsVariants}
                   animate={isHovered ? 'hover' : 'initial'}
-                  className='w-2.5 h-2.5 absolute right-[4.25px] top-0 bg-black rounded-full'
+                  className='absolute right-[4.25px] top-0 h-2.5 w-2.5 rounded-full bg-black'
                 />
               </div>
               <div
-                className='absolute top-5 right-[4px] w-5 h-5'
+                className='absolute right-[4px] top-5 h-5 w-5'
                 ref={rightEyeRef}
               >
                 <motion.div
                   variants={eyeballsVariants}
                   animate={isHovered ? 'hover' : 'initial'}
-                  className='w-2.5 h-2.5 absolute right-[4.25px] top-0 bg-black rounded-full'
+                  className='absolute right-[4.25px] top-0 h-2.5 w-2.5 rounded-full bg-black'
                 />
               </div>
             </motion.div>

@@ -1,21 +1,20 @@
 type Robots = {
   rules:
     | {
-        userAgent?: string | string[];
-        allow?: string | string[];
-        disallow?: string | string[];
-        crawlDelay?: number;
+        userAgent?: string | string[]
+        allow?: string | string[]
+        disallow?: string | string[]
+        crawlDelay?: number
       }
     | Array<{
-        userAgent: string | string[];
-        allow?: string | string[];
-        disallow?: string | string[];
-        crawlDelay?: number;
-      }>;
-  sitemap?: string | string[];
-  host?: string;
-};
-
+        userAgent: string | string[]
+        allow?: string | string[]
+        disallow?: string | string[]
+        crawlDelay?: number
+      }>
+  sitemap?: string | string[]
+  host?: string
+}
 
 export default function robots(): Robots {
   return {
@@ -25,5 +24,5 @@ export default function robots(): Robots {
       disallow: '/private/',
     },
     sitemap: 'https://terminal-420.space/sitemap.xml',
-  };
+  }
 }
