@@ -149,49 +149,11 @@ function remarkAdmonition() {
   }
 }
 
-// plugin for adding admonition
-function transformParagraphsToDivs() {
-  return (tree) => {
-    visit(tree, 'paragraph', (node) => {
-      const originalChildren = node.children
-
-      // node.data = {
-      //   hProperties: {
-      //     class: 'paragraph',
-      //   },
-      // }
-      // node.type = 'div'
-      // node.children = [
-      //   {
-      //     type: 'span',
-      //     children: originalChildren,
-      //   },
-      // ]
-      // node.children = [
-      //   {
-      //     type: 'element',
-      //     tagName: 'span',
-      //     properties: { className: 'my-class' }, // Optional properties like class name
-      //     children: originalChildren,
-      //   },
-      // ]
-      console.log(node)
-
-      return node
-    })
-  }
-}
-
 export default makeSource({
   contentDirPath: 'content',
   documentTypes: [Post],
   mdx: {
-    remarkPlugins: [
-      remarkGfm,
-      remarkDirective,
-      remarkMath,
-      transformParagraphsToDivs,
-    ],
+    remarkPlugins: [remarkGfm, remarkDirective, remarkMath],
     rehypePlugins: [
       rehypeSlug,
       [rehypeAutolinkHeadings, autolinkHeadingsOptions],

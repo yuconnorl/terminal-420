@@ -10,21 +10,13 @@ interface Props {
   alt: string
   width: number
   height: number
-  isOutOfFrame?: boolean
 }
 
-const CustomImage = ({
-  src,
-  caption,
-  alt,
-  width,
-  height,
-  isOutOfFrame = false,
-}: Props) => {
+const CustomImage = ({ src, caption, alt, width, height }: Props) => {
   return (
-    <figure className='mb-8'>
+    <figure className='relative mb-8'>
       <Image
-        className={cn('rounded-lg', isOutOfFrame && 'w-[725px]')}
+        className={cn('w-full rounded-lg')}
         src={src}
         alt={alt}
         width={width}

@@ -14,10 +14,16 @@ type Props = {
 
 const CustomAccordion = ({ title, children }: Props) => {
   return (
-    <Accordion className='left-0' type='single' collapsible>
-      <AccordionItem value='item-1'>
-        <AccordionTrigger>{title}</AccordionTrigger>
-        <AccordionContent>{children}</AccordionContent>
+    <Accordion
+      type='single'
+      collapsible
+      className='not-prose rounded-2xl border border-gray-400/50 px-5'
+    >
+      <AccordionItem className='border-0' value='item-1'>
+        <AccordionTrigger className='m-0'>{title}</AccordionTrigger>
+        <AccordionContent className='text-base leading-6'>
+          {children}
+        </AccordionContent>
       </AccordionItem>
     </Accordion>
   )
