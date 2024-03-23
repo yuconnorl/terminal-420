@@ -14,7 +14,7 @@ interface Props {
 
 const CustomImage = ({ src, caption, alt, width, height }: Props) => {
   return (
-    <figure className='relative mb-8'>
+    <figure className='relative my-12 md:my-16'>
       <Image
         className={cn('w-full rounded-lg')}
         src={src}
@@ -26,7 +26,7 @@ const CustomImage = ({ src, caption, alt, width, height }: Props) => {
         // unoptimized
       />
       {caption && (
-        <figcaption className=' mt-3 border-l border-main-gray/40 pl-3 text-sm text-main-gray'>
+        <figcaption className='mt-4 pl-3 text-center text-sm text-main-gray'>
           {caption}
         </figcaption>
       )}
