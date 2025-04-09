@@ -12,14 +12,6 @@ const routes = [
     name: 'Blog',
     path: '/blog',
   },
-  {
-    name: 'Categories',
-    path: '/categories',
-  },
-  {
-    name: 'About',
-    path: '/about',
-  },
 ]
 
 const Navbar = () => {
