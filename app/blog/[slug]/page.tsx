@@ -66,12 +66,8 @@ export default async function Blog({ params }: Props) {
         <h1 className='font-mono text-2xl font-bold tracking-tight md:text-3xl'>
           <Balancer>{post?.title}</Balancer>
         </h1>
-        <div className='mb-10 mt-4 flex items-center gap-4 font-mono text-sm tracking-tighter text-main-gray'>
+        <div className='mb-10 mt-2 flex items-center gap-4 font-mono text-sm tracking-tighter text-main-gray'>
           <p>{dayjs(post?.date).format('MMM DD, YYYY')}</p>
-          <CategoryLink
-            categoryDisplayName={post?.categoryDisplayName}
-            category={post?.category}
-          />
         </div>
         <Mdx code={post?.body.code} />
         <div className='pb-4 pt-1 text-right italic text-mallard-100'>

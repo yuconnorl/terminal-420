@@ -18,10 +18,10 @@ const Footer = () => {
 
   return (
     <footer className='relative mb-6 mt-4 flex justify-center text-sm'>
-      <div className='text-center text-main-gray'>
-        <p>© Terminal 420. Have a safe flight</p>
+      <div className='text-center text-gray-800'>
+        <p>Have a safe flight 🛫</p>
       </div>
-      <button
+      {/* <button
         type='button'
         className='group absolute bottom-0 right-4 flex animate-bounce md:animate-none'
         onClick={soberUp}
@@ -37,7 +37,7 @@ const Footer = () => {
         <div className='sober absolute -left-5 -top-5 h-fit rotate-[345deg] font-mono text-mallard-50 transition-opacity md:opacity-0 md:group-hover:opacity-100'>
           <p>Sober Up!</p>
         </div>
-      </button>
+      </button> */}
     </footer>
   )
 }

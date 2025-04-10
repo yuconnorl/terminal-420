@@ -98,9 +98,6 @@ const PostPeekerButton = ({ title, slug, description }: Props) => {
             <div className='mb-2 xl:mb-2'>
               <p>{title}</p>
             </div>
-            <div className='w-2/3 truncate font-sans-serif text-m tracking-wide text-main-gray'>
-              {description}
-            </div>
           </div>
           <motion.div
             ref={anchor}

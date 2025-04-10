@@ -4,7 +4,7 @@ import localFont from 'next/font/local'
 import Script from 'next/script'
 
 import './global.css'
-
+import { ThemeProvider } from 'next-themes'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 
@@ -80,7 +80,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       id='root'
       lang='zh-TW'
       className={clsx(
-        'scrollbar w-full bg-main-black font-sans-serif text-mallard-50 3xl:text-[1.1rem]',
+        'scrollbar w-full bg-stone-200 font-sans-serif text-gray-800',
         notoTc.variable,
         jetBrain.variable,
       )}
@@ -100,9 +100,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       </Script>
       <body className='w-full antialiased'>
         <div className='main flex w-full flex-col justify-between'>
-          <Header />
+          {/* <Header /> */}
           <main className='relative flex w-full flex-[1_0_0] justify-center px-6'>
-            {children}
+            <ThemeProvider>{children}</ThemeProvider>
           </main>
           <Footer />
         </div>

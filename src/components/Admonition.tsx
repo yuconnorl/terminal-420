@@ -1,5 +1,3 @@
-import clsx from 'clsx'
-
 import { cn } from '@/lib/utils'
 
 import { Danger, Info, Warn } from './Icons'
