@@ -1,21 +1,36 @@
 'use client'
 
 import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
+
+import { Moon, Sun } from '@/components/Icons'
 
 const ThemeToggle = () => {
   const { resolvedTheme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <button
-      className='mt-2 rounded-md bg-black px-4 py-2 text-white dark:bg-white dark:text-black'
+      className='p-3 text-neutral-800 dark:text-neutral-200'
       onClick={() => {
-        console.log(resolvedTheme)
-
         setTheme(resolvedTheme === 'light' ? 'dark' : 'light')
       }}
     >
-      <span className='w-4'>{resolvedTheme === 'light' ? '🌙' : '☀️'}</span>
-      Theme
+      <span>
+        {mounted ? (
+          resolvedTheme === 'light' ? (
+            <Sun className='size-6' />
+          ) : (
+            <Moon className='size-6' />
+          )
+        ) : (
+          <Sun className='size-6' />
+        )}
+      </span>
     </button>
   )
 }

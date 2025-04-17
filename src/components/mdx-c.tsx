@@ -36,17 +36,19 @@ function CustomLink(props) {
 
   if (href.startsWith('/')) {
     return (
-      <Link href={href} {...props}>
+      <Link className='h-fit' prefetch={false} href={href} {...props}>
         {props.children}
       </Link>
     )
   }
 
   if (href.startsWith('#')) {
-    return <a {...props} />
+    return <a className='h-fit' {...props} />
   }
 
-  return <a target='_blank' rel='noopener noreferrer' {...props} />
+  return (
+    <a className='h-fit' target='_blank' rel='noopener noreferrer' {...props} />
+  )
 }
 
 function RoundedImage(props) {
@@ -55,7 +57,6 @@ function RoundedImage(props) {
 
 function Code({ children, ...props }: { children: string }) {
   const codeHTML = highlight(children)
-  console.log('codeHTML', codeHTML)
 
   return (
     <code
@@ -107,12 +108,12 @@ function createHeading(level: number) {
 }
 
 const components = {
-  h1: createHeading(1),
-  h2: createHeading(2),
-  h3: createHeading(3),
-  h4: createHeading(4),
-  h5: createHeading(5),
-  h6: createHeading(6),
+  // h1: createHeading(1),
+  // h2: createHeading(2),
+  // h3: createHeading(3),
+  // h4: createHeading(4),
+  // h5: createHeading(5),
+  // h6: createHeading(6),
   Image: RoundedImage,
   a: CustomLink,
   code: Code,

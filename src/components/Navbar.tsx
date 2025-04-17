@@ -1,35 +1,25 @@
 'use client'
-import clsx from 'clsx'
+
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+
+import ThemeToggle from '@/components/theme-toggle'
 
 import { getAngle } from '@/helper/angle'
 
-const routes = [
-  {
-    name: 'Blog',
-    path: '/blog',
-  },
-]
-
 const Navbar = () => {
-  const pathname = usePathname()
-  const rootPath = pathname && pathname.match(/^\/(\w+)/g)?.[0]
   const logoRef = useRef<HTMLImageElement | null>(null)
+  const [hueAngle, setHueAngle] = useState(0)
 
   const onMousemove = useCallback((e: MouseEvent) => {
-    const html = document.getElementById('root')
     const mouseX = e.clientX
     const mouseY = e.clientY
     const logoRekt = logoRef.current && logoRef.current.getBoundingClientRect()
     const centerX = logoRekt ? logoRekt.left + logoRekt.width / 2 : 0
     const centerY = logoRekt ? logoRekt.top + logoRekt.height / 2 : 0
     const angleDeg = getAngle(mouseX, mouseY, centerX, centerY)
-
-    if (!html) return
-    html.style.filter = `hue-rotate(${angleDeg}deg)`
+    setHueAngle(angleDeg)
   }, [])
 
   useEffect(() => {
@@ -43,8 +33,11 @@ const Navbar = () => {
   }, [onMousemove])
 
   return (
-    <div className='mx-auto flex items-center justify-between'>
-      <Link href='/'>
+    <div
+      className='mx-auto flex items-center justify-between'
+      style={{ filter: `hue-rotate(${hueAngle}deg)` }}
+    >
+      <Link prefetch={false} href='/'>
         <Image
           ref={logoRef}
           alt='logo'
@@ -53,21 +46,7 @@ const Navbar = () => {
           height={32}
         />
       </Link>
-      <div className='flex gap-4 md:gap-5'>
-        {routes.map(({ name, path }) => (
-          <div
-            key={name}
-            className={clsx(
-              'font-mono tracking-tight transition-opacity',
-              rootPath === path
-                ? 'text-mallard-400'
-                : 'text-main-gray hover:opacity-70',
-            )}
-          >
-            <Link href={path}>{name}</Link>
-          </div>
-        ))}
-      </div>
+      <ThemeToggle />
     </div>
   )
 }
