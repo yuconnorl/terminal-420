@@ -18,7 +18,7 @@ const Footer = () => {
 
   return (
     <footer className='relative mb-6 mt-4 flex justify-center text-sm'>
-      <div className='text-center text-gray-800'>
+      <div className='text-center text-gray-600'>
         <p>Have a safe flight 🛫</p>
       </div>
       {/* <button

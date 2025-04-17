@@ -1,12 +1,13 @@
 import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-import Script from 'next/script'
+import { ThemeProvider } from 'next-themes'
 
 import './global.css'
-import { ThemeProvider } from 'next-themes'
+
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import { PostHogProvider } from '@/components/posthog-provider'
 
 // loading local fonts
 const notoTc = localFont({
@@ -79,33 +80,22 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html
       id='root'
       lang='zh-TW'
+      suppressHydrationWarning
       className={clsx(
-        'scrollbar w-full bg-stone-200 font-sans-serif text-gray-800',
+        'scrollbar w-full bg-stone-100 font-sans-serif dark:bg-stone-800',
         notoTc.variable,
         jetBrain.variable,
       )}
     >
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${
-          process.env.GA_TRACKING_ID || ''
-        }`}
-      />
-      <Script id='google-analytics'>
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${process.env.GA_TRACKING_ID || ''}');
-        `}
-      </Script>
       <body className='w-full antialiased'>
-        <div className='main flex w-full flex-col justify-between'>
-          {/* <Header /> */}
-          <main className='relative flex w-full flex-[1_0_0] justify-center px-6'>
-            <ThemeProvider>{children}</ThemeProvider>
-          </main>
-          <Footer />
-        </div>
+        <PostHogProvider>
+          <ThemeProvider>
+            <main className='relative flex w-full flex-[1_0_0] justify-center px-6  text-gray-800 dark:text-gray-200'>
+              {children}
+            </main>
+            <Footer />
+          </ThemeProvider>
+        </PostHogProvider>
       </body>
     </html>
   )

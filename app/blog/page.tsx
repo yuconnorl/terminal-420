@@ -1,31 +1,15 @@
-import { allPosts } from 'contentlayer/generated'
-import type { Metadata } from 'next'
+import { BlogPosts } from './blog-post'
 
-import ArticleCard from '@/components/ArticleCard'
-
-export const metadata: Metadata = {
+export const metadata = {
   title: 'Blog',
-  description: 'Blog posts',
+  description: 'Read my blog.',
 }
 
-const BlogPage = () => {
-  const sortPosts = allPosts.sort((a, b) => {
-    if (new Date(a.date) > new Date(b.date)) return -1
-    return 1
-  })
-
+export default function Page() {
   return (
-    <section className='w-full max-w-3xl pt-8'>
-      <h1 className='mb-8 font-mono text-3xl font-bold md:text-4xl'>
-        Blog Posts
-      </h1>
-      <div className='flex flex-col divide-y divide-mallard-50 divide-opacity-10'>
-        {sortPosts.map((post) => (
-          <ArticleCard key={post.id} post={post} />
-        ))}
-      </div>
+    <section>
+      <h1 className='mb-8 text-2xl font-semibold tracking-tighter'>Blog</h1>
+      <BlogPosts />
     </section>
   )
 }
-
-export default BlogPage

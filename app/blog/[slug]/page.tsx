@@ -1,91 +1,105 @@
-/* eslint-disable @typescript-eslint/require-await */
-import { allPosts, type Post } from 'contentlayer/generated'
+// import { baseUrl } from 'app/sitemap'
 import dayjs from 'dayjs'
-import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import Balancer from 'react-wrap-balancer'
 
-import CategoryLink from '@/components/CategoryLink'
-import CommentSection from '@/components/CommentSection'
-import Mdx from '@/components/Mdx'
-import PostPeekerButton from '@/components/PostPeekerButton'
-import SidePanel from '@/components/SidePanel'
+import { cn } from '@/lib/utils'
+
+import { CustomMDX } from '@/components/mdx-c'
+
+import { getBlogPosts } from '../utils'
 
 export async function generateStaticParams() {
-  return allPosts.map((post) => ({
+  const posts = getBlogPosts()
+
+  return posts.map((post) => ({
     slug: post.slug,
   }))
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post: Post | undefined = allPosts.find(
-    (post) => post.slug === params.slug,
-  )
+export function generateMetadata({ params }: { params: { slug: string } }) {
+  const baseUrl = 'https://terminal-420.com'
+  const post = getBlogPosts().find((post) => post.slug === params.slug)
+  if (!post) {
+    return
+  }
+
+  const {
+    title,
+    publishedAt: publishedTime,
+    summary: description,
+    image,
+  } = post.metadata
+  const ogImage = image
+    ? image
+    : `${baseUrl}/og?title=${encodeURIComponent(title)}`
 
   return {
-    title: post?.title,
-    description: post?.description,
+    title,
+    description,
     openGraph: {
-      title: post?.title,
-      description: post?.description,
-      url: `https://terminal-420.space/blog/${post ? post?.slug : ''}`,
-      publishedTime: post?.date,
+      title,
+      description,
       type: 'article',
+      publishedTime,
+      url: `${baseUrl}/blog/${post.slug}`,
+      images: [
+        {
+          url: ogImage,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: post?.title,
-      description: post?.description,
+      title,
+      description,
+      images: [ogImage],
     },
   }
 }
-interface Props {
-  params: Post
-}
 
-export default async function Blog({ params }: Props) {
-  const post: Post | undefined = allPosts.find(
-    (post) => post.slug === params.slug,
-  )
-
-  const currentPostId = post?.id
-  const allPostWithoutCurrent = allPosts.filter(
-    (post) => post.id !== currentPostId,
-  )
-
-  const randomIndex = Math.floor(Math.random() * allPostWithoutCurrent.length)
-  const randomPost = allPostWithoutCurrent[randomIndex]
+export default function Blog({ params }: { params: { slug: string } }) {
+  const post = getBlogPosts().find((post) => post.slug === params.slug)
+  const baseUrl = 'https://terminal-420.com'
 
   if (!post) {
     notFound()
   }
 
   return (
-    <div className='3xl:max-w-8xl relative w-full max-w-6xl pt-8 font-sans-serif xl:grid xl:grid-cols-section xl:gap-7 2xl:gap-10 3xl:gap-12'>
-      <section className='col-start-2 mx-auto w-full max-w-3xl'>
-        <h1 className='font-mono text-2xl font-bold tracking-tight md:text-3xl'>
-          <Balancer>{post?.title}</Balancer>
-        </h1>
-        <div className='mb-10 mt-2 flex items-center gap-4 font-mono text-sm tracking-tighter text-main-gray'>
-          <p>{dayjs(post?.date).format('MMM DD, YYYY')}</p>
-        </div>
-        <Mdx code={post?.body.code} />
-        <div className='pb-4 pt-1 text-right italic text-mallard-100'>
-          <span>Last updated on</span>
-          <span className='ml-1.5 font-bold'>
-            {dayjs(post?.modifiedDate).format('MMM DD, YYYY')}
-          </span>
-        </div>
-        {randomPost?.id && (
-          <PostPeekerButton
-            title={randomPost.title}
-            description={randomPost.description}
-            slug={randomPost.slug}
-          />
-        )}
-        <CommentSection />
-      </section>
-      <SidePanel rawPost={post?.body.raw} />
-    </div>
+    <section>
+      <script
+        type='application/ld+json'
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: post.metadata.title,
+            datePublished: post.metadata.publishedAt,
+            dateModified: post.metadata.publishedAt,
+            description: post.metadata.summary,
+            image: post.metadata.image
+              ? `${baseUrl}${post.metadata.image}`
+              : `/og?title=${encodeURIComponent(post.metadata.title)}`,
+            url: `${baseUrl}/blog/${post.slug}`,
+            author: {
+              '@type': 'Person',
+              name: 'My Portfolio',
+            },
+          }),
+        }}
+      />
+      <h1 className='title text-2xl font-semibold tracking-tighter'>
+        {post.metadata.title}
+      </h1>
+      <div className='mb-6 mt-1 flex items-center justify-between text-sm'>
+        <p className='font-mono tabular-nums tracking-tight text-neutral-600 dark:text-neutral-400'>
+          {dayjs(post.metadata.publishedAt).format('MMM DD, YYYY')}
+        </p>
+      </div>
+      <article className={cn('prose mb-10 max-w-xl')}>
+        <CustomMDX source={post.content} />
+      </article>
+    </section>
   )
 }

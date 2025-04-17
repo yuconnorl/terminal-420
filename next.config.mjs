@@ -1,8 +1,9 @@
-const { withContentlayer } = require('next-contentlayer')
+import createMDX from '@next/mdx'
 
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: false,
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   images: {
     formats: ['image/avif', 'image/webp'],
   },
@@ -15,6 +16,10 @@ const config = {
     ]
   },
 }
+
+const withMDX = createMDX({
+  // Add markdown plugins here, as desired
+})
 
 // https://nextjs.org/docs/advanced-features/security-headers
 // removed 'default-src 'self' vercel.live' for giscus
@@ -65,4 +70,4 @@ const securityHeaders = [
   },
 ]
 
-module.exports = withContentlayer(config)
+export default withMDX(config)

@@ -1,7 +1,8 @@
-import { allPosts } from 'contentlayer/generated'
-import dayjs from 'dayjs'
 import type { Metadata } from 'next'
-import Link from 'next/link'
+
+import ThemeToggle from '@/components/theme-toggle'
+
+import { BlogPosts } from './blog/blog-post'
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -9,11 +10,6 @@ export const metadata: Metadata = {
 }
 
 const LandingPage = () => {
-  const sortPosts = allPosts.sort((a, b) => {
-    if (new Date(a.date) > new Date(b.date)) return -1
-    return 1
-  })
-
   return (
     <section className='w-full max-w-3xl pt-8'>
       <div className='mb-10'>
@@ -23,19 +19,9 @@ const LandingPage = () => {
           cannabis and psychedelic research. Pull up a chair and have fun!
         </p>
       </div>
+      <ThemeToggle />
       <div className='flex flex-col gap-2'>
-        {sortPosts.map((post) => (
-          <Link
-            key={post.id}
-            href={post.url}
-            className='flex flex-col tracking-tight transition-opacity hover:opacity-60'
-          >
-            <p className='text-blue-500'>{post.title}</p>
-            <p className='font-mono text-sm text-gray-400'>
-              {dayjs(post.date).format('MMM DD, YYYY')}
-            </p>
-          </Link>
-        ))}
+        <BlogPosts />
       </div>
     </section>
   )

@@ -26,9 +26,7 @@ const CustomImage = ({ src, caption, alt, width, height }: Props) => {
         // unoptimized
       />
       {caption && (
-        <figcaption className=' mt-3 border-l border-main-gray/40 pl-3 text-sm text-main-gray'>
-          {caption}
-        </figcaption>
+        <figcaption className='mt-2 pl-1.5 text-sm'>{caption}</figcaption>
       )}
     </figure>
   )

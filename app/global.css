@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root {
+  --sh-class: #2d5e9d;
+  --sh-identifier: #354150;
+  --sh-sign: #8996a3;
+  --sh-property: #0550ae;
+  --sh-entity: #249a97;
+  --sh-jsxliterals: #6266d1;
+  --sh-string: #00a99a;
+  --sh-keyword: #f47067;
+  --sh-comment: #a19595;
+}
+
 html, body {
   scrollbar-gutter: stable;
 }
@@ -19,21 +33,12 @@ html, body {
 }
 
 .prose .anchor::after {
-  @apply absolute text-slate-300;
+  @apply absolute text-gray-700;
   content: '#';
 }
 
 .prose *:hover > .anchor {
   @apply visible;
-}
-
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4,
-.prose h5,
-.prose h6 {
-  @apply relative text-mallard-50
 }
 
 .inline-code {
@@ -100,11 +105,6 @@ body::-webkit-scrollbar {
 
 .sober {
   @apply after:absolute after:-right-4 after:top-4 after:h-[1px] after:w-3 after:rotate-[315deg] after:bg-slate-100 after:content-[""] before:absolute before:-left-4 before:top-4 before:h-[1px] before:w-3 before:rotate-[35deg] before:bg-slate-100 before:content-[""]
-}
-
-.main {
-  @apply h-fit;
-  min-height: 100svh;
 }
 
 .katex-html {
