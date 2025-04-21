@@ -1,9 +1,10 @@
 'use client'
-import clsx from 'clsx'
+
 import GithubSlugger from 'github-slugger'
 import { useEffect, useRef, useState } from 'react'
 
-import { Chevron } from '@/components/Icons'
+import { cn } from '@/lib/utils'
+
 interface MenuData {
   id: string
   heading: string
@@ -84,33 +85,31 @@ const SidePanel = ({ rawPost = '' }) => {
   }, [menuData])
 
   return (
-    <aside
-      ref={sidebar}
-      className={clsx('sticky top-16 hidden h-fit flex-col xl:flex')}
-    >
+    <aside ref={sidebar} className={cn('sticky top-16 h-fit flex-col xl:flex')}>
       <div className='mb-3 flex pl-2'>
-        <p className='font-mono text-sm font-bold'>On this page</p>
-        <div className='relative top-[1px] ml-1' onClick={onChevronClick}>
-          <Chevron
-            className={clsx(isAsideOpen && 'rotate-45', 'transition-transform')}
-          />
+        <p className='font-mono text-sm'>Contents</p>
+        <div
+          className='relative ml-1 -translate-y-0.5 cursor-pointer transition-opacity hover:opacity-70'
+          onClick={onChevronClick}
+        >
+          <span>{isAsideOpen ? '🐵' : '🙈'}</span>
         </div>
       </div>
       <ul
-        className={clsx(
+        className={cn(
           isScrolling ? 'opacity-100' : 'opacity-20',
-          isAsideOpen ? ' visible' : 'invisible',
-          'flex flex-col gap-[0.65rem] border-l border-l-[#2c2c2c59] pl-4 transition-opacity duration-300 hover:opacity-100',
+          isAsideOpen ? 'visible' : 'invisible',
+          'flex flex-col gap-[0.65rem] pl-4 transition-opacity duration-300 hover:opacity-100',
         )}
       >
         {menuData.map(({ id, heading, headingLevel }: MenuData) => (
           <li
-            className={clsx(
-              headingLevel === 3 && 'pl-2',
+            className={cn(
+              headingLevel === 3 && 'pl-3.5',
               currentId === id
-                ? 'text-mallard-50 before:absolute before:-left-4 before:h-full before:w-[1px] before:bg-mallard-400 before:content-[""]'
-                : 'text-main-gray',
-              'relative cursor-pointer leading-4',
+                ? 'before:bg-mallard-400 text-neutral-900 before:absolute before:-left-4 before:h-full before:w-[1.6px] before:-translate-y-0.5 before:content-[""] dark:text-neutral-50'
+                : 'text-neutral-400 dark:text-neutral-600',
+              'relative cursor-pointer leading-4 transition-colors duration-300',
             )}
             key={id}
           >
@@ -118,11 +117,13 @@ const SidePanel = ({ rawPost = '' }) => {
               className='text-left text-sm'
               onClick={(e) => {
                 e.preventDefault()
-                document.getElementById(`${id}`)?.scrollIntoView({
-                  behavior: 'smooth',
-                  block: 'start',
-                  inline: 'nearest',
-                })
+                const ele = document.getElementById(`${id}`)
+                const yOffset = -10
+                const y = ele
+                  ? ele.getBoundingClientRect().top + window.scrollY + yOffset
+                  : 0
+
+                window.scrollTo({ top: y, behavior: 'smooth' })
               }}
             >
               {heading}

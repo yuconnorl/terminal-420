@@ -82,7 +82,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       lang='zh-TW'
       suppressHydrationWarning
       className={clsx(
-        'scrollbar w-full bg-neutral-100 font-sans-serif dark:bg-neutral-800',
+        'scrollbar font-sans-serif w-full bg-neutral-100 transition-colors dark:bg-neutral-800',
         notoTc.variable,
         jetBrain.variable,
       )}

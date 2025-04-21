@@ -3,6 +3,7 @@ title: Cross-Origin Resource Sharing (CORS)
 description: 糟了，是 CORS！
 id: 8bd5ae80-7109-405d-ae72-df83556e2e26
 publishedAt: 2023-Oct-09 14:53:21+08:00
+modifiedAt: 2023-Oct-09 14:53:21+08:00
 category: frontend
 ---
 
@@ -19,26 +20,22 @@ category: frontend
 依據 [同源政策](https://developer.mozilla.org/zh-TW/docs/Web/Security/Same-origin_policy)（Same-origin policy），兩個網頁具備相同協定（protocol）、埠號（port，如果有指定）以及網域（domain），則為同源。而非同源的網站產生的 request 即為跨來源請求（cross-origin http request）。以 `https://www.terminal-420.space` 來和下面幾個網址相比：
 
 ```markdown
-
 1. http://www.terminal-420.space // 通訊協定不同，非同源
 2. https://www.terminal-420.com // domain 不同，非同源
 3. https://www.cannabis.terminal-420.space // domain 不同，非同源
 4. https://www.terminal-420.space:3080 // 埠號不同，非同源
 5. https://www.terminal-420.space/blog // 同源
-
 ```
-
-而來自於非同源的請求，就稱為**跨來源請求**。
 
 ## 什麼是 CORS？
 
-CORS 是一種機制，其使用額外的 Http header，讓非同源的請求可以被管理、並安全的回覆該請求。
+Cross-Origin Resource Sharing (CORS) 是一種機制，其使用額外的 Http header，讓非同源的請求可以被管理、並安全的回覆該請求。
 
-在 JavaScript 中，如果在 Server 沒有額外設定的情況下，所有非同源請求都會被阻擋。而在 CORS 的規範中，跨來源請求分為兩種，簡單（simple）和預檢（preflighted）請求
+在 JavaScript 中，如果在 Server 沒有額外設定的情況下，所有非同源請求都會被阻擋。而在 CORS 的規範中，跨來源請求分為兩種，簡單（simple）和預檢（preflighted）請求。
 
 ### 簡單請求（Simple request）
 
-不需要經過 preflighted（或不觸發 preflighted）就可以直接發送的請求，在 fetch spec 當中稱為 `non-preflighted request`。僅允許下面三個 HTTP Methods
+簡單請求指「不需要經過 preflighted（或不觸發 preflighted）就可以直接發送的請求」。在 [Fetch spec](https://fetch.spec.whatwg.org/#cors-protocol-exceptions) 當中稱為 `non-preflighted request`。僅允許下面三個 HTTP Methods
 
 - GET
 - HEAD

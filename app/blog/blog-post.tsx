@@ -23,7 +23,7 @@ export function BlogPosts() {
             href={`/blog/${post.slug}`}
           >
             <div className='flex w-full flex-col space-x-0 md:flex-row md:space-x-2'>
-              <p className='w-[115px] font-mono text-sm tabular-nums tracking-tight text-neutral-600 dark:text-neutral-400'>
+              <p className='w-[115px] font-mono text-sm tracking-tight text-neutral-600 tabular-nums dark:text-neutral-400'>
                 {dayjs(post.metadata.publishedAt).format('MMM DD, YYYY')}
               </p>
               <p className='tracking-tight text-neutral-700'>

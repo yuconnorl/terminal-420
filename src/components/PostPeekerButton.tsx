@@ -85,14 +85,14 @@ const PostPeekerButton = ({ title, slug, description }: Props) => {
         whileHover='animate'
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className='overflow-hidden border-b border-t border-mallard-50 border-opacity-20 px-2 py-4 xl:py-6'
+        className='overflow-hidden border-y border-neutral-200 px-2 py-4 xl:py-6 dark:border-neutral-600'
       >
         <Link
           className='flex items-center text-lg tracking-tight transition-opacity hover:opacity-60 lg:text-xl'
           href={`/blog/${slug}`}
         >
           <div className='flex w-[75%] flex-col font-mono md:w-[90%]'>
-            <div className=' mb-1 text-sm text-main-gray opacity-50 xl:mb-2'>
+            <div className='text-main-gray mb-1 text-sm opacity-50 xl:mb-2'>
               <p>Next</p>
             </div>
             <div className='mb-2 xl:mb-2'>
@@ -115,21 +115,21 @@ const PostPeekerButton = ({ title, slug, description }: Props) => {
                 className='max-w-fit'
                 priority
               />
-              <div className='absolute left-3 top-5 h-5 w-5' ref={leftEyetRef}>
+              <div className='absolute top-5 left-3 h-5 w-5' ref={leftEyetRef}>
                 <motion.div
                   variants={eyeballsVariants}
                   animate={isHovered ? 'hover' : 'initial'}
-                  className='absolute right-[4.25px] top-0 h-2.5 w-2.5 rounded-full bg-black'
+                  className='absolute top-0 right-[4.25px] h-2.5 w-2.5 rounded-full bg-black'
                 />
               </div>
               <div
-                className='absolute right-[4px] top-5 h-5 w-5'
+                className='absolute top-5 right-[4px] h-5 w-5'
                 ref={rightEyeRef}
               >
                 <motion.div
                   variants={eyeballsVariants}
                   animate={isHovered ? 'hover' : 'initial'}
-                  className='absolute right-[4.25px] top-0 h-2.5 w-2.5 rounded-full bg-black'
+                  className='absolute top-0 right-[4.25px] h-2.5 w-2.5 rounded-full bg-black'
                 />
               </div>
             </motion.div>

@@ -19,7 +19,7 @@ const BlogPage = () => {
       <h1 className='mb-8 font-mono text-3xl font-bold md:text-4xl'>
         Blog Posts
       </h1>
-      <div className='flex flex-col divide-y divide-mallard-50 divide-opacity-10'>
+      <div className='divide-mallard-50 divide-opacity-10 flex flex-col divide-y'>
         {sortPosts.map((post) => (
           <ArticleCard key={post.id} post={post} />
         ))}

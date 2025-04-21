@@ -3,6 +3,7 @@ title: 新手上路之 SSH
 description: 新手 SSH 大補帖！想知道如何修改 Port 且不用輸入 IP 及密碼就進入機器嗎，進來就對了！
 id: e5457b2a-030e-4562-96b0-bad230f9d8fc
 publishedAt: 2023-Oct-30 17:43:58+08:00
+modifiedAt: 2024-Apr-21 17:43:58+08:00
 category: system
 ---
 
@@ -124,13 +125,12 @@ debug1: channel 1: new [forwarded-streamlocal]
 
 ## 修改預設的 Port，避免機器被瘋狂嘗試登入
 
-<CustomImage src='/images/newbie-ssh/door-breaking-port-22.jpg' width={600} height={637} alt='Port 22 door breaking'/>
 
-通常預設的 SSH 連線 Port 會是 22，所以機器被掃到就會被瘋狂嘗試登入！
+通常預設的 SSH 連線 Port 會是 22，如果機器被掃到就會被踹爛！
 
-<CustomImage src='/images/newbie-ssh/default-port-attempt-login.png' width={567} height={45} alt='default port' caption='短短幾分鐘內就被踹了四千多次 🤔'/>
+<CustomImage src='/images/newbie-ssh/door-breaking-port-22.jpg' width={600} height={637} alt='Port 22 door breaking' caption='短短幾分鐘內就被踹了四千多次'/>
 
-因此，我們需要把預設的 Port 換掉！這裡會介紹兩種方法，分別是使用 iptables 及 firewalld 來設定。
+因此我們需要把預設的 Port 換掉！這裡會介紹兩種方法，分別是使用 iptables 及 firewalld 來設定。
 
 ### iptables
 
@@ -315,7 +315,7 @@ Host remote-vps
 	Port 20388
 ```
 
-6. 最後，就可以直接用名稱，透過 SSH 連線至 remote server！🥳🥳
+6. 最後，就可以直接用名稱，透過 SSH 連線至 remote server 🥳
 
 ```shell
 ssh remote-vps

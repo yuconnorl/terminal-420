@@ -28,18 +28,28 @@
 }
 
 :root {
-  --sh-class: #2d5e9d;
-  --sh-identifier: #354150;
-  --sh-sign: #8996a3;
-  --sh-property: #0550ae;
-  --sh-entity: #249a97;
-  --sh-jsxliterals: #6266d1;
-  --sh-string: #00a99a;
-  --sh-keyword: #f47067;
-  --sh-comment: #a19595;
+  /* Class, number and null - using Ansi 4 (Blue) */
+  --sh-class: #89DDFF; 
+  /* Identifier - using Foreground Color */
+  --sh-identifier: #A6ACD0; 
+  /* Sign - using Ansi 8 */
+  --sh-sign: #A6ACD0; 
+  /* Property - using Ansi 14 (Cyan) */
+  --sh-property: #89DDFF; 
+  /* Entity - using Ansi 2 (Green) */
+  --sh-entity: #5DE496; 
+  /* JSX literals - using Ansi 5 (Magenta) */
+  --sh-jsxliterals: #FCC4EA; 
+  /* String - using Ansi 3 (Yellow) */
+  --sh-string: #FFFA7D; 
+  /* Keyword - using Ansi 1 (Red) */
+  --sh-keyword: #D09EFF; 
+  /* Comment - using a muted version of Foreground Color */
+  --sh-comment: #A6ACD0; 
 }
 
 html, body {
+  /* to prevent content reflow due to scrollbar gutter show/hide */
   scrollbar-gutter: stable;
 }
 
@@ -47,8 +57,6 @@ html, body {
   @apply absolute invisible no-underline -ml-4 md:-ml-6 pr-1 md:pr-2;
 
   width: 80%;
-  height: 100%;
-  cursor: pointer;
 }
 
 .anchor:hover {
@@ -56,7 +64,7 @@ html, body {
 }
 
 .prose .anchor::after {
-  @apply absolute text-gray-700;
+  @apply absolute text-neutral-700 dark:text-neutral-300;
   content: '#';
 }
 
@@ -105,26 +113,10 @@ svg:hover #down {
 
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
-  background-color: #1d1b1b;
+  background-color: #oklch(55.6% 0 0);
   width: 3px;
   height: 5px;
  }
-
-html::-webkit-scrollbar-thumb,
-body::-webkit-scrollbar {
-  background-color:#999999;
-  border-radius: 10px;
-}
-
-html::-webkit-scrollbar-track,
-body::-webkit-scrollbar {
-  background-color: #1d1b1b;
-  padding: 5px;
-}
-
-[data-rehype-pretty-code-fragment] > pre > code {
-  @apply bg-transparent inline-block;
-}
 
 .sober {
   @apply after:absolute after:-right-4 after:top-4 after:h-[1px] after:w-3 after:rotate-[315deg] after:bg-slate-100 after:content-[""] before:absolute before:-left-4 before:top-4 before:h-[1px] before:w-3 before:rotate-[35deg] before:bg-slate-100 before:content-[""]

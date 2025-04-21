@@ -31,9 +31,7 @@ const config = {
         warn: '#f59e0b',
         danger: '#e53e3e',
         weed: '#5b9764',
-        'weed-200': '#bedcbf',
         mushroom: '#e293db',
-        'mushroom-200': '#f6d8f5',
       },
       gridTemplateColumns: {
         section: '1fr minmax(700px,3fr) 1fr',

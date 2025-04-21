@@ -9,4 +9,5 @@ module.exports = {
   proseWrap: 'never',
   htmlWhitespaceSensitivity: 'strict',
   bracketSpacing: true,
+  printWidth: 200,
 }
