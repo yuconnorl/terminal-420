@@ -26,15 +26,8 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
     return
   }
 
-  const {
-    title,
-    publishedAt: publishedTime,
-    description: description,
-    image,
-  } = post.metadata
-  const ogImage = image
-    ? image
-    : `${baseUrl}/og?title=${encodeURIComponent(title)}`
+  const { title, publishedAt: publishedTime, description: description, image } = post.metadata
+  const ogImage = image ? image : `${baseUrl}/og?title=${encodeURIComponent(title)}`
 
   return {
     title,
@@ -69,16 +62,14 @@ export default function Blog({ params }: { params: { slug: string } }) {
   }
 
   const currentPostId = post?.metadata.id
-  const allPostWithoutCurrent = getBlogPosts().filter(
-    (post) => post.metadata.id !== currentPostId,
-  )
+  const allPostWithoutCurrent = getBlogPosts().filter((post) => post.metadata.id !== currentPostId)
 
   const randomIndex = Math.floor(Math.random() * allPostWithoutCurrent.length)
   const randomPost = allPostWithoutCurrent[randomIndex]
 
   return (
     <div className='xl:grid xl:grid-cols-[1fr_minmax(700px,3fr)_1fr] xl:gap-7'>
-      <article className='col-start-2 mx-auto w-full max-w-3xl'>
+      <article className='col-start-2 mx-auto w-full max-w-xl'>
         <script
           type='application/ld+json'
           suppressHydrationWarning
@@ -109,16 +100,14 @@ export default function Blog({ params }: { params: { slug: string } }) {
         </div>
         <section
           className={cn(
-            'prose prose-neutral dark:prose-invert prose-h2:text-xl prose-h3:text-lg87678c mb-10 max-w-xl',
+            'prose prose-neutral dark:prose-invert prose-h2:text-xl prose-h3:text-lg87678c prose-headings:relative mb-10 max-w-xl',
           )}
         >
           <CustomMDX source={post.content} />
         </section>
         <div className='pt-1 pb-4 text-right text-sm text-neutral-600 italic dark:text-neutral-400'>
           <span>Last updated on</span>
-          <time className='ml-1.5 font-bold'>
-            {dayjs(post?.metadata?.modifiedAt).format('MMM DD, YYYY')}
-          </time>
+          <time className='ml-1.5 font-bold'>{dayjs(post?.metadata?.modifiedAt).format('MMM DD, YYYY')}</time>
         </div>
         {randomPost?.metadata?.id && (
           <PostPeekerButton

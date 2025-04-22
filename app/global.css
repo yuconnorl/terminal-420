@@ -55,7 +55,7 @@ html, body {
 
 .prose .anchor {
   @apply absolute invisible no-underline -ml-4 md:-ml-6 pr-1 md:pr-2;
-
+  
   width: 80%;
 }
 

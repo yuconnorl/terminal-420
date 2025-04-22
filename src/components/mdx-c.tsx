@@ -12,9 +12,7 @@ import CustomImage from './CustomImage'
 import SpecialAdmonition from './special-admonition'
 
 function Table({ data }) {
-  const headers = data.headers.map((header, index) => (
-    <th key={index}>{header}</th>
-  ))
+  const headers = data.headers.map((header, index) => <th key={index}>{header}</th>)
   const rows = data.rows.map((row, index) => (
     <tr key={index}>
       {row.map((cell, cellIndex) => (
@@ -48,9 +46,7 @@ function CustomLink(props) {
     return <a className='h-fit' {...props} />
   }
 
-  return (
-    <a className='h-fit' target='_blank' rel='noopener noreferrer' {...props} />
-  )
+  return <a className='h-fit' target='_blank' rel='noopener noreferrer' {...props} />
 }
 
 function RoundedImage(props) {
@@ -75,11 +71,7 @@ function CodeBlock({ children, ...props }: { children: string }) {
 
   return (
     <pre className=''>
-      <code
-        className=''
-        dangerouslySetInnerHTML={{ __html: codeHTML }}
-        {...props}
-      />
+      <code className='' dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
     </pre>
   )
 }
@@ -99,7 +91,6 @@ function createHeading(level: number) {
   const Heading = ({ children }: { children: string }) => {
     const slugger = new GithubSlugger()
     const slug = slugger.slug(children)
-    const childrenTrim = children.replace(/\(%%.*%%\)/, '')
 
     return React.createElement(
       `h${level}`,
@@ -113,7 +104,7 @@ function createHeading(level: number) {
           className: 'anchor',
         }),
       ],
-      childrenTrim,
+      children,
     )
   }
 
@@ -141,10 +132,5 @@ const components = {
 }
 
 export function CustomMDX(props) {
-  return (
-    <MDXRemote
-      {...props}
-      components={{ ...components, ...(props.components || {}) }}
-    />
-  )
+  return <MDXRemote {...props} components={{ ...components, ...(props.components || {}) }} />
 }

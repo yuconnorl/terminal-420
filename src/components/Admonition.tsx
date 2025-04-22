@@ -26,18 +26,11 @@ const Admonition = ({ title, children, types }: Props) => {
   const Icon = iconMap[types]
 
   return (
-    <div
-      className={cn(
-        'text-m my-8 rounded-xl border px-5 pt-6 pb-2 leading-relaxed',
-        theme,
-      )}
-    >
+    <div className={cn('text-m my-8 rounded-xl border px-5 pt-6 pb-2 leading-relaxed', theme)}>
       {title && (
-        <div className='mb-3 flex items-center gap-1'>
+        <div className='mb-3 flex gap-1'>
           {Icon && <Icon />}
-          <span className='text-base font-bold tracking-wide capitalize'>
-            {title}
-          </span>
+          <span className='text-base font-bold tracking-wide capitalize'>{title}</span>
         </div>
       )}
       <div>{children}</div>

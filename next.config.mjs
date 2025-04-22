@@ -1,4 +1,7 @@
 import createMDX from '@next/mdx'
+import rehypeKatex from 'rehype-katex'
+import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -19,6 +22,10 @@ const config = {
 
 const withMDX = createMDX({
   // Add markdown plugins here, as desired
+  options: {
+    remarkPlugins: [remarkGfm, remarkMath],
+    rehypePlugins: [],
+  },
 })
 
 // https://nextjs.org/docs/advanced-features/security-headers
