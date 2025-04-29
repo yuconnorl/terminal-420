@@ -68,7 +68,7 @@ export default function Blog({ params }: { params: { slug: string } }) {
   const randomPost = allPostWithoutCurrent[randomIndex]
 
   return (
-    <div className='xl:grid xl:grid-cols-[1fr_minmax(700px,3fr)_1fr] xl:gap-7'>
+    <div className='md:grid md:grid-cols-[1fr_minmax(650px,2.5fr)_1fr] xl:grid-cols-[1fr_minmax(650px,2.5fr)_1fr] xl:gap-5'>
       <article className='col-start-2 mx-auto w-full max-w-xl'>
         <script
           type='application/ld+json'

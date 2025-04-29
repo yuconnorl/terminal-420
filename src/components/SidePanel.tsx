@@ -20,9 +20,7 @@ const SidePanel = ({ rawPost = '' }) => {
   const sidebar = useRef<HTMLDivElement>(null)
 
   // retain only headings at level 2 and 3
-  const filterHeadingList: string[] = rawPost
-    .split('\n')
-    .filter((line) => line.match(/^##{1,2}\s/))
+  const filterHeadingList: string[] = rawPost.split('\n').filter((line) => line.match(/^##{1,2}\s/))
 
   // extract heading info and level, transform into object
   const menuData: MenuData[] = filterHeadingList.map((el) => {
@@ -70,10 +68,7 @@ const SidePanel = ({ rawPost = '' }) => {
       threshold: 1.0,
     }
 
-    observer.current = new IntersectionObserver(
-      observerCallback,
-      observerOptions,
-    )
+    observer.current = new IntersectionObserver(observerCallback, observerOptions)
     menuData.forEach((el) => {
       const currentEl = document.getElementById(`${el.id}`)
 
@@ -107,8 +102,8 @@ const SidePanel = ({ rawPost = '' }) => {
             className={cn(
               headingLevel === 3 && 'pl-3.5',
               currentId === id
-                ? 'before:bg-mallard-400 text-neutral-900 before:absolute before:-left-4 before:h-full before:w-[1.6px] before:-translate-y-0.5 before:content-[""] dark:text-neutral-50'
-                : 'text-neutral-400 dark:text-neutral-600',
+                ? 'text-neutral-900 before:absolute before:-left-4 before:h-full before:w-[1.6px] before:-translate-y-0.5 before:bg-[#8c796a] before:content-[""] dark:text-neutral-50 dark:before:bg-[#AA9D8D]'
+                : 'text-neutral-400 dark:text-neutral-500',
               'relative cursor-pointer leading-4 transition-colors duration-300',
             )}
             key={id}
@@ -119,9 +114,7 @@ const SidePanel = ({ rawPost = '' }) => {
                 e.preventDefault()
                 const ele = document.getElementById(`${id}`)
                 const yOffset = -10
-                const y = ele
-                  ? ele.getBoundingClientRect().top + window.scrollY + yOffset
-                  : 0
+                const y = ele ? ele.getBoundingClientRect().top + window.scrollY + yOffset : 0
 
                 window.scrollTo({ top: y, behavior: 'smooth' })
               }}

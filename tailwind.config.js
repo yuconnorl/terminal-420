@@ -43,6 +43,7 @@ const config = {
       },
       backgroundImage: {
         'link-arrow': "url('/images/link-arrow.svg')",
+        'link-arrow-dark': "url('/images/link-arrow-dark.svg')",
         galaxy: "url('/images/galaxy.webp')",
         'weed-boi': "url('/images/weed-boi-bg.png')",
         'mushroom-img': "url('/images/mushroom-bg.png')",

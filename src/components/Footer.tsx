@@ -6,18 +6,18 @@ import { useEffect } from 'react'
 import versionLogger from '@/helper/versionLogger'
 
 const Footer = () => {
-  const soberUp = () => {
-    const html = document.getElementById('root')
-    if (!html) return
-    html.style.filter = `hue-rotate(${0}deg)`
-  }
+  // const soberUp = () => {
+  //   const html = document.getElementById('root')
+  //   if (!html) return
+  //   html.style.filter = `hue-rotate(${0}deg)`
+  // }
 
   useEffect(() => {
     versionLogger('#81a760')
   }, [])
 
   return (
-    <footer className='relative mb-6 mt-4 flex justify-center text-sm'>
+    <footer className='relative mt-4 mb-6 flex justify-center text-sm'>
       <div className='text-center text-neutral-800 opacity-70 dark:text-neutral-200'>
         <p>Have a safe flight 🛫</p>
       </div>

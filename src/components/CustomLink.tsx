@@ -18,9 +18,9 @@ const CustomLink = (props: CustomLinkProps) => {
   }
 
   return (
-    <span className='not-prose m-0 mr-[2px] inline-flex text-mallard-400 transition-opacity hover:opacity-70'>
+    <span className='not-prose text-mallard-400 m-0 mr-[2px] inline-flex transition-opacity hover:opacity-70'>
       <a
-        className='after:contents-[""] relative inline-block after:relative after:left-[2px] after:inline-block after:h-3 after:w-3 after:bg-link-arrow after:bg-contain after:bg-center after:bg-no-repeat'
+        className='after:contents-[""] after:bg-link-arrow relative inline-block after:relative after:left-[2px] after:inline-block after:h-3 after:w-3 after:bg-contain after:bg-center after:bg-no-repeat'
         target='_blank'
         rel='noopener noreferrer'
         href={props.href}
