@@ -1,24 +1,17 @@
 'use client'
 
-import Image from 'next/image'
 import { useEffect } from 'react'
 
 import versionLogger from '@/helper/versionLogger'
 
 const Footer = () => {
-  // const soberUp = () => {
-  //   const html = document.getElementById('root')
-  //   if (!html) return
-  //   html.style.filter = `hue-rotate(${0}deg)`
-  // }
-
   useEffect(() => {
     versionLogger('#81a760')
   }, [])
 
   return (
     <footer className='relative mt-4 mb-6 flex justify-center text-sm'>
-      <div className='text-center text-neutral-800 opacity-70 dark:text-neutral-200'>
+      <div className='font-silk text-center tracking-tight text-neutral-700 opacity-70 dark:text-neutral-300'>
         <p>Have a safe flight 🛫</p>
       </div>
       {/* <button
@@ -34,7 +27,7 @@ const Footer = () => {
           height={100}
           alt='weeeed boy'
         />
-        <div className='sober absolute -left-5 -top-5 h-fit rotate-[345deg] font-mono text-mallard-50 transition-opacity md:opacity-0 md:group-hover:opacity-100'>
+        <div className='sober absolute -left-5 -top-5 h-fit rotate-[345deg] font-mono text-neutral-50 transition-opacity md:opacity-0 md:group-hover:opacity-100'>
           <p>Sober Up!</p>
         </div>
       </button> */}

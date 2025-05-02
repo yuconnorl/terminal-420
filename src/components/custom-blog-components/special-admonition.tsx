@@ -9,9 +9,9 @@ interface Props {
 }
 
 const themes = {
-  weed: 'overflow-hidden relative bg-weed/10 bg-auto bg-repeat text-[#324a36] dark:text-[#c5d5c5] border-weed/50 py-8 before:content-[""] before:absolute before:bg-[length:12%] sm:before:bg-auto before:top-0 before:left-0 before:w-[200%] before:h-[200%] before:bg-weed-boi before:animate-weed before:translate-x-[0%]',
+  weed: 'overflow-hidden relative bg-weed/10 bg-auto bg-repeat text-[#324a36] dark:text-[#c5d5c5] border-weed/50 py-8 before:content-[""] before:absolute before:bg-[length:12%] sm:before:bg-auto before:top-0 before:left-0 before:w-[200%] before:h-[200%] before:bg-[url(/images/weed-boi-bg.png)] before:animate-weed before:translate-x-[0%]',
   mushroom:
-    'overflow-hidden relative bg-mushroom/10 bg-auto bg-repeat text-[#943787] dark:text-[#edbaea] border-mushroom/50 py-8 before:content-[""] before:absolute before:bg-[length:12%] sm:before:bg-auto before:top-0 before:left-0 before:w-[200%] before:h-[200%] before:bg-mushroom-img before:animate-mushroom',
+    'overflow-hidden relative bg-mushroom/10 bg-auto bg-repeat text-[#943787] dark:text-[#edbaea] border-mushroom/50 py-8 before:content-[""] before:absolute before:bg-[length:12%] sm:before:bg-auto before:top-0 before:left-0 before:w-[200%] before:h-[200%] before:bg-[url(/images/mushroom-bg.png)] before:animate-mushroom',
 }
 
 const SpecialAdmonition = ({ title, children, themeType }: Props) => {

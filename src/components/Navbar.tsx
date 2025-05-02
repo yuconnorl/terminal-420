@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import SoberUpButton from '@/components/sober-up-button'
 import ThemeToggle from '@/components/theme-toggle'
 
 import { getAngle } from '@/helper/angle'
@@ -43,11 +44,14 @@ const Navbar = () => {
   }, [isMounted, onMousemove])
 
   return (
-    <div className='mx-auto flex items-center justify-between'>
+    <div className='max-w-2xl mx-auto flex items-center justify-between'>
       <Link prefetch={false} href='/'>
         <Image ref={logoRef} alt='logo' src='/images/logo.svg' width={32} height={32} />
       </Link>
-      <ThemeToggle />
+      <div className='flex items-center gap-2'>
+        <ThemeToggle />
+        <SoberUpButton />
+      </div>
     </div>
   )
 }

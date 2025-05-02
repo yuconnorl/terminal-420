@@ -1,6 +1,6 @@
 @import 'tailwindcss';
-
-@config '../tailwind.config.js';
+@plugin "@tailwindcss/typography";
+@plugin "tailwindcss-animate";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
@@ -24,6 +24,93 @@
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
+  }
+}
+
+@theme {
+  /* Font */
+  --font-noto: var(--font-noto), "sans-serif"; 
+  --font-mono: var(--font-jet-brain), "monospace";
+  --font-cubic: var(--font-cubic-11), "sans-serif";
+  --font-silk: var(--font-silk-screen), "sans-serif";
+
+  /* Color */
+  --color-info: #12b59d;
+  --color-warn: #f59e0b;
+  --color-danger: #e53e3e;
+  --color-weed: #5b9764;
+  --color-mushroom: #e293db;
+
+  /* Background */
+  --bg-link-arrow: url('/public/images/link-arrow.svg');
+  --bg-link-arrow-dark: url('/public/images/link-arrow-dark.svg');
+  --bg-galaxy: url('/public/images/galaxy.webp');
+
+  --animate-weed: weed 30s ease-in-out infinite;
+  --animate-mushroom: mushroom 25s ease-in-out infinite;
+  --animate-rainbow: rainbow 10s linear infinite;
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-blink: blink 1s infinite step-end;
+
+  @keyframes weed {
+    0% { transform: translate(-10%, -10%) }
+    50% { transform: translate(-40.5%, -40.5%) }
+    100% { transform: translate(-10%, -10%) }
+  }
+
+  @keyframes mushroom {
+    0% { transform: translate(-10%, -10%) }
+    50% { transform: translate(-40.5%, -40.5%) }
+    100% { transform: translate(-10%, -10%) }
+  }
+
+  @keyframes rainbow {
+    0% { background-position: 0% center }
+    50% { background-position: 1000px center }
+    100% { background-position: 2000px center }
+  }
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  @keyframes blink {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+@layer components {
+  .trippy {
+    @apply animate-rainbow bg-conic/decreasing from-violet-700 via-lime-300 to-emerald-500 bg-clip-text text-transparent
+  }
+
+  .trippy-hover {
+    @variant hover {
+      @apply animate-rainbow bg-conic/decreasing from-violet-700 via-lime-300 to-emerald-500 bg-clip-text text-transparent
+    }
   }
 }
 
@@ -124,4 +211,8 @@ body::-webkit-scrollbar {
 
 .katex-html {
   display: none;
+}
+
+.blink {
+  animation: blink 1s infinite step-end;
 }

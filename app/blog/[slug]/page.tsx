@@ -1,33 +1,85 @@
-// import { baseUrl } from 'app/sitemap'
 import dayjs from 'dayjs'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
 
-import CommentSection from '@/components/CommentSection'
-import { CustomMDX } from '@/components/mdx-c'
-import PostPeekerButton from '@/components/PostPeekerButton'
-import SidePanel from '@/components/SidePanel'
+import CommentSection from '@/components/comment-section'
+import PostPeekerButton from '@/components/post-peeker-button'
+import SidePanel from '@/components/side-panel'
 
 import { getBlogPosts } from '../utils'
 
-export async function generateStaticParams() {
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const { default: Post } = await import(`@/contents/${slug}.mdx`)
+
   const posts = getBlogPosts()
+  const filteredPosts = posts.filter((post) => post.metadata.id !== slug)
 
-  return posts.map((post) => ({
-    slug: post.slug,
-  }))
-}
+  const randomIndex = Math.floor(Math.random() * filteredPosts.length)
+  const randomPost = filteredPosts[randomIndex]
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const baseUrl = 'https://terminal-420.com'
-  const post = getBlogPosts().find((post) => post.slug === params.slug)
-  if (!post) {
-    return
+  const currentPost = posts.find((post) => post.slug === slug)
+
+  if (!currentPost) {
+    notFound()
   }
 
-  const { title, publishedAt: publishedTime, description: description, image } = post.metadata
-  const ogImage = image ? image : `${baseUrl}/og?title=${encodeURIComponent(title)}`
+  return (
+    <div className='max-w-2xl flex w-full lg:gap-10'>
+      <article className='w-full'>
+        <h1 className='title font-cubic text-2xl font-semibold tracking-wide'>{currentPost.metadata.title}</h1>
+        <div className='mt-1 mb-6 flex items-center justify-between text-sm'>
+          <time className='font-silk tracking-tight text-neutral-600 tabular-nums dark:text-neutral-400'>
+            {dayjs(currentPost.metadata.publishedAt).format('MMM DD, YYYY')}
+          </time>
+        </div>
+        <section
+          className={cn(
+            'prose prose-neutral lg:min-w-2xl max-w-2xl dark:prose-invert prose-h2:text-xl prose-h3:text-lg prose-headings:relative prose-headings:font-cubic prose-blockquote:border-s-[2px] mb-10',
+          )}
+        >
+          <Post />
+        </section>
+        <div className='pt-1 pb-4 text-right text-sm text-neutral-600 italic dark:text-neutral-400'>
+          <span>Last updated on</span>
+          <time className='font-silk ml-1.5 font-bold tracking-tight'>
+            {dayjs(currentPost?.metadata?.modifiedAt).format('MMM DD, YYYY')}
+          </time>
+        </div>
+        {randomPost?.metadata?.id && <PostPeekerButton title={randomPost.metadata.title} slug={randomPost.slug} />}
+        <CommentSection />
+      </article>
+      <SidePanel rawPost={currentPost?.content} />
+    </div>
+  )
+}
+
+export function generateStaticParams() {
+  const posts = getBlogPosts()
+
+  return posts.map((post) => ({ slug: post.slug }))
+}
+
+export const dynamicParams = false
+
+type MetadataProps = {
+  params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: MetadataProps): Promise<Metadata> {
+  const { slug } = await params
+  const post = getBlogPosts().find((post) => post.slug === slug)
+
+  if (!post) {
+    return {
+      title: '404 Not Found',
+      description: 'Page not found',
+    }
+  }
+
+  const { title, publishedAt, description } = post.metadata
 
   return {
     title,
@@ -36,89 +88,16 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
       title,
       description,
       type: 'article',
-      publishedTime,
-      url: `${baseUrl}/blog/${post.slug}`,
-      images: [
-        {
-          url: ogImage,
-        },
-      ],
+      publishedTime: publishedAt,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}`,
+      siteName: process.env.NEXT_PUBLIC_SITE_NAME,
+      images: [`/api/og-image?title=${title}`],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [ogImage],
+      images: [`/api/og-image?title=${title}`],
     },
   }
-}
-
-export default function Blog({ params }: { params: { slug: string } }) {
-  const post = getBlogPosts().find((post) => post.slug === params.slug)
-  const baseUrl = 'https://terminal-420.com'
-
-  if (!post) {
-    notFound()
-  }
-
-  const currentPostId = post?.metadata.id
-  const allPostWithoutCurrent = getBlogPosts().filter((post) => post.metadata.id !== currentPostId)
-
-  const randomIndex = Math.floor(Math.random() * allPostWithoutCurrent.length)
-  const randomPost = allPostWithoutCurrent[randomIndex]
-
-  return (
-    <div className='md:grid md:grid-cols-[1fr_minmax(650px,2.5fr)_1fr] xl:grid-cols-[1fr_minmax(650px,2.5fr)_1fr] xl:gap-5'>
-      <article className='col-start-2 mx-auto w-full max-w-xl'>
-        <script
-          type='application/ld+json'
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'BlogPosting',
-              headline: post.metadata.title,
-              datePublished: post.metadata.publishedAt,
-              dateModified: post.metadata.modifiedAt,
-              description: post.metadata.description,
-              image: post.metadata.image
-                ? `${baseUrl}${post.metadata.image}`
-                : `/og?title=${encodeURIComponent(post.metadata.title)}`,
-              url: `${baseUrl}/blog/${post.slug}`,
-              author: {
-                '@type': 'Person',
-                name: 'My Portfolio',
-              },
-            }),
-          }}
-        />
-        <h1 className='title text-2xl font-semibold'>{post.metadata.title}</h1>
-        <div className='mt-1 mb-6 flex items-center justify-between text-sm'>
-          <time className='font-mono tracking-tight text-neutral-600 tabular-nums dark:text-neutral-400'>
-            {dayjs(post.metadata.publishedAt).format('MMM DD, YYYY')}
-          </time>
-        </div>
-        <section
-          className={cn(
-            'prose prose-neutral dark:prose-invert prose-h2:text-xl prose-h3:text-lg87678c prose-headings:relative mb-10 max-w-xl',
-          )}
-        >
-          <CustomMDX source={post.content} />
-        </section>
-        <div className='pt-1 pb-4 text-right text-sm text-neutral-600 italic dark:text-neutral-400'>
-          <span>Last updated on</span>
-          <time className='ml-1.5 font-bold'>{dayjs(post?.metadata?.modifiedAt).format('MMM DD, YYYY')}</time>
-        </div>
-        {randomPost?.metadata?.id && (
-          <PostPeekerButton
-            title={randomPost.metadata.title}
-            description={randomPost.metadata.description}
-            slug={randomPost.slug}
-          />
-        )}
-        <CommentSection />
-      </article>
-      <SidePanel rawPost={post?.content} />
-    </div>
-  )
 }

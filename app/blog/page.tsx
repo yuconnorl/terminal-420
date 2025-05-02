@@ -1,7 +1,9 @@
 import { notFound } from 'next/navigation'
 
-export default function Page() {
+const BlogPage = () => {
   notFound()
 
   return null
 }
+
+export default BlogPage

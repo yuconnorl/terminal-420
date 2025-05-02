@@ -13,7 +13,7 @@ const CustomLink = (props: CustomLinkProps) => {
 
   if (href?.startsWith('/')) {
     return (
-      <Link className='h-fit' prefetch={false} href={href} {...props}>
+      <Link className='h-fit text-[#8c796a] transition-opacity hover:opacity-70 dark:text-[#c3bbae]' prefetch={false} href={href} {...props}>
         {props.children}
       </Link>
     )
@@ -24,9 +24,9 @@ const CustomLink = (props: CustomLinkProps) => {
   }
 
   return (
-    <span className='not-prose m-0 mr-[2px] inline-flex text-[#8c796a] transition-opacity hover:opacity-70 dark:text-[#AA9D8D]'>
+    <span className='not-prose m-0 mr-[2px] inline-flex text-[#8c796a] transition-opacity hover:opacity-70 dark:text-[#c3bbae]'>
       <a
-        className='after:contents-[""] after:bg-link-arrow-dark dark:after:bg-link-arrow relative inline-block underline underline-offset-2 after:relative after:left-[2px] after:inline-block after:h-3 after:w-3 after:bg-contain after:bg-center after:bg-no-repeat'
+        className='after:contents-[""] relative inline-block underline underline-offset-2 after:relative after:left-[2px] after:inline-block after:h-3 after:w-3 after:bg-[url(/images/link-arrow-dark.svg)] after:bg-contain after:bg-center after:bg-no-repeat dark:after:bg-[url(/images/link-arrow.svg)]'
         target='_blank'
         rel='noopener noreferrer'
         href={props.href}

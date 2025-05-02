@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { ThemeProvider } from 'next-themes'
-
+import { Toaster, toast } from 'sonner'
 import './global.css'
 
 import Footer from '@/components/Footer'
@@ -27,6 +27,16 @@ const notoTc = localFont({
 const jetBrain = localFont({
   src: '../public/fonts/jetbrain-mono-variable.ttf',
   variable: '--font-jet-brain',
+})
+
+const cubic_11 = localFont({
+  src: '../public/fonts/cubic_11.woff2',
+  variable: '--font-cubic-11',
+})
+
+const silkScreen = localFont({
+  src: '../public/fonts/silk-screen-regular.ttf',
+  variable: '--font-silk-screen',
 })
 
 // built-in SEO helper
@@ -85,6 +95,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         'scrollbar font-sans-serif w-full bg-[#f7f6f5] transition-colors duration-200 dark:bg-neutral-800',
         notoTc.variable,
         jetBrain.variable,
+        cubic_11.variable,
+        silkScreen.variable,
       )}
     >
       <body className='w-full antialiased'>
@@ -95,6 +107,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
               {children}
             </main>
             <Footer />
+            <Toaster />
           </ThemeProvider>
         </PostHogProvider>
       </body>

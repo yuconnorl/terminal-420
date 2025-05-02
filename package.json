@@ -47,6 +47,7 @@
     "remark-mdx-frontmatter": "^5.1.0",
     "satori": "^0.4.4",
     "shiki": "^0.14.1",
+    "sonner": "^2.0.3",
     "sugar-high": "^0.9.3",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
