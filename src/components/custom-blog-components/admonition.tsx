@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 
-import { Danger, Info, Warn } from '@/components/Icons'
+import { Danger, Info, Warn } from '@/components/icons'
 type Status = 'info' | 'warn' | 'danger'
 
 interface Props {

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 import { highlight } from 'sugar-high'
 
-import { Js, Markdown, Mdx, Ts } from '@/components/Icons'
+import { Js, Markdown, Mdx, Ts } from '@/components/icons'
 
 type CustomLinkProps = React.ComponentPropsWithoutRef<'a'>
 
@@ -13,7 +13,12 @@ const CustomLink = (props: CustomLinkProps) => {
 
   if (href?.startsWith('/')) {
     return (
-      <Link className='h-fit text-[#8c796a] transition-opacity hover:opacity-70 dark:text-[#c3bbae]' prefetch={false} href={href} {...props}>
+      <Link
+        className='h-fit text-[#8c796a] transition-opacity hover:opacity-70 dark:text-[#c3bbae]'
+        prefetch={false}
+        href={href}
+        {...props}
+      >
         {props.children}
       </Link>
     )

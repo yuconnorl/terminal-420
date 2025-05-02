@@ -3,7 +3,7 @@
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 
-import { Moon, Sun } from '@/components/Icons'
+import { Moon, Sun } from '@/components/icons'
 
 const ThemeToggle = () => {
   const { resolvedTheme, setTheme } = useTheme()

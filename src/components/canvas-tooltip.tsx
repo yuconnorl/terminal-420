@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-import { OuterSpace, PartyRocket, TrashBin } from './Icons'
+import { OuterSpace, PartyRocket, TrashBin } from './icons'
 
 interface Props {
   title: string
