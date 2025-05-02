@@ -3,6 +3,8 @@ import rehypeKatex from 'rehype-katex'
 import remarkFrontmatter from 'remark-frontmatter'
 import remarkMath from 'remark-math'
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
+import remarkRehype from 'remark-rehype'
+import remarkGfm from 'remark-gfm'
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -22,10 +24,20 @@ const config = {
 }
 
 const withMDX = createMDX({
-  // Add markdown plugins here, as desired
   options: {
-    remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
-    rehypePlugins: [],
+    remarkPlugins: [
+      remarkFrontmatter,
+      remarkMdxFrontmatter,
+      remarkGfm,
+      [
+        remarkRehype,
+        {
+          footnoteBackContent: 'back',
+          footnoteLabel: '🦶🏼📝',
+        },
+      ],
+    ],
+    rehypePlugins: [rehypeKatex],
   },
 })
 

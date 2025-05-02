@@ -82,7 +82,7 @@ const PostPeekerButton = ({ title, slug }: Props) => {
         whileHover='animate'
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className='overflow-hidden border-y border-neutral-200 px-2 py-4 xl:py-6 dark:border-neutral-600'
+        className='overflow-hidden border-neutral-200 px-2 py-4 xl:py-6 dark:border-neutral-600'
       >
         <Link className='trippy-hover flex items-center transition-opacity hover:opacity-80' href={`/blog/${slug}`}>
           <div className='flex w-[75%] flex-col font-mono md:w-[90%]'>

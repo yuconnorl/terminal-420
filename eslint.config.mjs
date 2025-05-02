@@ -18,7 +18,6 @@ const eslintConfig = [
   ),
   {
     files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx', '**/*.mjs'],
-    ignores: ['**/*.mdx', '**/*.md'],
     plugins: {
       prettier,
     },

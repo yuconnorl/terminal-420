@@ -112,6 +112,10 @@
       @apply animate-rainbow bg-conic/decreasing from-violet-700 via-lime-300 to-emerald-500 bg-clip-text text-transparent
     }
   }
+
+  .data-footnote-backref {
+    @apply font-silk text-xs tracking-tighter text-neutral-600/70 dark:text-neutral-400/70;
+  }
 }
 
 :root {

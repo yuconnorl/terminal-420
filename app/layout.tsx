@@ -2,11 +2,11 @@ import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { ThemeProvider } from 'next-themes'
-import { Toaster, toast } from 'sonner'
+import { Toaster } from 'sonner'
 import './global.css'
 
-import Footer from '@/components/Footer'
-import Header from '@/components/Header'
+import Footer from '@/components/footer'
+import Header from '@/components/header'
 import { PostHogProvider } from '@/components/posthog-provider'
 
 // loading local fonts

@@ -6,7 +6,9 @@ import { highlight } from 'sugar-high'
 
 import { Js, Markdown, Mdx, Ts } from '@/components/icons'
 
-type CustomLinkProps = React.ComponentPropsWithoutRef<'a'>
+type CustomLinkProps = React.ComponentPropsWithoutRef<'a'> & {
+  'data-footnote-ref'?: boolean | string
+}
 
 const CustomLink = (props: CustomLinkProps) => {
   const href = props.href
@@ -24,22 +26,24 @@ const CustomLink = (props: CustomLinkProps) => {
     )
   }
 
-  if (href?.startsWith('#')) {
-    return <a className='h-fit' {...props} />
+  if (href?.startsWith('#') && props['data-footnote-ref']) {
+    return <a className='font-silk h-fit pl-1 transition-opacity hover:opacity-70' {...props} />
+  } else if (href?.startsWith('#')) {
+    return <a className='h-fit transition-opacity hover:opacity-70' {...props} />
+  } else {
+    return (
+      <span className='not-prose m-0 mr-[2px] inline-flex text-[#8c796a] transition-opacity hover:opacity-70 dark:text-[#c3bbae]'>
+        <a
+          className='after:contents-[""] relative inline-block underline underline-offset-2 after:relative after:left-[2px] after:inline-block after:h-3 after:w-3 after:bg-[url(/images/link-arrow-dark.svg)] after:bg-contain after:bg-center after:bg-no-repeat dark:after:bg-[url(/images/link-arrow.svg)]'
+          target='_blank'
+          rel='noopener noreferrer'
+          href={props.href}
+        >
+          {props.children}
+        </a>
+      </span>
+    )
   }
-
-  return (
-    <span className='not-prose m-0 mr-[2px] inline-flex text-[#8c796a] transition-opacity hover:opacity-70 dark:text-[#c3bbae]'>
-      <a
-        className='after:contents-[""] relative inline-block underline underline-offset-2 after:relative after:left-[2px] after:inline-block after:h-3 after:w-3 after:bg-[url(/images/link-arrow-dark.svg)] after:bg-contain after:bg-center after:bg-no-repeat dark:after:bg-[url(/images/link-arrow.svg)]'
-        target='_blank'
-        rel='noopener noreferrer'
-        href={props.href}
-      >
-        {props.children}
-      </a>
-    </span>
-  )
 }
 
 function createHeading(level: number) {
@@ -68,9 +72,9 @@ function createHeading(level: number) {
   return Heading
 }
 
-const CodeBlock = ({ children, ...props }: { children: string }) => {
-  const language = children.props.className?.split('-')[1]
-  const codeHTML = highlight(children.props.children)
+const CodeBlock = ({ children, ...props }: { children: React.ReactNode }) => {
+  const language = children?.props.className.split('-')[1]
+  const codeHTML = highlight(children?.props.children)
 
   const iconMap = {
     javascript: <Js className='size-5' />,

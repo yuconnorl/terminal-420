@@ -27,7 +27,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   }
 
   return (
-    <div className='max-w-2xl flex w-full lg:gap-10'>
+    <div className='flex w-full max-w-2xl lg:gap-10'>
       <article className='w-full'>
         <h1 className='title font-cubic text-2xl font-semibold tracking-wide'>{currentPost.metadata.title}</h1>
         <div className='mt-1 mb-6 flex items-center justify-between text-sm'>
@@ -37,7 +37,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         </div>
         <section
           className={cn(
-            'prose prose-neutral lg:min-w-2xl max-w-2xl dark:prose-invert prose-h2:text-xl prose-h3:text-lg prose-headings:relative prose-headings:font-cubic prose-blockquote:border-s-[2px] mb-10',
+            'prose prose-neutral prose-ul:pl-2 dark:prose-invert prose-h2:text-xl prose-h3:text-lg prose-headings:relative prose-headings:font-cubic prose-blockquote:border-s-[2px] mb-10 max-w-2xl lg:min-w-2xl',
           )}
         >
           <Post />

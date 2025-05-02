@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from 'next/og'
 import { NextRequest } from 'next/server'
 
@@ -19,7 +18,7 @@ export async function GET(request: NextRequest) {
       throw new Error('Failed to fetch the font file for og image')
     }
 
-    if (!cubic_11.ok) { 
+    if (!cubic_11.ok) {
       throw new Error('Failed to fetch the font file for og image')
     }
 
@@ -66,8 +65,8 @@ export async function GET(request: NextRequest) {
       },
     )
   } catch (e: any) {
-    console.log(`${e.message}`)
-    return new Response(`Failed to generate the image`, {
+    console.log(`Failed to generate og image: ${e.message}`)
+    return new Response(`Failed to generate og image`, {
       status: 500,
     })
   }
