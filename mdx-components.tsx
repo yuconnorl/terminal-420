@@ -27,7 +27,7 @@ const CustomLink = (props: CustomLinkProps) => {
   }
 
   if (href?.startsWith('#') && props['data-footnote-ref']) {
-    return <a className='font-silk h-fit pl-1 transition-opacity hover:opacity-70' {...props} />
+    return <a className='h-fit pl-1 font-silk transition-opacity hover:opacity-70' {...props} />
   } else if (href?.startsWith('#')) {
     return <a className='h-fit transition-opacity hover:opacity-70' {...props} />
   } else {
@@ -72,13 +72,20 @@ function createHeading(level: number) {
   return Heading
 }
 
-const CodeBlock = ({ children, ...props }: { children: React.ReactNode }) => {
-  const language = children?.props.className.split('-')[1]
-  const codeHTML = highlight(children?.props.children)
+const CodeBlock = ({
+  children,
+  ...props
+}: {
+  children: React.ReactElement<{ className?: string; children: string }>
+}) => {
+  const language = children?.props?.className?.split('-')[1] || ''
+  const codeHTML = highlight(children?.props?.children)
 
   const iconMap = {
     javascript: <Js className='size-5' />,
+    jsx: <Js className='size-5' />,
     typescript: <Ts className='size-5' />,
+    tsx: <Ts className='size-5' />,
     markdown: <Markdown className='size-5' />,
     mdx: <Mdx className='size-5' />,
   }

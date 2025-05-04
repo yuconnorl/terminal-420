@@ -37,14 +37,14 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         </div>
         <section
           className={cn(
-            'prose prose-neutral prose-ul:pl-2 dark:prose-invert prose-h2:text-xl prose-h3:text-lg prose-headings:relative prose-headings:font-cubic prose-blockquote:border-s-[2px] mb-10 max-w-2xl lg:min-w-2xl',
+            'prose mb-10 max-w-2xl prose-neutral lg:min-w-2xl dark:prose-invert prose-headings:relative prose-headings:font-cubic prose-h2:text-xl prose-h3:text-lg prose-blockquote:border-s-[2px] prose-ul:pl-2',
           )}
         >
           <Post />
         </section>
         <div className='pt-1 pb-4 text-right text-sm text-neutral-600 italic dark:text-neutral-400'>
           <span>Last updated on</span>
-          <time className='font-silk ml-1.5 font-bold tracking-tight'>
+          <time className='ml-1.5 font-silk font-bold tracking-tight'>
             {dayjs(currentPost?.metadata?.modifiedAt).format('MMM DD, YYYY')}
           </time>
         </div>

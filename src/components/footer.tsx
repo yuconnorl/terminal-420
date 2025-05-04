@@ -11,7 +11,7 @@ const Footer = () => {
 
   return (
     <footer className='relative mt-4 mb-6 flex justify-center text-sm'>
-      <div className='font-silk text-center tracking-tight text-neutral-700 opacity-70 dark:text-neutral-300'>
+      <div className='text-center font-silk tracking-tight text-neutral-700 opacity-70 dark:text-neutral-300'>
         <p>Have a safe flight 🛫</p>
       </div>
       {/* <button

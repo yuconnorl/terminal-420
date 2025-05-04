@@ -33,7 +33,7 @@ const withMDX = createMDX({
         remarkRehype,
         {
           footnoteBackContent: 'back',
-          footnoteLabel: '🦶🏼📝',
+          // footnoteLabel: '',
         },
       ],
     ],

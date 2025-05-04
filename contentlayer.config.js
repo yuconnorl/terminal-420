@@ -69,9 +69,7 @@ export const Post = defineDocumentType(() => ({
     modifiedDate: {
       type: 'Date',
       resolve: (post) => {
-        const lastModifiedDate = getLastModifiedDate(
-          `./content/${post._raw.flattenedPath}.mdx`,
-        )
+        const lastModifiedDate = getLastModifiedDate(`./content/${post._raw.flattenedPath}.mdx`)
 
         return lastModifiedDate
       },
@@ -123,17 +121,8 @@ function titleFormatter(title) {
 function remarkAdmonition() {
   return (tree) => {
     visit(tree, (node) => {
-      if (
-        node.type === 'textDirective' ||
-        node.type === 'leafDirective' ||
-        node.type === 'containerDirective'
-      ) {
-        if (
-          !['info', 'warn', 'danger', 'weed', 'mushroom'].includes(
-            node.attributes?.class,
-          )
-        )
-          return
+      if (node.type === 'textDirective' || node.type === 'leafDirective' || node.type === 'containerDirective') {
+        if (!['info', 'warn', 'danger', 'weed', 'mushroom'].includes(node.attributes?.class)) return
 
         const title = titleFormatter(node.name)
         const data = node.data || (node.data = {})

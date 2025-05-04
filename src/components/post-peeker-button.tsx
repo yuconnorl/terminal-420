@@ -86,10 +86,10 @@ const PostPeekerButton = ({ title, slug }: Props) => {
       >
         <Link className='trippy-hover flex items-center transition-opacity hover:opacity-80' href={`/blog/${slug}`}>
           <div className='flex w-[75%] flex-col font-mono md:w-[90%]'>
-            <p className='font-silk mb-1 text-sm tracking-tight text-neutral-600/70 xl:mb-2 dark:text-neutral-400/70'>
+            <p className='mb-1 font-silk text-sm tracking-tight text-neutral-600/70 xl:mb-2 dark:text-neutral-400/70'>
               Next
             </p>
-            <p className='font-cubic mb-2 text-lg'>{title}</p>
+            <p className='mb-2 font-cubic text-lg'>{title}</p>
           </div>
           <motion.div
             ref={anchor}
