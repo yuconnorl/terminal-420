@@ -6,7 +6,6 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 import SoberUpButton from '@/components/sober-up-button'
 import ThemeToggle from '@/components/theme-toggle'
-
 import { getAngle } from '@/helper/angle'
 
 const Navbar = () => {

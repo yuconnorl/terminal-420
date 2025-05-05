@@ -2,11 +2,10 @@ import dayjs from 'dayjs'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import { cn } from '@/lib/utils'
-
 import CommentSection from '@/components/comment-section'
 import PostPeekerButton from '@/components/post-peeker-button'
 import SidePanel from '@/components/side-panel'
+import { cn } from '@/lib/utils'
 
 import { getBlogPosts } from '../utils'
 

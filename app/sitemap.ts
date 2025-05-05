@@ -1,4 +1,3 @@
-import { allPosts } from 'contentlayer/generated'
 import dayjs from 'dayjs'
 
 type Sitemap = Array<{
@@ -6,7 +5,6 @@ type Sitemap = Array<{
   lastModified?: string | Date
 }>
 
-// eslint-disable-next-line @typescript-eslint/require-await
 async function generateSitemap(): Promise<Sitemap> {
   const postData = allPosts.map((post) => ({
     url: `https://terminal-420.space/blog/${post.slug}/`,

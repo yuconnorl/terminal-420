@@ -5,14 +5,14 @@ import {
   BarChart,
   CartesianGrid,
   LabelList,
+  PolarAngleAxis,
+  PolarGrid,
+  PolarRadiusAxis,
+  Radar,
+  RadarChart,
   ReferenceLine,
   XAxis,
   YAxis,
-  PolarAngleAxis,
-  PolarGrid,
-  Radar,
-  RadarChart,
-  PolarRadiusAxis,
 } from 'recharts'
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
@@ -30,11 +30,11 @@ const chartConfig = {
 
 export default function MEQ30Result({ rawData }: { rawData: any }) {
   const categoryMap = {
-    'mystical': '密契體驗 (%)',
+    mystical: '密契體驗 (%)',
     'positive-mood': '正面情緒 (%)',
     'transcendence-of-time-and-space': '超越時間及空間 (%)',
-    'ineffability': '超言說性 (%)',
-  };
+    ineffability: '超言說性 (%)',
+  }
 
   const subscaleMap = {
     mystical: [4, 5, 6, 9, 14, 15, 16, 18, 20, 21, 23, 24, 25, 26, 28],
@@ -68,12 +68,12 @@ export default function MEQ30Result({ rawData }: { rawData: any }) {
   const isCompleteMythicalExperience = chartDataNormalised.every((d) => d.scorePercentage >= 60)
 
   return (
-    <Card className='dark:border-neutral-200 dark:bg-neutral-50 border-neutral-200 bg-neutral-50'>
+    <Card className='border-neutral-200 bg-neutral-50 dark:border-neutral-200 dark:bg-neutral-50'>
       <CardHeader>
         <CardTitle>MEQ-30 Result</CardTitle>
         <CardDescription className='font-cubic'>密契體驗問卷結果</CardDescription>
       </CardHeader>
-      <CardContent className='flex flex-col md:flex-row gap-2'>
+      <CardContent className='flex flex-col gap-2 md:flex-row'>
         <ChartContainer className='flex-[1_1_0]' config={chartConfig}>
           <BarChart
             accessibilityLayer
@@ -99,7 +99,7 @@ export default function MEQ30Result({ rawData }: { rawData: any }) {
               content={
                 <ChartTooltipContent
                   hideIndicator
-                  labelFormatter={(value, payload) => {
+                  labelFormatter={(value) => {
                     return categoryMap[value as keyof typeof categoryMap]
                   }}
                 />
@@ -114,7 +114,15 @@ export default function MEQ30Result({ rawData }: { rawData: any }) {
                 fontSize={12}
               />
             </Bar>
-            <ReferenceLine x={60} stroke='var(--color-red-500)' strokeDasharray='3 3' ifOverflow='extendDomain' label={{ value: 'Threshold', position: 'insideTop', fill: 'var(--color-red-600)' }} isFront strokeWidth={2} />
+            <ReferenceLine
+              x={60}
+              stroke='var(--color-red-500)'
+              strokeDasharray='3 3'
+              ifOverflow='extendDomain'
+              label={{ value: 'Threshold', position: 'insideTop', fill: 'var(--color-red-600)' }}
+              isFront
+              strokeWidth={2}
+            />
           </BarChart>
         </ChartContainer>
         <ChartContainer className='flex-[1_1_0]' config={chartConfig}>

@@ -1,10 +1,9 @@
 import Image from 'next/image'
 
+import { IMAGE_PLACEHOLDER_URL } from '@/configs/general'
 import { cn } from '@/lib/utils'
 
-import { IMAGE_PLACEHOLDER_URL } from '@/configs/general'
-
-interface Props {
+type Props = {
   src: string
   caption?: string
   alt: string

@@ -1,9 +1,9 @@
+import { Danger, Info, Warn } from '@/components/icons'
 import { cn } from '@/lib/utils'
 
-import { Danger, Info, Warn } from '@/components/icons'
 type Status = 'info' | 'warn' | 'danger'
 
-interface Props {
+type Props = {
   title?: string
   children?: React.ReactNode
   types: Status

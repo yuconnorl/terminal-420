@@ -35,7 +35,6 @@ const BackgroundCanvas = () => {
           : (window.innerWidth / 2560) * RATIO_CONSTANT
 
     for (let i = 0; i < number; i++) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const color: string = Common.choose(COLOR_ARRAY)
       const random = Math.random() * 1.33
       const weedBody = Bodies.rectangle(

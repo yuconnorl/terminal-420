@@ -1,31 +1,73 @@
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
 import { FlatCompat } from '@eslint/eslintrc'
-import prettier from 'eslint-plugin-prettier'
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
+import js from '@eslint/js'
+import typescriptEslint from '@typescript-eslint/eslint-plugin'
+import tsParser from '@typescript-eslint/parser'
+import simpleImportSort from 'eslint-plugin-simple-import-sort'
 
 const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
+const __dirname = path.dirname(__filename)
 const compat = new FlatCompat({
   baseDirectory: __dirname,
 })
 
 const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript', 'prettier'),
   {
-    files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx', '**/*.mjs'],
+    ignores: ['src/components/ui/*'],
+  },
+  js.configs.recommended,
+  ...compat.extends(
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:jsx-a11y/recommended',
+    'plugin:prettier/recommended',
+    'next',
+    'next/core-web-vitals',
+  ),
+  {
     plugins: {
-      // 'simple-import-sort': simpleImportSort,
-      prettier,
+      '@typescript-eslint': typescriptEslint,
+      'simple-import-sort': simpleImportSort,
     },
+
+    languageOptions: {
+      parser: {
+        parse: tsParser.parse,
+        meta: {
+          name: '@typescript-eslint/parser',
+        },
+      },
+      ecmaVersion: 6,
+      // sourceType: 'commonjs',
+      sourceType: 'module',
+
+      parserOptions: {
+        project: true,
+        tsconfigRootDir: __dirname,
+      },
+    },
+
     rules: {
       'prettier/prettier': 'error',
-      'arrow-body-style': 'off',
-      'prefer-arrow-callback': 'off',
-      'no-unused-vars': ['warn', { varsIgnorePattern: '^[A-Z_]' }],
-      '@typescript-eslint/no-unused-vars': 'warn',
-      // 'simple-import-sort/imports': 'error',
-      // 'simple-import-sort/exports': 'error',
+      'react/react-in-jsx-scope': 'off',
+      'jsx-a11y/anchor-is-valid': [
+        'error',
+        {
+          components: ['Link'],
+          specialLink: ['hrefLeft', 'hrefRight'],
+          aspects: ['invalidHref', 'preferButton'],
+        },
+      ],
+      'react/prop-types': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      'react/no-unescaped-entities': 'off',
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+      '@typescript-eslint/no-var-requires': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off',
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
     },
   },
 ]

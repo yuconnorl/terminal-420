@@ -1,9 +1,10 @@
+import './global.css'
+
 import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { ThemeProvider } from 'next-themes'
 import { Toaster } from 'sonner'
-import './global.css'
 
 import Footer from '@/components/footer'
 import Header from '@/components/header'

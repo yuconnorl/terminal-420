@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { cn } from '@/lib/utils'
 
-interface MenuData {
+type MenuData = {
   id: string
   heading: string
   headingLevel: number
@@ -83,12 +83,12 @@ const SidePanel = ({ rawPost = '' }) => {
     <aside ref={sidebar} className={cn('sticky hidden h-fit min-w-52 flex-col xl:top-16 xl:block')}>
       <div className='mb-3 flex pl-2'>
         <p className='font-mono text-sm'>Contents</p>
-        <div
+        <button
           className='relative ml-1 -translate-y-0.5 cursor-pointer transition-opacity hover:opacity-70'
           onClick={onChevronClick}
         >
           <span>{isAsideOpen ? '🐵' : '🙈'}</span>
-        </div>
+        </button>
       </div>
       <ul
         className={cn(
@@ -108,7 +108,7 @@ const SidePanel = ({ rawPost = '' }) => {
             )}
             key={id}
           >
-            <a
+            <button
               className='text-left text-sm'
               onClick={(e) => {
                 e.preventDefault()
@@ -120,7 +120,7 @@ const SidePanel = ({ rawPost = '' }) => {
               }}
             >
               {heading}
-            </a>
+            </button>
           </li>
         ))}
       </ul>

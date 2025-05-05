@@ -2,7 +2,7 @@ import clsx from 'clsx'
 
 import { OuterSpace, PartyRocket, TrashBin } from './icons'
 
-interface Props {
+type Props = {
   title: string
   icon: keyof typeof IconMap
   isSpaceMode?: boolean

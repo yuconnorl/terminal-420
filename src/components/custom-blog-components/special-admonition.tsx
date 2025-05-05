@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils'
 
 type ThemeTypes = 'weed' | 'mushroom'
 
-interface Props {
+type Props = {
   title?: string
   children?: React.ReactNode
   themeType: ThemeTypes

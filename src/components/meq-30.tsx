@@ -1,71 +1,73 @@
-'use client';
+'use client'
 
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { useReducer, useCallback, memo, useState } from 'react';
-import MEQ30Result from './meq-30-result';
+import { memo, useCallback, useReducer, useState } from 'react'
 
-interface QuestionProps {
-  question: string;
-  index: number;
-  selectedValue: string;
-  handleOptionChange: (index: number, value: string) => void;
-  category: string;
-  isSubmitted: boolean;
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+
+import MEQ30Result from './meq-30-result'
+
+type QuestionProps = {
+  question: string
+  index: number
+  selectedValue: string
+  handleOptionChange: (index: number, value: string) => void
+  category: string
+  isSubmitted: boolean
 }
 
-const Question = memo(({ question, index, selectedValue, handleOptionChange, category, isSubmitted }: QuestionProps) => {
-  const options = ['0', '1', '2', '3', '4', '5'];
+const Question = memo(
+  ({ question, index, selectedValue, handleOptionChange, category, isSubmitted }: QuestionProps) => {
+    const options = ['0', '1', '2', '3', '4', '5']
 
-  const categoryMap = {
-    'mystical': '密契體驗 (Mystical)',
-    'positive-mood': '正面情緒 (Positive mood)',
-    'transcendence-of-time-and-space': '超越時間及空間 (Transcendence of time and space)',
-    'ineffability': '超言說性 (Ineffability)',
-  };
+    const categoryMap = {
+      mystical: '密契體驗 (Mystical)',
+      'positive-mood': '正面情緒 (Positive mood)',
+      'transcendence-of-time-and-space': '超越時間及空間 (Transcendence of time and space)',
+      ineffability: '超言說性 (Ineffability)',
+    }
 
-  return (
-    <div className="flex flex-col gap-2 rounded p-2">
-      <div className='mb-2'>
-        {index}. {question}
+    return (
+      <div className='flex flex-col gap-2 rounded p-2'>
+        <div className='mb-2'>
+          {index}. {question}
+        </div>
+        <RadioGroup
+          value={selectedValue}
+          onValueChange={(value) => handleOptionChange(index, value)}
+          className='flex gap-4'
+        >
+          {options.map((option) => (
+            <div key={option} className='flex items-center space-x-1'>
+              <RadioGroupItem value={option} id={`q${index}-option${option}`} />
+              <Label htmlFor={`q${index}-option${option}`}>{option}</Label>
+            </div>
+          ))}
+        </RadioGroup>
+        {isSubmitted && <Badge className='mt-1'>{categoryMap[category as keyof typeof categoryMap]}</Badge>}
       </div>
-      <RadioGroup
-        value={selectedValue}
-        onValueChange={(value) => handleOptionChange(index, value)}
-        className="flex gap-4"
-      >
-        {options.map((option) => (
-          <div key={option} className="flex items-center space-x-1">
-            <RadioGroupItem value={option} id={`q${index}-option${option}`} />
-            <Label htmlFor={`q${index}-option${option}`}>{option}</Label>
-          </div>
-        ))}
-      </RadioGroup>
-      {isSubmitted &&
-        <Badge className="mt-1">{categoryMap[category as keyof typeof categoryMap]}</Badge>
-      }
-    </div>
-  );
-});
+    )
+  },
+)
 
-Question.displayName = 'Question';
+Question.displayName = 'Question'
 
 const reducer = (state: { [key: number]: string }, action: { type: 'UPDATE'; index: number; value: string }) => {
   if (action.type === 'UPDATE') {
-    return { ...state, [action.index]: action.value };
+    return { ...state, [action.index]: action.value }
   }
-  return state;
-};
+  return state
+}
 
 const MEQ30 = () => {
   const subscales = {
-    'mystical': [4, 5, 6, 9, 14, 15, 16, 18, 20, 21, 23, 24, 25, 26, 28],
+    mystical: [4, 5, 6, 9, 14, 15, 16, 18, 20, 21, 23, 24, 25, 26, 28],
     'positive-mood': [2, 8, 12, 17, 27, 30],
     'transcendence-of-time-and-space': [1, 7, 11, 13, 19, 22],
-    'ineffability': [3, 10, 29],
-  };
+    ineffability: [3, 10, 29],
+  }
 
   const questionsData = [
     {
@@ -179,7 +181,8 @@ const MEQ30 = () => {
       category: 'transcendence-of-time-and-space',
     },
     {
-      question: '現在你很確信，你在旅程中曾遇見終極實相（ultimate reality）。像是你在過程中曾聽到或看到什麼是真的現實（really real）',
+      question:
+        '現在你很確信，你在旅程中曾遇見終極實相（ultimate reality）。像是你在過程中曾聽到或看到什麼是真的現實（really real）',
       index: 23,
       category: 'mystical',
     },
@@ -218,22 +221,28 @@ const MEQ30 = () => {
       index: 30,
       category: 'positive-mood',
     },
-  ];
+  ]
 
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState(false)
 
-  const [selectedValues, dispatch] = useReducer(reducer, questionsData.reduce((acc, _, index) => {
-    acc[index] = '0';
-    return acc;
-  }, {} as { [key: number]: string }));
+  const [selectedValues, dispatch] = useReducer(
+    reducer,
+    questionsData.reduce(
+      (acc, _, index) => {
+        acc[index] = '0'
+        return acc
+      },
+      {} as { [key: number]: string },
+    ),
+  )
 
   const handleOptionChange = useCallback((index: number, value: string) => {
-    dispatch({ type: 'UPDATE', index, value });
-  }, []);
-  
+    dispatch({ type: 'UPDATE', index, value })
+  }, [])
+
   return (
     <div>
-      <div className="mx-auto my-6 flex max-w-3xl flex-col gap-4">
+      <div className='mx-auto my-6 flex max-w-3xl flex-col gap-4'>
         {questionsData.map((question) => (
           <Question
             key={question.index}
@@ -246,12 +255,12 @@ const MEQ30 = () => {
           />
         ))}
       </div>
-      <Button className="mb-4" onClick={() => setSubmitted(true)}>
+      <Button className='mb-4' onClick={() => setSubmitted(true)}>
         填完了！
       </Button>
       {submitted && <MEQ30Result rawData={selectedValues} />}
     </div>
-  );
-};
+  )
+}
 
-export default MEQ30;
+export default MEQ30

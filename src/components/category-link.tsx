@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 import { Folder } from '@/components/icons'
 
-interface Props {
+type Props = {
   category?: string
   count?: number
   isActive?: boolean

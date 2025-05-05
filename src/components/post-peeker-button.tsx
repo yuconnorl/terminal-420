@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { getAngle } from '@/helper/angle'
 
-interface Props {
+type Props = {
   title: string
   slug: string
 }
@@ -80,11 +80,15 @@ const PostPeekerButton = ({ title, slug }: Props) => {
         initial='initial'
         animate='initial'
         whileHover='animate'
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onHoverStart={handleMouseEnter}
+        onHoverEnd={handleMouseLeave}
         className='overflow-hidden border-neutral-200 px-2 py-4 xl:py-6 dark:border-neutral-600'
       >
-        <Link className='trippy-hover flex items-center transition-opacity hover:opacity-80' href={`/blog/${slug}`}>
+        <Link
+          prefetch={false}
+          className='trippy-hover flex items-center transition-opacity hover:opacity-80'
+          href={`/blog/${slug}`}
+        >
           <div className='flex w-[75%] flex-col font-mono md:w-[90%]'>
             <p className='mb-1 font-silk text-sm tracking-tight text-neutral-600/70 xl:mb-2 dark:text-neutral-400/70'>
               Next

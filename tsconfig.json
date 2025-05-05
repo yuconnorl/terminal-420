@@ -24,22 +24,19 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },
   "include": [
-    ".eslintrc.js",
+    "eslint.config.mjs",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
     ".next/types/**/*.ts",
-    ".contentlayer/generated",
     "next.config.js",
     "postcss.config.js",
     "prettier.config.js",
-    "tailwind.config.js"
   ],
-  "exclude": ["node_modules", "tailwind.config.js"]
+  "exclude": ["node_modules"]
 }

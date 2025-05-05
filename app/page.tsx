@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const LandingPage = () => {
   return (
-    <section className='max-w-2xl w-full pt-8'>
+    <section className='w-full max-w-2xl pt-8'>
       <div className='mb-10'>
         <h1 className='mb-8 text-3xl font-bold md:text-4xl'>👋 👋 👋</h1>
         <Image className='mb-6 inline align-middle' src={homer} alt='Homer' width={240} />
