@@ -1,12 +1,14 @@
+import './global.css'
+
 import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-import Script from 'next/script'
+import { ThemeProvider } from 'next-themes'
+import { Toaster } from 'sonner'
 
-import './global.css'
-
-import Footer from '@/components/Footer'
-import Header from '@/components/Header'
+import Footer from '@/components/footer'
+import Header from '@/components/header'
+import { PostHogProvider } from '@/components/posthog-provider'
 
 // loading local fonts
 const notoTc = localFont({
@@ -26,6 +28,16 @@ const notoTc = localFont({
 const jetBrain = localFont({
   src: '../public/fonts/jetbrain-mono-variable.ttf',
   variable: '--font-jet-brain',
+})
+
+const cubic_11 = localFont({
+  src: '../public/fonts/cubic_11.woff2',
+  variable: '--font-cubic-11',
+})
+
+const silkScreen = localFont({
+  src: '../public/fonts/silk-screen-regular.ttf',
+  variable: '--font-silk-screen',
 })
 
 // built-in SEO helper
@@ -79,33 +91,28 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html
       id='root'
       lang='zh-TW'
+      suppressHydrationWarning
       className={clsx(
-        'scrollbar w-full bg-main-black font-sans-serif text-mallard-50 3xl:text-[1.1rem]',
+        'scrollbar font-sans-serif w-full bg-[#f7f6f5] transition-colors duration-200 dark:bg-neutral-800',
         notoTc.variable,
         jetBrain.variable,
+        cubic_11.variable,
+        silkScreen.variable,
       )}
     >
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${
-          process.env.GA_TRACKING_ID || ''
-        }`}
-      />
-      <Script id='google-analytics'>
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${process.env.GA_TRACKING_ID || ''}');
-        `}
-      </Script>
       <body className='w-full antialiased'>
-        <div className='main flex w-full flex-col justify-between'>
-          <Header />
-          <main className='relative flex w-full flex-[1_0_0] justify-center px-6'>
-            {children}
-          </main>
-          <Footer />
-        </div>
+        <PostHogProvider>
+          <ThemeProvider>
+            <div className='flex min-h-screen flex-col'>
+              <Header />
+              <main className='relative flex w-full flex-[1_0_0] justify-center px-6 text-neutral-800 dark:text-neutral-200'>
+                {children}
+              </main>
+              <Footer />
+            </div>
+            <Toaster />
+          </ThemeProvider>
+        </PostHogProvider>
       </body>
     </html>
   )

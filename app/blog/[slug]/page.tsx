@@ -1,95 +1,110 @@
-/* eslint-disable @typescript-eslint/require-await */
-import { allPosts, type Post } from 'contentlayer/generated'
 import dayjs from 'dayjs'
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import Balancer from 'react-wrap-balancer'
 
-import CategoryLink from '@/components/CategoryLink'
-import CommentSection from '@/components/CommentSection'
-import Mdx from '@/components/Mdx'
-import PostPeekerButton from '@/components/PostPeekerButton'
-import SidePanel from '@/components/SidePanel'
+import CommentSection from '@/components/comment-section'
+import PostPeekerButton from '@/components/post-peeker-button'
+import SidePanel from '@/components/side-panel'
+import { cn } from '@/lib/utils'
 
-export async function generateStaticParams() {
-  return allPosts.map((post) => ({
-    slug: post.slug,
-  }))
-}
+import { getBlogPosts } from '../utils'
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post: Post | undefined = allPosts.find(
-    (post) => post.slug === params.slug,
-  )
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const { default: Post } = await import(`@/contents/${slug}.mdx`)
 
-  return {
-    title: post?.title,
-    description: post?.description,
-    openGraph: {
-      title: post?.title,
-      description: post?.description,
-      url: `https://terminal-420.space/blog/${post ? post?.slug : ''}`,
-      publishedTime: post?.date,
-      type: 'article',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post?.title,
-      description: post?.description,
-    },
-  }
-}
-interface Props {
-  params: Post
-}
+  const posts = getBlogPosts()
+  const filteredPosts = posts.filter((post) => post.metadata.id !== slug)
 
-export default async function Blog({ params }: Props) {
-  const post: Post | undefined = allPosts.find(
-    (post) => post.slug === params.slug,
-  )
+  const randomIndex = Math.floor(Math.random() * filteredPosts.length)
+  const randomPost = filteredPosts[randomIndex]
 
-  const currentPostId = post?.id
-  const allPostWithoutCurrent = allPosts.filter(
-    (post) => post.id !== currentPostId,
-  )
+  const currentPost = posts.find((post) => post.slug === slug)
 
-  const randomIndex = Math.floor(Math.random() * allPostWithoutCurrent.length)
-  const randomPost = allPostWithoutCurrent[randomIndex]
-
-  if (!post) {
+  if (!currentPost) {
     notFound()
   }
 
   return (
-    <div className='3xl:max-w-8xl relative w-full max-w-6xl pt-8 font-sans-serif xl:grid xl:grid-cols-section xl:gap-7 2xl:gap-10 3xl:gap-12'>
-      <section className='col-start-2 mx-auto w-full max-w-3xl'>
-        <h1 className='font-mono text-2xl font-bold tracking-tight md:text-3xl'>
-          <Balancer>{post?.title}</Balancer>
-        </h1>
-        <div className='mb-10 mt-4 flex items-center gap-4 font-mono text-sm tracking-tighter text-main-gray'>
-          <p>{dayjs(post?.date).format('MMM DD, YYYY')}</p>
-          <CategoryLink
-            categoryDisplayName={post?.categoryDisplayName}
-            category={post?.category}
-          />
+    <div className='flex w-full max-w-2xl lg:gap-10'>
+      <article className='w-full'>
+        <h1 className='title font-cubic text-2xl font-semibold tracking-wide'>{currentPost.metadata.title}</h1>
+        <div className='mt-1 mb-6 flex items-center justify-between text-sm'>
+          <time className='font-silk tracking-tight text-neutral-600 tabular-nums dark:text-neutral-400'>
+            {dayjs(currentPost.metadata.publishedAt).format('MMM DD, YYYY')}
+          </time>
         </div>
-        <Mdx code={post?.body.code} />
-        <div className='pb-4 pt-1 text-right italic text-mallard-100'>
+        <section
+          className={cn(
+            'prose mb-10 max-w-2xl prose-neutral lg:min-w-2xl dark:prose-invert prose-headings:relative prose-headings:font-cubic prose-h2:text-xl prose-h3:text-lg prose-blockquote:border-s-[2px] prose-ul:pl-2',
+          )}
+        >
+          <Post />
+        </section>
+        <div className='pt-1 pb-4 text-right text-sm text-neutral-600 italic dark:text-neutral-400'>
           <span>Last updated on</span>
-          <span className='ml-1.5 font-bold'>
-            {dayjs(post?.modifiedDate).format('MMM DD, YYYY')}
-          </span>
+          <time className='ml-1.5 font-silk font-bold tracking-tight'>
+            {dayjs(currentPost?.metadata?.modifiedAt).format('MMM DD, YYYY')}
+          </time>
         </div>
-        {randomPost?.id && (
-          <PostPeekerButton
-            title={randomPost.title}
-            description={randomPost.description}
-            slug={randomPost.slug}
-          />
-        )}
+        {randomPost?.metadata?.id && <PostPeekerButton title={randomPost.metadata.title} slug={randomPost.slug} />}
+        <Link
+          href='/'
+          prefetch={false}
+          className='mt-6 block font-silk text-base text-neutral-800 italic transition-opacity hover:opacity-60 md:mt-8 dark:text-neutral-200'
+        >
+          <span>{`< Back`}</span>
+        </Link>
         <CommentSection />
-      </section>
-      <SidePanel rawPost={post?.body.raw} />
+      </article>
+      <SidePanel rawPost={currentPost?.content} />
     </div>
   )
+}
+
+export function generateStaticParams() {
+  const posts = getBlogPosts()
+
+  return posts.map((post) => ({ slug: post.slug }))
+}
+
+export const dynamicParams = false
+
+type MetadataProps = {
+  params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: MetadataProps): Promise<Metadata> {
+  const { slug } = await params
+  const post = getBlogPosts().find((post) => post.slug === slug)
+
+  if (!post) {
+    return {
+      title: '404 Not Found',
+      description: 'Page not found',
+    }
+  }
+
+  const { title, publishedAt, description } = post.metadata
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      publishedTime: publishedAt,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}`,
+      siteName: process.env.NEXT_PUBLIC_SITE_NAME,
+      images: [`/api/og-image?title=${title}`],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [`/api/og-image?title=${title}`],
+    },
+  }
 }

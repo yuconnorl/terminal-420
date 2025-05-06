@@ -1,17 +1,173 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@theme {
+  /* Font */
+  --font-noto: var(--font-noto), "sans-serif"; 
+  --font-mono: var(--font-jet-brain), "monospace";
+  --font-cubic: var(--font-cubic-11), "sans-serif";
+  --font-silk: var(--font-silk-screen), "sans-serif";
+
+  /* Color */
+  --color-info: #12b59d;
+  --color-warn: #f59e0b;
+  --color-danger: #e53e3e;
+  --color-weed: #5b9764;
+  --color-mushroom: #e293db;
+
+  /* Background */
+  --bg-link-arrow: url('/public/images/link-arrow.svg');
+  --bg-link-arrow-dark: url('/public/images/link-arrow-dark.svg');
+  --bg-galaxy: url('/public/images/galaxy.webp');
+
+  --animate-weed: weed 30s ease-in-out infinite;
+  --animate-mushroom: mushroom 25s ease-in-out infinite;
+  --animate-rainbow: rainbow 10s linear infinite;
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-blink: blink 1s infinite step-end;
+
+  @keyframes weed {
+    0% { transform: translate(-10%, -10%) }
+    50% { transform: translate(-40.5%, -40.5%) }
+    100% { transform: translate(-10%, -10%) }
+  }
+
+  @keyframes mushroom {
+    0% { transform: translate(-10%, -10%) }
+    50% { transform: translate(-40.5%, -40.5%) }
+    100% { transform: translate(-10%, -10%) }
+  }
+
+  @keyframes rainbow {
+    0% { background-position: 0% center }
+    50% { background-position: 1000px center }
+    100% { background-position: 2000px center }
+  }
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  @keyframes blink {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+@layer components {
+  .trippy {
+    @apply animate-rainbow bg-conic/decreasing from-violet-700 via-lime-300 to-emerald-500 bg-clip-text text-transparent
+  }
+
+  .trippy-hover {
+    @variant hover {
+      @apply animate-rainbow bg-conic/decreasing from-violet-700 via-lime-300 to-emerald-500 bg-clip-text text-transparent
+    }
+  }
+
+  .data-footnote-backref {
+    @apply font-silk text-xs tracking-tighter text-neutral-600/70 dark:text-neutral-400/70;
+  }
+}
+
+:root {
+  /* Class, number and null - using Ansi 4 (Blue) */
+  --sh-class: #89DDFF; 
+  /* Identifier - using Foreground Color */
+  --sh-identifier: #A6ACD0; 
+  /* Sign - using Ansi 8 */
+  --sh-sign: #A6ACD0; 
+  /* Property - using Ansi 14 (Cyan) */
+  --sh-property: #89DDFF; 
+  /* Entity - using Ansi 2 (Green) */
+  --sh-entity: #5DE496; 
+  /* JSX literals - using Ansi 5 (Magenta) */
+  --sh-jsxliterals: #FCC4EA; 
+  /* String - using Ansi 3 (Yellow) */
+  --sh-string: #FFFA7D; 
+  /* Keyword - using Ansi 1 (Red) */
+  --sh-keyword: #D09EFF; 
+  /* Comment - using a muted version of Foreground Color */
+  --sh-comment: #A6ACD0; 
+}
+
+@layer base {
+  :root {
+    --chart-1: 46 76% 61%;
+    --chart-2: 43 76% 56%;
+    --chart-3: 38 72% 50%;
+    --chart-4: 32 74% 44%;
+    --chart-5: 26 71% 37%;
+    --chart-6: 216.26 100% 57.8%;
+  }
+ 
+  .dark {
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --chart-6: 216.26 100% 57.8%;
+  }
+}
 
 html, body {
+  /* to prevent content reflow due to scrollbar gutter show/hide */
   scrollbar-gutter: stable;
 }
 
 .prose .anchor {
   @apply absolute invisible no-underline -ml-4 md:-ml-6 pr-1 md:pr-2;
-
+  
   width: 80%;
-  height: 100%;
-  cursor: pointer;
 }
 
 .anchor:hover {
@@ -19,21 +175,12 @@ html, body {
 }
 
 .prose .anchor::after {
-  @apply absolute text-slate-300;
+  @apply absolute text-neutral-700 dark:text-neutral-300;
   content: '#';
 }
 
 .prose *:hover > .anchor {
   @apply visible;
-}
-
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4,
-.prose h5,
-.prose h6 {
-  @apply relative text-mallard-50
 }
 
 .inline-code {
@@ -77,36 +224,19 @@ svg:hover #down {
 
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
-  background-color: #1d1b1b;
+  background-color: #oklch(55.6% 0 0);
   width: 3px;
   height: 5px;
  }
-
-html::-webkit-scrollbar-thumb,
-body::-webkit-scrollbar {
-  background-color:#999999;
-  border-radius: 10px;
-}
-
-html::-webkit-scrollbar-track,
-body::-webkit-scrollbar {
-  background-color: #1d1b1b;
-  padding: 5px;
-}
-
-[data-rehype-pretty-code-fragment] > pre > code {
-  @apply bg-transparent inline-block;
-}
 
 .sober {
   @apply after:absolute after:-right-4 after:top-4 after:h-[1px] after:w-3 after:rotate-[315deg] after:bg-slate-100 after:content-[""] before:absolute before:-left-4 before:top-4 before:h-[1px] before:w-3 before:rotate-[35deg] before:bg-slate-100 before:content-[""]
 }
 
-.main {
-  @apply h-fit;
-  min-height: 100svh;
-}
-
 .katex-html {
   display: none;
+}
+
+.blink {
+  animation: blink 1s infinite step-end;
 }
