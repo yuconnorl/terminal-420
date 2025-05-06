@@ -103,11 +103,13 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className='w-full antialiased'>
         <PostHogProvider>
           <ThemeProvider>
-            <Header />
-            <main className='relative flex w-full flex-[1_0_0] justify-center px-6 text-neutral-800 dark:text-neutral-200'>
-              {children}
-            </main>
-            <Footer />
+            <div className='flex min-h-screen flex-col'>
+              <Header />
+              <main className='relative flex w-full flex-[1_0_0] justify-center px-6 text-neutral-800 dark:text-neutral-200'>
+                {children}
+              </main>
+              <Footer />
+            </div>
             <Toaster />
           </ThemeProvider>
         </PostHogProvider>

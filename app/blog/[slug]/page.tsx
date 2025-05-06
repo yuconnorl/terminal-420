@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import CommentSection from '@/components/comment-section'
@@ -48,6 +49,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           </time>
         </div>
         {randomPost?.metadata?.id && <PostPeekerButton title={randomPost.metadata.title} slug={randomPost.slug} />}
+        <Link
+          href='/'
+          prefetch={false}
+          className='mt-6 block font-silk text-base text-neutral-800 italic transition-opacity hover:opacity-60 md:mt-8 dark:text-neutral-200'
+        >
+          <span>{`< Back`}</span>
+        </Link>
         <CommentSection />
       </article>
       <SidePanel rawPost={currentPost?.content} />

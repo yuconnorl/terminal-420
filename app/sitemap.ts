@@ -1,36 +1,28 @@
 import dayjs from 'dayjs'
 
+import { getBlogPosts } from './blog/utils'
+
 type Sitemap = Array<{
   url: string
   lastModified?: string | Date
 }>
 
 async function generateSitemap(): Promise<Sitemap> {
-  const postData = allPosts.map((post) => ({
-    url: `https://terminal-420.space/blog/${post.slug}/`,
-    lastModified: dayjs(post.modifiedDate).format('YYYY-MM-DD').toString(),
+  const postData = getBlogPosts().map((post) => ({
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}/`,
+    lastModified: dayjs(post.metadata.modifiedAt).format('YYYY-MM-DD').toString(),
   }))
 
-  const routeData = ['', '/blog', '/categories', '/about'].map((route) => {
+  const routeData = ['', '/blog'].map((route) => {
     const now = dayjs().format('YYYY-MM-DD')
 
     return {
-      url: `https://terminal-420.space${route}/`,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/${route}`,
       lastModified: now,
     }
   })
 
-  const categories = [...new Set(allPosts.map((post) => post.category))]
-  const categoriesDate = Array.from(categories).map((category) => {
-    const now = dayjs().format('YYYY-MM-DD')
-
-    return {
-      url: `https://terminal-420.space/categories/${category}/`,
-      lastModified: now,
-    }
-  })
-
-  return [...postData, ...routeData, ...categoriesDate]
+  return [...postData, ...routeData]
 }
 
 export default generateSitemap

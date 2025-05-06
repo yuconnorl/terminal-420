@@ -70,7 +70,7 @@ export default function MEQ30Result({ rawData }: { rawData: any }) {
   return (
     <Card className='border-neutral-200 bg-neutral-50 dark:border-neutral-200 dark:bg-neutral-50'>
       <CardHeader>
-        <CardTitle>MEQ-30 Result</CardTitle>
+        <CardTitle className='dark:text-neutral-800'>MEQ-30 Result</CardTitle>
         <CardDescription className='font-cubic'>密契體驗問卷結果</CardDescription>
       </CardHeader>
       <CardContent className='flex flex-col gap-2 md:flex-row'>
@@ -143,7 +143,7 @@ export default function MEQ30Result({ rawData }: { rawData: any }) {
           </RadarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className='flex-col items-start gap-2 text-sm'>
+      <CardFooter className='flex-col items-start gap-2 text-sm dark:text-neutral-800'>
         {isCompleteMythicalExperience && (
           <div className='flex flex-col items-start font-cubic'>
             <span>完整的密契體驗</span>

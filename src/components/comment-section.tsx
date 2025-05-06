@@ -9,7 +9,7 @@ const CommentSection = () => {
   const { resolvedTheme, setTheme } = useTheme()
 
   return (
-    <div className='py-10 md:py-16 dark:border-neutral-600'>
+    <div className='pt-6 pb-8 md:pt-8 md:pb-10 dark:border-neutral-600'>
       <Giscus
         id='comments'
         repo={giscusConfig.repo}
