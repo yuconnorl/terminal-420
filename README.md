@@ -6,6 +6,5 @@ Terminal 420, a blog that focuses on web-related tech, cannabis and psychedelic 
 
 ## Tech Stack
 
-- Next.js 13 with app router
-- ContentLayer for transforming Mdx file into data
-- Matter.js 
+- Next.js with app router
+- `@next/mdx` for mdx support (used to be `contentlayer` but it's no longer maintained 😢 but it's still a nice lib to work with. Community fork [contentlayer2](https://github.com/timlrx/contentlayer2)
