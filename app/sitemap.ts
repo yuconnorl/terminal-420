@@ -13,7 +13,7 @@ async function generateSitemap(): Promise<Sitemap> {
     lastModified: dayjs(post.metadata.modifiedAt).format('YYYY-MM-DD').toString(),
   }))
 
-  const routeData = ['', '/blog'].map((route) => {
+  const routeData = [''].map((route) => {
     const now = dayjs().format('YYYY-MM-DD')
 
     return {
