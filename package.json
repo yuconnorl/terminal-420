@@ -33,6 +33,7 @@
     "posthog-js": "^1.236.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-markdown": "^10.1.0",
     "react-wrap-balancer": "^1.0.0",
     "recharts": "^2.15.3",
     "rehype-add-classes": "^1.0.0",

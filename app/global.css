@@ -49,8 +49,8 @@
   --animate-weed: weed 30s ease-in-out infinite;
   --animate-mushroom: mushroom 25s ease-in-out infinite;
   --animate-rainbow: rainbow 10s linear infinite;
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-accordion-down: accordion-down 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --animate-accordion-up: accordion-up 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --animate-blink: blink 1s infinite step-end;
 
   @keyframes weed {
