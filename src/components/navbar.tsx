@@ -10,7 +10,6 @@ import { getAngle } from '@/helper/angle'
 
 const Navbar = () => {
   const logoRef = useRef<HTMLImageElement | null>(null)
-  const [isMounted, setIsMounted] = useState(false)
 
   const onMousemove = useCallback((e: MouseEvent) => {
     const mouseX = e.clientX
@@ -27,11 +26,7 @@ const Navbar = () => {
   }, [])
 
   useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  useEffect(() => {
-    if (!isMounted || !logoRef.current) return
+    if (!logoRef.current) return
 
     logoRef.current.addEventListener('mousemove', onMousemove)
 
@@ -40,7 +35,7 @@ const Navbar = () => {
         logoRef.current.removeEventListener('mousemove', onMousemove)
       }
     }
-  }, [isMounted, onMousemove])
+  }, [onMousemove])
 
   return (
     <div className='mx-auto flex max-w-2xl flex-col'>
