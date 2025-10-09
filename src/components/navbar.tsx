@@ -43,13 +43,15 @@ const Navbar = () => {
   }, [isMounted, onMousemove])
 
   return (
-    <div className='mx-auto flex max-w-2xl items-center justify-between'>
-      <Link prefetch={false} href='/'>
-        <Image ref={logoRef} alt='logo' src='/images/logo.svg' width={32} height={32} />
-      </Link>
-      <div className='flex items-center gap-2'>
-        <ThemeToggle />
-        <SoberUpButton />
+    <div className='mx-auto flex max-w-2xl flex-col'>
+      <div className='flex items-center justify-between'>
+        <Link prefetch={false} href='/'>
+          <Image ref={logoRef} alt='logo' src='/images/logo.svg' width={32} height={32} />
+        </Link>
+        <div className='flex items-center gap-2'>
+          <ThemeToggle />
+          <SoberUpButton />
+        </div>
       </div>
     </div>
   )

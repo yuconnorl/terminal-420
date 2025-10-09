@@ -19,7 +19,7 @@ export function BlogPosts() {
           <Link
             prefetch={false}
             key={post.slug}
-            className='transition-opacity hover:opacity-50'
+            className='relative hover:opacity-50 before:content-[">"] before:absolute before:-left-3.5 sm:before:-left-4.5 before:font-silk before:text-neutral-600 dark:before:text-neutral-400 before:dark:text-neutral-600 before:opacity-0 hover:before:opacity-100'
             href={`/blog/${post.slug}`}
           >
             <div className='flex w-full flex-col space-x-0 md:flex-row md:space-x-2'>

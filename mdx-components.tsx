@@ -16,7 +16,7 @@ const CustomLink = (props: CustomLinkProps) => {
   if (href?.startsWith('/')) {
     return (
       <Link
-        className='h-fit text-[#8c796a] transition-opacity hover:opacity-70 dark:text-[#c3bbae]'
+        className='h-fit text-[#8c796a] hover:opacity-70 dark:text-[#c3bbae]'
         prefetch={false}
         href={href}
         {...props}
@@ -27,12 +27,12 @@ const CustomLink = (props: CustomLinkProps) => {
   }
 
   if (href?.startsWith('#') && props['data-footnote-ref']) {
-    return <a className='h-fit pl-1 font-silk transition-opacity hover:opacity-70' {...props} />
+    return <a className='h-fit pl-1 font-silk hover:opacity-70' {...props} />
   } else if (href?.startsWith('#')) {
-    return <a className='h-fit transition-opacity hover:opacity-70' {...props} />
+    return <a className='h-fit hover:opacity-70' {...props} />
   } else {
     return (
-      <span className='not-prose m-0 mr-[2px] inline-flex text-[#8c796a] transition-opacity hover:opacity-70 dark:text-[#c3bbae]'>
+      <span className='not-prose m-0 mr-[2px] inline-flex text-[#8c796a] hover:opacity-70 dark:text-[#c3bbae]'>
         <a
           className='after:contents-[""] relative inline-block underline underline-offset-2 after:relative after:left-[2px] after:inline-block after:h-3 after:w-3 after:bg-[url(/images/link-arrow-dark.svg)] after:bg-contain after:bg-center after:bg-no-repeat dark:after:bg-[url(/images/link-arrow.svg)]'
           target='_blank'

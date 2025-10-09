@@ -3,9 +3,8 @@ import { fileURLToPath } from 'node:url'
 
 import { FlatCompat } from '@eslint/eslintrc'
 import js from '@eslint/js'
-import typescriptEslint from '@typescript-eslint/eslint-plugin'
-import tsParser from '@typescript-eslint/parser'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
+import tseslint from 'typescript-eslint'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -18,31 +17,16 @@ const eslintConfig = [
     ignores: ['src/components/ui/*'],
   },
   js.configs.recommended,
-  ...compat.extends(
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:jsx-a11y/recommended',
-    'plugin:prettier/recommended',
-    'next',
-    'next/core-web-vitals',
-  ),
+  ...tseslint.configs.recommended,
+  ...compat.extends('plugin:jsx-a11y/recommended', 'plugin:prettier/recommended', 'next', 'next/core-web-vitals'),
   {
     plugins: {
-      '@typescript-eslint': typescriptEslint,
       'simple-import-sort': simpleImportSort,
     },
 
     languageOptions: {
-      parser: {
-        parse: tsParser.parse,
-        meta: {
-          name: '@typescript-eslint/parser',
-        },
-      },
-      ecmaVersion: 6,
-      // sourceType: 'commonjs',
+      ecmaVersion: 'latest',
       sourceType: 'module',
-
       parserOptions: {
         project: true,
         tsconfigRootDir: __dirname,

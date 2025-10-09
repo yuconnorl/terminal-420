@@ -52,7 +52,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         <Link
           href='/'
           prefetch={false}
-          className='mt-6 block font-silk text-base text-neutral-800 italic transition-opacity hover:opacity-60 md:mt-8 dark:text-neutral-200'
+          className='mt-6 block font-silk text-base text-neutral-800 hover:opacity-60 md:mt-8 dark:text-neutral-200'
         >
           <span>{`< Back`}</span>
         </Link>

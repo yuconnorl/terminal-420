@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
-import homer from 'public/images/homer.webp'
-
+import ASCIIAnimation  from '@/components/ascii-animation-color'
 import { BlogPosts } from './blog/blog-post'
 
 export const metadata: Metadata = {
@@ -11,12 +9,12 @@ export const metadata: Metadata = {
 
 const LandingPage = () => {
   return (
-    <section className='w-full max-w-2xl pt-8'>
-      <div className='mb-10'>
-        <Image className='mb-6 inline align-middle' src={homer} alt='Homer' width={240} />
-        <div className='font-silk text-xl font-bold md:text-2xl'>
-          What’s good? Terminal 420’s all about web dev, weed, and{' '}
-          <span className='trippy inline-block'>trippy studies</span>. Take a load off and enjoy!
+    <section className='w-full max-w-2xl'>
+      <div className='mb-4'>
+        <ASCIIAnimation fps={30} frameCount={150} />
+        <span className='text-xs font-mono mb-6 block text-neutral-300 dark:text-neutral-700'>The Simpsons - Season 8, Episode 9 ("The Mysterious Voyage of Homer")</span>
+        <div className='font-silk text-xl font-semibold'>
+          Way to go. Take a load off and relax.
         </div>
       </div>
       <div className='flex flex-col gap-2'>

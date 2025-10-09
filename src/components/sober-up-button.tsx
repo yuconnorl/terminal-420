@@ -21,7 +21,7 @@ const SoberUpButton = () => {
   return (
     <button type='button' className='group relative flex md:animate-none' onClick={soberUp}>
       <div className='h-fit text-neutral-50 transition'>
-        <span className='text-2xl transition-opacity group-hover:opacity-60'>🧽</span>
+        <span className='text-2xl group-hover:opacity-60'>🧽</span>
       </div>
       <span className='absolute bottom-0 block translate-y-8 animate-blink font-silk text-xs text-neutral-700 group-hover:block md:translate-x-7 md:translate-y-2 dark:text-neutral-50'>
         Get sober

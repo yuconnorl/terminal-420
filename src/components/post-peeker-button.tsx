@@ -86,7 +86,7 @@ const PostPeekerButton = ({ title, slug }: Props) => {
       >
         <Link
           prefetch={false}
-          className='trippy-hover flex items-center transition-opacity hover:opacity-80'
+          className='flex items-center hover:opacity-60'
           href={`/blog/${slug}`}
         >
           <div className='flex w-[75%] flex-col font-mono md:w-[90%]'>
