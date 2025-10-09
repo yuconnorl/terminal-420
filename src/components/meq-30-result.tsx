@@ -28,7 +28,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export default function MEQ30Result({ rawData }: { rawData: any }) {
+export default function MEQ30Result({ rawData }: { rawData: Record<string, string> }) {
   const categoryMap = {
     mystical: '密契體驗 (%)',
     'positive-mood': '正面情緒 (%)',

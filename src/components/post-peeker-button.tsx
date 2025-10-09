@@ -84,11 +84,7 @@ const PostPeekerButton = ({ title, slug }: Props) => {
         onHoverEnd={handleMouseLeave}
         className='overflow-hidden border-neutral-200 px-2 py-4 xl:py-6 dark:border-neutral-600'
       >
-        <Link
-          prefetch={false}
-          className='flex items-center hover:opacity-60'
-          href={`/blog/${slug}`}
-        >
+        <Link prefetch={false} className='flex items-center hover:opacity-60' href={`/blog/${slug}`}>
           <div className='flex w-[75%] flex-col font-mono md:w-[90%]'>
             <p className='mb-1 font-silk text-sm tracking-tight text-neutral-600/70 xl:mb-2 dark:text-neutral-400/70'>
               Next

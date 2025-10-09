@@ -98,7 +98,7 @@ const BackgroundCanvas = () => {
     )
   }
 
-  const onMousemove = useCallback((e: MouseEvent) => {
+  function onMousemove(e: MouseEvent) {
     const html = document.getElementById('root')
     const mouseX = e.clientX
     const mouseY = e.clientY
@@ -108,7 +108,7 @@ const BackgroundCanvas = () => {
     const angleDeg = getAngle(mouseX, mouseY, centerX, centerY)
     if (!html) return
     html.style.filter = `hue-rotate(${angleDeg}deg)`
-  }, [])
+  }
 
   function toggleOuterSpaceMode() {
     if (!isSpaceMode) {
