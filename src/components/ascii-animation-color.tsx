@@ -64,7 +64,6 @@ export default function ASCIIAnimation({
   const [isLoading, setIsLoading] = useState(true)
   const [currentFrame, setCurrentFrame] = useState(0)
   const framesRef = useRef<string[]>([])
-
   const [animationManager] = useState(
     () =>
       new AnimationManager(() => {
@@ -91,7 +90,7 @@ export default function ASCIIAnimation({
         const framePromises = frameFiles.map(async (filename) => {
           const response = await fetch(`/${frameFolder}/${filename}.html`)
           if (!response.ok) {
-            throw new Error(`Failed to fetch ${filename}.txt: ${response.status}`)
+            throw new Error(`Failed to fetch ${filename}.html: ${response.status}`)
           }
           return await response.text()
         })
