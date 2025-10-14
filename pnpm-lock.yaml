@@ -56,9 +56,6 @@ importers:
       marked-custom-heading-id:
         specifier: ^2.0.4
         version: 2.0.15(marked@16.3.0)
-      matter-js:
-        specifier: ^0.19.0
-        version: 0.19.0
       next:
         specifier: ^15.3.0
         version: 15.5.3(@babel/core@7.28.4)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -165,9 +162,6 @@ importers:
       '@types/eslint':
         specifier: ^8.21.1
         version: 8.56.12
-      '@types/matter-js':
-        specifier: ^0.18.2
-        version: 0.18.5
       '@types/node':
         specifier: ^20
         version: 20.19.14
@@ -1007,9 +1001,6 @@ packages:
 
   '@types/mathjax@0.0.40':
     resolution: {integrity: sha512-rHusx08LCg92WJxrsM3SPjvLTSvK5C+gealtSuhKbEOcUZfWlwigaFoPLf6Dfxhg4oryN5qP9Sj7zOQ4HYXINw==}
-
-  '@types/matter-js@0.18.5':
-    resolution: {integrity: sha512-CV8m/FUmjmFNFcI7fUnsKcCLeqbf0kzWdKOTLGrpfKwWwrF6ggLaQlHNsg8267TkkiUAPoXY/7q6H9qwmR5TZg==}
 
   '@types/mdast@3.0.15':
     resolution: {integrity: sha512-LnwD+mUEfxWMa1QpDraczIn6k0Ee3SMicuYSSzS6ZYl2gKS09EClnJYGd8Du6rfc5r/GZEk5o1mRb8TaTj03sQ==}
@@ -2760,9 +2751,6 @@ packages:
 
   mathjax-full@3.2.2:
     resolution: {integrity: sha512-+LfG9Fik+OuI8SLwsiR02IVdjcnRCy5MufYLi0C3TdMT56L/pjB0alMVGgoWJF8pN9Rc7FESycZB9BMNWIid5w==}
-
-  matter-js@0.19.0:
-    resolution: {integrity: sha512-v2huwvQGOHTGOkMqtHd2hercCG3f6QAObTisPPHg8TZqq2lz7eIY/5i/5YUV8Ibf3mEioFEmwibcPUF2/fnKKQ==}
 
   mdast-util-directive@2.2.4:
     resolution: {integrity: sha512-sK3ojFP+jpj1n7Zo5ZKvoxP1MvLyzVG63+gm40Z/qI00avzdPCYxt7RBMgofwAva9gBjbDBWVRB/i+UD+fUCzQ==}
@@ -4930,8 +4918,6 @@ snapshots:
 
   '@types/mathjax@0.0.40': {}
 
-  '@types/matter-js@0.18.5': {}
-
   '@types/mdast@3.0.15':
     dependencies:
       '@types/unist': 2.0.11
@@ -6886,8 +6872,6 @@ snapshots:
       mhchemparser: 4.2.1
       mj-context-menu: 0.6.1
       speech-rule-engine: 4.1.2
-
-  matter-js@0.19.0: {}
 
   mdast-util-directive@2.2.4:
     dependencies:

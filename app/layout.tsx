@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     'Welcome to Terminal 420, a blog that focuses on web-related tech, cannabis and psychedelic research. Pull up a chair and have fun!',
   openGraph: {
     title: 'Terminal 420',
-    description: 'Terminal 420, a place of cannabis and web tech',
+    description: 'Way to go. Take a load off and relax.',
     url: 'https://terminal-420.space',
     siteName: 'Terminal 420',
     images: [
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Terminal 420',
-    description: 'Terminal 420, a place of cannabis and web tech',
+    description: 'Way to go. Take a load off and relax.',
     images: 'https://terminal-420.space/images/og.jpeg',
   },
   robots: {

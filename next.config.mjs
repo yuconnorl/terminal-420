@@ -1,10 +1,10 @@
 import createMDX from '@next/mdx'
 import rehypeKatex from 'rehype-katex'
 import remarkFrontmatter from 'remark-frontmatter'
+import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import remarkRehype from 'remark-rehype'
-import remarkGfm from 'remark-gfm'
 
 /** @type {import("next").NextConfig} */
 const config = {
