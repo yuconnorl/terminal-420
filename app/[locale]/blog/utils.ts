@@ -53,8 +53,8 @@ function getMDXData(dir: string) {
   })
 }
 
-export function getBlogPosts() {
-  return getMDXData(path.join(process.cwd(), 'src', 'contents'))
+export function getBlogPosts(locale = 'zh-TW') {
+  return getMDXData(path.join(process.cwd(), 'src', 'contents', locale))
 }
 
 export function formatDate(date: string, includeRelative = false) {

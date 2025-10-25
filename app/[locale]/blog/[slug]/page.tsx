@@ -10,11 +10,11 @@ import { cn } from '@/lib/utils'
 
 import { getBlogPosts } from '../utils'
 
-export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
-  const { default: Post } = await import(`@/contents/${slug}.mdx`)
+export default async function Page({ params }: { params: Promise<{ slug: string; locale: string }> }) {
+  const { slug, locale } = await params
+  const { default: Post } = await import(`@/contents/${locale}/${slug}.mdx`)
 
-  const posts = getBlogPosts()
+  const posts = getBlogPosts(locale)
   const filteredPosts = posts.filter((post) => post.metadata.id !== slug)
 
   const randomIndex = Math.floor(Math.random() * filteredPosts.length)

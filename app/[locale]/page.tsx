@@ -10,7 +10,8 @@ export const metadata: Metadata = {
   description: 'Terminal 420, happy tripping!',
 }
 
-const LandingPage = async () => {
+const LandingPage = async ({ params }: { params: Promise<{ locale: string }> }) => {
+  const { locale } = await params
   const frames = await loadFrames({ frameCount: 150, frameFolder: 'frames' })
 
   return (
@@ -24,7 +25,7 @@ const LandingPage = async () => {
       </div>
       <div className='flex flex-col gap-2'>
         <h3 className='mb-4 text-xl md:text-2xl'>🧠</h3>
-        <BlogPosts />
+        <BlogPosts locale={locale} />
       </div>
     </section>
   )

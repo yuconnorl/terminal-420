@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useEffect, useRef } from 'react'
 
+import LocaleSwitcher from '@/components/locale-switcher'
 import SoberUpButton from '@/components/sober-up-button'
 import ThemeToggle from '@/components/theme-toggle'
 import { getAngle } from '@/helper/angle'
@@ -20,9 +21,7 @@ const Navbar = () => {
     const angleDeg = getAngle(mouseX, mouseY, centerX, centerY)
 
     const html = document.documentElement
-    if (html) {
-      html.style.filter = `hue-rotate(${angleDeg}deg)`
-    }
+    if (html) html.style.filter = `hue-rotate(${angleDeg}deg)`
   }, [])
 
   useEffect(() => {
@@ -43,8 +42,9 @@ const Navbar = () => {
         <Link prefetch={false} href='/'>
           <Image ref={logoRef} alt='logo' src='/images/logo.svg' width={32} height={32} />
         </Link>
-        <div className='flex items-center gap-2'>
+        <div className='flex items-center gap-0.5 md:gap-1'>
           <ThemeToggle />
+          <LocaleSwitcher />
           <SoberUpButton />
         </div>
       </div>

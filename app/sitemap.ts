@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-import { getBlogPosts } from './blog/utils'
+import { getBlogPosts } from './[locale]/blog/utils'
 
 type Sitemap = Array<{
   url: string
@@ -8,7 +8,12 @@ type Sitemap = Array<{
 }>
 
 async function generateSitemap(): Promise<Sitemap> {
-  const postData = getBlogPosts().map((post) => ({
+  const postDataZhTW = getBlogPosts('zh-TW').map((post) => ({
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}/`,
+    lastModified: dayjs(post.metadata.modifiedAt).format('YYYY-MM-DD').toString(),
+  }))
+
+  const postDataEn = getBlogPosts('en').map((post) => ({
     url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}/`,
     lastModified: dayjs(post.metadata.modifiedAt).format('YYYY-MM-DD').toString(),
   }))
@@ -22,7 +27,7 @@ async function generateSitemap(): Promise<Sitemap> {
     }
   })
 
-  return [...postData, ...routeData]
+  return [...postDataZhTW, ...postDataEn, ...routeData]
 }
 
 export default generateSitemap

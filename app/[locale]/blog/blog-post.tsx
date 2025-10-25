@@ -1,10 +1,11 @@
 import dayjs from 'dayjs'
-import Link from 'next/link'
+
+import { Link } from '@/i18n/navigation'
 
 import { getBlogPosts } from './utils'
 
-export function BlogPosts() {
-  const allBlogs = getBlogPosts()
+export function BlogPosts({ locale }: { locale: string }) {
+  const allBlogs = getBlogPosts(locale)
 
   return (
     <section className='flex flex-col gap-6 md:gap-7'>
