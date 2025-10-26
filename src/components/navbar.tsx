@@ -1,13 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { useCallback, useEffect, useRef } from 'react'
 
 import LocaleSwitcher from '@/components/locale-switcher'
 import SoberUpButton from '@/components/sober-up-button'
 import ThemeToggle from '@/components/theme-toggle'
 import { getAngle } from '@/helper/angle'
+import { Link } from '@/i18n/navigation'
 
 const Navbar = () => {
   const logoRef = useRef<HTMLImageElement | null>(null)

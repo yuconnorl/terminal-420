@@ -1,11 +1,11 @@
 import dayjs from 'dayjs'
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import CommentSection from '@/components/comment-section'
 import PostPeekerButton from '@/components/post-peeker-button'
 import SidePanel from '@/components/side-panel'
+import { Link } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
 
