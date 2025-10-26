@@ -27,7 +27,7 @@ export function BlogPosts({ locale }: { locale: string }) {
               <p className='font-cubic text-base tracking-tight text-neutral-700 md:text-lg dark:text-neutral-300'>
                 {post.metadata.title}
               </p>
-              <p className='font-silk text-sm tracking-tighter text-neutral-500 tabular-nums md:ml-auto dark:text-neutral-400'>
+              <p className='shrink-0 font-silk text-sm tracking-tighter text-neutral-500 tabular-nums md:ml-auto dark:text-neutral-400'>
                 {dayjs(post.metadata.publishedAt).format('MMM DD, YYYY')}
               </p>
             </div>

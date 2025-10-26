@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 import CommentSection from '@/components/comment-section'
 import PostPeekerButton from '@/components/post-peeker-button'
 import SidePanel from '@/components/side-panel'
+import { routing } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
 
 import { getBlogPosts } from '../utils'
@@ -64,20 +65,28 @@ export default async function Page({ params }: { params: Promise<{ slug: string;
 }
 
 export function generateStaticParams() {
-  const posts = getBlogPosts()
+  const locales = routing.locales
+  const params: { locale: string; slug: string }[] = []
 
-  return posts.map((post) => ({ slug: post.slug }))
+  locales.forEach((locale) => {
+    const posts = getBlogPosts(locale)
+    posts.forEach((post) => {
+      params.push({ locale, slug: post.slug })
+    })
+  })
+
+  return params
 }
 
 export const dynamicParams = false
 
 type MetadataProps = {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string; locale: string }>
 }
 
 export async function generateMetadata({ params }: MetadataProps): Promise<Metadata> {
-  const { slug } = await params
-  const post = getBlogPosts().find((post) => post.slug === slug)
+  const { slug, locale } = await params
+  const post = getBlogPosts(locale).find((post) => post.slug === slug)
 
   if (!post) {
     return {

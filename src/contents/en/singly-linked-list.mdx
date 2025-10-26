@@ -1,0 +1,476 @@
+---
+title: Singly Linked List
+description: index? Too naive, I am a Linked List!
+id: ff80f316-782a-459c-84ed-6964d330a2c9
+publishedAt: 2023-Jul-02 21:45:47+08:00
+category: algorithm
+---
+It's like an array data structure, but without an index; it only links data up and down. So, if we want to find the fifth item in a linked list, we have to start from the first and work our way back to the fifth.
+
+Each element in a linked list is called a node. In addition to storing its own data, each node also points to the next node.
+
+The first node in a linked list is called the head, and the last node is called the tail. This node records the length of the linked list, giving us a complete picture of the entire linked list.
+
+As the name suggests, a singly linked list is unidirectional, meaning there's only a one-way relationship from the previous node to the next. A doubly linked list, on the other hand, has a bidirectional relationship.
+
+For example, imagine two super-tall skyscrapers: an array and a linked list. An array is like a building with an elevator; you can reach a specific floor by pressing a button. A linked list, on the other hand, has stairs to climb; you have to follow them one step at a time to reach that floor.
+
+## Arrays vs. Linked Lists
+
+### Arrays
+
+- Has an index and maintains order.
+- Inserting or deleting a value is expensive, because inserting a value in one place means that subsequent indices must also change.
+
+### Linked Lists
+
+- No index; instead, head represents the beginning of the list, and tail represents the end (tail is optional).
+- Nodes are connected by pointers, meaning the previous node points to the next node.
+- Because there are no indexes, there's no way to access values randomly. To retrieve a specific value, you must iterate through the entire list until you reach it.
+- Inserting or deleting a value is a very "cheap" operation; inserting a value at a certain point in time doesn't affect the index (because there's no index, just a pointer to the next node).
+
+Next, let's implement a linked list in JavaScript!
+
+## Various Operations on a Singly Linked List
+
+- [push](#push)
+- [pop](#pop)
+- [shift](#shift)
+- [unshift](#unshift)
+- [get](#get)
+- [set](#set)
+- [insert](#insert)
+- [remove](#remove)
+- [reverse](#reverse)
+
+### Push
+
+`Push()` adds a node to the end of the list, becoming the new tail.
+
+1. This function accepts a value as a parameter.
+2. Adds a node whose value is the value passed to the function.
+3. If the list does not already have a head, sets the added node to the head.
+4. If the list already has a head, sets the next pointer in the current tail to point to the added node and sets the tail to the added node.
+5. Finally, increase the length of the list by one.
+
+```js
+push(val) {
+let newNode = new Node(val)
+// if this is the first node of the list
+if (!this.head && !this.tail) {
+this.head = newNode
+} else {
+this.tail.next = newNode
+}
+
+this.tail = newNode
+this.length++
+// return the list
+return this
+}
+```
+
+### Pop
+
+`Pop()` removes the current tail of the list and returns the removed node.
+
+This sounds easy enough. Doesn't it just remove the current tail and assign the previous node as the new tail?
+
+Yes...that's true, but our pointer points to the "next node." This means we can't access the previous node by using the tail node. We have to start from the beginning and traverse the entire list until we reach the last node, then assign that node as the new tail.
+
+```js
+pop() {
+let popNode
+if (!this.head) return
+if (this.length === 1) {
+popNode = this.head
+this.head = null
+this.tail = null
+} else {
+// store the tail for later return
+popNode = this.tail
+let current = this.head
+let newTail = current
+
+while (current.next) {
+newTail = current
+// move current forward
+current = current.next
+}
+// set the tail to the second-last item and remove its next property
+this.tail = newTail
+this.tail.next = null
+}
+
+this.length--
+return popNode
+}
+```
+
+### Shift
+
+`shift()` will remove the first node of the list
+
+```js
+shift() {
+  if (!this.head) return
+  let currentHead = this.head
+  if (this.length === 1) {
+    this.head = null
+    this.tail = null
+  } else {
+    this.head = currentHead.next
+  }
+
+  this.length--
+  return currentHead
+}
+```
+
+### Unshift
+
+`unshift()` will add a new node as the new head of the list
+
+```js
+unshift(val) {
+  let newNode = new Node(val)
+  if (!this.head) {
+    this.head = newNode
+    this.tail = newNode
+  }
+
+  newNode.next = this.head
+  //update the head of list
+  this.head = newNode
+  this.length++
+  return this
+}
+```
+
+The code above This might not seem like a big deal, but calling `unshift()` when the list has no values will add a new node as the head and tail, but this node's next block will also point to itself. Let's adjust this.
+
+```js
+unshift(val) {
+let newNode = new Node(val)
+if (!this.head) {
+this.head = newNode
+this.tail = newNode
+} else {
+newNode.next = this.head
+// Update the head of the list
+this.head = newNode
+}
+
+this.length++
+return this
+}
+```
+
+This successfully solves the problem mentioned above!
+
+### Get
+
+`get()` returns the value at that index, just like getting the value at an array index.
+
+```js
+get(index) {
+if (index < 0 || index >= this.length) return null
+let counter = 0
+let currentNode = this.head
+while (counter < index) {
+counter++
+currentNode = currentNode.next
+}
+
+return currentNode
+}
+```
+
+### Set
+
+`set()` changes the value at a specific index. The `set()` function accepts two parameters: the index and the value to be written. We can use the `get()` function described above to help us find the value.
+
+```js
+set(index, val) {
+let currentNode = this.get(index)
+
+if (!currentNode) {
+return false
+} else {
+currentNode.val = val
+return true
+}
+}
+```
+
+### Insert
+
+`insert()` inserts a value at a specific index.
+
+1. If index is less than zero or greater than the length of the list, `return false`.
+2. If index is equal to the length of the list, it means a node is added to the end of the list, equivalent to the `push` function.
+3. If index is equal to zero, it means a node is added to the beginning of the list, equivalent to the `unshift` function.
+4. If none of the above conditions are met, the value to be inserted is between two nodes. Use the `get()` function to retrieve the node at `index - 1`.
+5. Store the `next` of that node in a variable.
+6. Create a new node using the passed `val`.
+7. Set the `next` of the node retrieved by the `get()` method to the new node.
+8. Set the inserted node to point to the node previously at that position.
+9. Add list length++.
+10. Return `true`.
+
+```js
+insert(index, val) {
+// if index is less than zero or greater than the length of the list, return false
+if (index < 0 || index > this.length) return false
+
+// if index equals the length of the list, which means inserting the node at the end of the list, which is a push
+if (index === this.length) return !!this.push(val)
+
+// if index equals zero, which means inserting the node at the beginning of the list, which is an unshift
+if (index === 0) return !!this.unshift(val)
+
+  // get the item before our index
+  let currentNode = this.get(index - 1)
+  let temp = currentNode.next
+  let newNode = new Node(val)
+  currentNode.next = newNode
+  newNode.next = temp
+  this.length++
+  return true
+}
+```
+
+### Remove
+
+Remove the node located at this index
+
+```js
+remove(index) {
+  if (index < 0 || index > this.length) return
+  if (index === 0) this.shift()
+  if (index === this.length - 1) this.pop()
+
+  let prev = this.get(index - 1)
+  let removeNode = prev.next
+  // point the previous node to next next
+  prev.next = removeNode.next
+  this.length--
+  return removeNode
+}
+```
+
+### Reverse
+
+Reverse the entire linked The precondition for reversing a list is that it must be done in-place, not by making a copy and returning it.
+
+First, swap the head and tail. Since the head and tail will be swapped after reversing, and the node before the head is null, set the `prev` variable to `null`.
+
+The `node` variable stores the initial head, the `prev` variable stores the new node that the node should point to after reversing, and the `next` variable stores the `next` value of the previous node to prevent it from being overwritten during the swap.
+
+```js
+reverse() {
+// Swap head and tail
+let node = this.head
+this.head = this.tail
+this.tail = node
+
+// Initialize prev to null because tail (the reverse of head) should point to null
+let prev = null
+let next
+
+for (let i = 0; i < this.length; i++) {
+// Store the next node of the current node in the next variable
+next = node.next
+// Set the current node to point to the previous node, which is the node stored in the prev variable
+node.next = prev
+// This node is now the previous node that the next node should point to, so change the value of prev to the current node
+prev = node
+// Continue processing the next node, which is the next node stored initially
+node = next
+}
+
+return this
+}
+```
+
+`reverse` code It looks simple, but the thought process is quite taxing 🫠
+
+## Whole Singly Linked List
+
+Combining all the above methods together, you have a complete singly linked list 🎉!
+
+```js
+class Node {
+  constructor(val) {
+    this.val = val
+    this.next = null
+  }
+}
+
+class SinglyLinkedList {
+  constructor() {
+    this.head = null
+    this.tail = null
+    this.length = 0
+  }
+
+  push(val) {
+    let newNode = new Node(val)
+    // if this is the first node of list
+    if (!this.head && !this.tail) {
+      this.head = newNode
+    } else {
+      this.tail.next = newNode
+    }
+
+    this.tail = newNode
+    this.length++
+    // return the list
+    return this
+  }
+
+  pop() {
+    let popNode
+    if (!this.head) return
+    if (this.length === 1) {
+      popNode = this.head
+      this.head = null
+      this.tail = null
+    } else {
+      // store the tail for later return
+      popNode = this.tail
+      let current = this.head
+      let newTail = current
+
+      while (current.next) {
+        newTail = current
+        // move current forward
+        current = current.next
+      }
+      // set the tail to the second last item, and remove its next property
+      this.tail = newTail
+      this.tail.next = null
+    }
+
+    this.length--
+    return popNode
+  }
+
+  shift() {
+    if (!this.head) return
+    let currentHead = this.head
+    if (this.length === 1) {
+      this.head = null
+      this.tail = null
+    } else {
+      this.head = currentHead.next
+    }
+
+    this.length--
+    return currentHead
+  }
+
+  unshift(val) {
+    let newNode = new Node(val)
+    if (!this.head) {
+      this.head = newNode
+      this.tail = newNode
+    }
+
+    newNode.next = this.head
+    //update the head of list
+    this.head = newNode
+    this.length++    return this
+  }
+
+  get(index) {
+    if (index < 0 || index >= this.length) return null
+    let counter = 0
+    let currentNode = this.head
+    while (counter < index) {
+      counter++
+      currentNode = currentNode.next
+    }
+
+    return currentNode
+  }
+
+  set(index, val) {
+    let currentNode = this.get(index)
+
+    if (!currentNode) {
+      return false
+    } else {
+      currentNode.val = val
+      return true
+    }
+  }
+
+  insert(index, val) {
+    // if index less than zero or greater than the length of list, return false
+    if (index < 0 || index > this.length) return false
+
+    // if index equal to the length of list, which means to insert node at the end of list, which is push
+    if (index === this.length) return !!this.push(val)
+
+    // if index equal to zero, which means to insert node at the start of list, which is unshift
+    if (index === 0) return !!this.unshift(val)
+
+    // get the item before our index
+    let currentNode = this.get(index - 1)
+    let temp = currentNode.next
+    let newNode = new Node(val)
+    currentNode.next = newNode
+    newNode.next = temp
+    this.length++
+    return true
+  }
+
+  remove(index) {
+    if (index < 0 || index > this.length) return
+    if (index === 0) this.shift()
+    if (index === this.length - 1) this.pop()
+
+    let prev = this.get(index - 1)
+    let removeNode = prev.next
+    // point the previous node to next next
+    prev.next = removeNode.next
+    this.length--
+    return removeNode
+  }
+
+  reverse() {
+    // swap head and tail
+    let node = this.head
+    this.head = this.tail
+    this.tail = node
+    
+    // will prev Initially set to null because tail (the reverse of head) should point to null.
+let prev = null
+let next
+
+for (let i = 0; i < this.length; i++) {
+// Store the next node of the current node in the next variable.
+next = node.next
+// Set the current node to point to the previous node, which is the node stored in the prev variable.
+node.next = prev
+// This node becomes the previous node that the next node should point to, so change the value of prev to the current node.
+prev = node
+// Continue processing the next node, which is the next node stored initially.
+node = next
+}
+
+return this
+}
+}
+```
+
+## Time Complexity of Singly Linked Lists
+
+- Insertion: In a singly linked list, inserting a value does not affect other values. index, so the time complexity is $O(1)$, while inserting values into an array is $O(n)$. 
+- Removal: Remove an element from a singly linked list. If the element being removed is the head, then the time complexity is $O(1)$, because we only need to set the old head to null and set `head.next` to the new head; if the element being removed is the tail, then we must traverse the entire linked list until the previous node of the tail and assign it as the new tail, and the time complexity is $O(n)$. 
+- Searching and Access: To find a specific node, we must traverse the entire list, so the time complexity is $O(n)$. In contrast, the time complexity of obtaining a specific index value in an array is $O(1)$. 
+
+## Summary
+
+Singly linked lists lack indexes, so retrieving the value of an index is much faster than with arrays. However, this also makes linked lists significantly faster than arrays when performing insertions.

@@ -22,7 +22,7 @@ const LocaleSwitcher = () => {
   return (
     <>
       {locale === 'en' ? (
-        <LocaleButton pathname={pathname} localeCode='zh-tw' />
+        <LocaleButton pathname='/' localeCode='zh-tw' />
       ) : (
         <LocaleButton pathname={pathname} localeCode='en' />
       )}

@@ -1,0 +1,109 @@
+---
+title: Merge Sort
+id: c4dcbd6a-9b3c-4aea-b758-d362aca466d1
+publishedAt: 2023-Jul-03 17:53:53+08:00
+modifiedAt: 2023-Jul-03 17:53:53+08:00
+description: Merge sort is one of the most time-efficient comparative sorting algorithms. Its core concept is that if an array contains only one or zero elements, it is already sorted!
+category: algorithm
+---
+import { CustomImage } from '@/components/custom-blog-components'
+
+## What is Merge Sort?
+
+Merge sort involves three concepts: splitting, merging, and sorting.
+
+The core concept is: if an array contains only one or zero elements, it is already sorted! (Sounds a bit like nonsense!)
+
+So, merge sort gradually splits the array into smaller arrays containing one or zero elements, and then merges them together to form a new, sorted array. Because of this splitting and merging process, merge sort is also called the *Divide-and-Conquer algorithm*.
+
+## Implementing a merge sort function in JavaScript
+
+First, let's implement a merge function that merges two sorted arrays. The general idea is:
+
+1. Create an array.
+2. If there are still elements in either array that have not been iterated over.
+- If the elements in arr1 are **less** than the elements in arr2, push the elements in arr1 to the new array and continue checking the next element in arr1.
+- If the elements in arr1 are **greater** than the elements in arr2, push the elements in arr2 to the new array and continue checking the next element in arr2.
+- If one of the two arrays has been iterated over, push all remaining elements in the other array to the new array.
+
+```javascript
+function merge(arr1, arr2) {
+let res = []
+let i = 0;
+let j = 0;
+
+// Consider the case that arr1[i] equals arr2[j]
+while (i < arr1.length && j < arr2.length) {
+if (arr1[i] < arr2[j]) {
+res.push(arr1[i])
+i++
+} else {
+res.push(arr2[j])
+j++
+}
+}
+
+// if one array exhausts to the end, deal with another one
+if (i === arr1.length) {
+res = [...res, ...arr2.slice(j)]
+}
+
+if (j === arr2.length) {
+res = [...res, ...arr1.slice(i)]
+}
+
+return res
+}
+```
+
+Next, we complete the remaining functions, which means repeatedly splitting the array until each array contains only 1 or 0 values, and calling the `merge` function at the same time. This completes the merge sort! The program code is as follows:
+
+```javascript
+function merge(arr1, arr2) {
+   let res = []
+   let i = 0;
+   let j = 0;
+
+   while (i < arr1.length && j < arr2.length) {
+      if (arr1[i] < arr2[j]) {
+         res.push(arr1[i])
+         i++
+      } else {
+         res.push(arr2[j])
+         j++
+      }
+   }
+   if (i === arr1.length) {
+      res = [...res, ...arr2.slice(j)]
+   }
+   if (j === arr2.length) {
+      res = [...res, ...arr1.slice(i)]
+   }
+   return res
+}
+
+function mergeSort(arr) {
+   if (arr. length <= 1) return arr
+   let middlePoint = Math.floor(arr.length / 2) // Find the middle point of the array
+
+let left = mergeSort(arr.slice(0, middlePoint)) // Extract the left part of the array, and call mergeSort recursively until the length of the array equals 1 or 0
+
+let right = mergeSort(arr.slice(middlePoint)) // Extract the right part of the array, and call mergeSort recursively until the length of the array equals 1 or 0
+
+return merge(left, right) // Finally, merge the left and right together
+}
+```
+
+## What is the time complexity of Merge Sort?
+
+The time complexity of Merge Sort is $$O(n\,log\,n)$$, and it does not change with the degree of sorting of the data, because the data is always split into multiple arrays and then merged together.
+
+### Why is it O(nlogn)?
+
+If the array has 8 elements, splitting it into its smallest possible size requires 3 operations, for a time complexity of $O(logn)$. Furthermore, each comparison before merging has a time complexity of $O(n)$. For example, the final step of an 8-element array involves comparing two 4-element arrays, which requires approximately $O(n)$ comparisons. Ultimately, the time complexity of Merge Sort is $O(nlogn)$.
+
+## Call Stacks of Merge Sort
+
+If you break down each step of merge sort, the code execution sequence will look something like this (it's recommended to open the GIF image in a new tab):
+
+<CustomImage src='/images/merge-sort/merge-sort-call-stack.gif' width={1920} height={1080} alt='Merge sorting' caption='Step by step merge sorting'/>
