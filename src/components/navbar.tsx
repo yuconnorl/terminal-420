@@ -39,7 +39,7 @@ const Navbar = () => {
   return (
     <div className='mx-auto flex max-w-2xl flex-col'>
       <div className='flex items-center justify-between'>
-        <Link prefetch={false} href='/'>
+        <Link href='/'>
           <Image ref={logoRef} alt='logo' src='/images/logo.svg' width={32} height={32} />
         </Link>
         <div className='flex items-center gap-0.5 md:gap-1'>
