@@ -14,7 +14,7 @@ type Props = {
 
 const CustomImage = ({ src, caption, alt, width, height }: Props) => {
   return (
-    <figure className='relative mb-8'>
+    <figure className='custom-image-figure relative mb-8'>
       <Image
         className={cn('w-full rounded-lg')}
         src={src}
@@ -26,7 +26,7 @@ const CustomImage = ({ src, caption, alt, width, height }: Props) => {
         // unoptimized
       />
       {caption && (
-        <figcaption className='mt-2 pl-1 text-sm text-neutral-800 dark:text-neutral-300'>
+        <figcaption className='mt-2 pl-1 text-sm text-neutral-600 dark:text-neutral-300'>
           <Markdown
             components={{
               a: ({ node, ...props }) => (

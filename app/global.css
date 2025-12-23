@@ -240,3 +240,9 @@ body::-webkit-scrollbar {
 .blink {
   animation: blink 1s infinite step-end;
 }
+
+.custom-image-figure {
+  p {
+    margin: 0;
+  }
+}
