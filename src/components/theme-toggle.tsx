@@ -11,6 +11,8 @@ const ThemeToggle = () => {
     <Button
       variant='emoji'
       size='icon'
+      className='cursor-pointer'
+      asChild
       onClick={() => {
         setTheme(resolvedTheme === 'light' ? 'dark' : 'light')
       }}

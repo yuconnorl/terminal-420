@@ -13,30 +13,123 @@ const sourceDirEn = 'src/contents/en'
 const targetLanguage = 'en'
 
 /**
- * Protect only import statements from translation
+ * Protect formatting elements from translation
  */
-function protectImports(content) {
-  const imports = []
+function protectFormatting(content) {
+  const protections = []
   let counter = 0
 
-  // Protect import statements
-  const protectedContent = content.replace(/^import\s+.*?$/gm, (match) => {
-    const placeholder = `___IMPORT_${counter}___`
-    imports.push({ placeholder, original: match })
+  // Protect double line breaks (paragraph separators)
+  content = content.replace(/\n\n+/g, (match) => {
+    const placeholder = `___DOUBLE_BREAK_${counter}___`
+    protections.push({ placeholder, original: match })
     counter++
     return placeholder
   })
 
-  return { protectedContent, imports }
+  // Protect JSX line breaks
+  content = content.replace(/>\s*\n\s*</g, (match) => {
+    const placeholder = `___JSX_BREAK_${counter}___`
+    protections.push({ placeholder, original: match })
+    counter++
+    return placeholder
+  })
+
+  // Protect single line breaks at end of lines
+  content = content.replace(/\n(?=\S)/g, (match) => {
+    const placeholder = `___LINE_BREAK_${counter}___`
+    protections.push({ placeholder, original: match })
+    counter++
+    return placeholder
+  })
+
+  return { content, protections }
 }
 
 /**
- * Restore import statements from placeholders
+ * Restore formatting elements after translation
  */
-function restoreImports(content, imports) {
+function restoreFormatting(content, protections) {
   let restored = content
-  imports.forEach(({ placeholder, original }) => {
-    restored = restored.replace(placeholder, original)
+  protections.forEach(({ placeholder, original }) => {
+    restored = restored.replace(new RegExp(placeholder, 'g'), original)
+  })
+  return restored
+}
+
+/**
+ * Protect JSX components and imports from translation
+ */
+function protectJSXAndImports(content) {
+  const protections = []
+  let counter = 0
+
+  // Protect import statements
+  content = content.replace(/^import\s+.*?$/gm, (match) => {
+    const placeholder = `___IMPORT_${counter}___`
+    protections.push({ placeholder, original: match })
+    counter++
+    return placeholder
+  })
+
+  // Protect multi-line JSX components (like <Admonition>...</Admonition>)
+  content = content.replace(/<([A-Z][a-zA-Z0-9]*)[^>]*>[\s\S]*?<\/\1>/g, (match) => {
+    const placeholder = `___JSX_COMPONENT_${counter}___`
+    protections.push({ placeholder, original: match })
+    counter++
+    return placeholder
+  })
+
+  // Protect self-closing JSX components with props
+  content = content.replace(/<[A-Z][a-zA-Z0-9]*[^>]*\/>/g, (match) => {
+    const placeholder = `___JSX_SELF_CLOSING_${counter}___`
+    protections.push({ placeholder, original: match })
+    counter++
+    return placeholder
+  })
+
+  // Protect JSX attributes with complex values
+  content = content.replace(/(\w+)=\{[^}]+\}/g, (match) => {
+    const placeholder = `___JSX_ATTR_${counter}___`
+    protections.push({ placeholder, original: match })
+    counter++
+    return placeholder
+  })
+
+  // Protect markdown links
+  content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match) => {
+    const placeholder = `___LINK_${counter}___`
+    protections.push({ placeholder, original: match })
+    counter++
+    return placeholder
+  })
+
+  // Protect code blocks
+  content = content.replace(/```[\s\S]*?```/g, (match) => {
+    const placeholder = `___CODE_BLOCK_${counter}___`
+    protections.push({ placeholder, original: match })
+    counter++
+    return placeholder
+  })
+
+  // Protect inline code
+  content = content.replace(/`[^`]+`/g, (match) => {
+    const placeholder = `___INLINE_CODE_${counter}___`
+    protections.push({ placeholder, original: match })
+    counter++
+    return placeholder
+  })
+
+  return { content, protections }
+}
+
+/**
+ * Restore JSX components and imports after translation
+ */
+function restoreJSXAndImports(content, protections) {
+  let restored = content
+  protections.forEach(({ placeholder, original }) => {
+    restored = restored.replace(new RegExp(placeholder, 'g'), original)
   })
   return restored
 }
@@ -59,7 +152,7 @@ function splitFrontmatter(content) {
 }
 
 /**
- * Translate a single MDX file with JSX protection
+ * Translate a single MDX file with enhanced formatting protection
  */
 async function translateMdxFile(sourceFile, targetFile) {
   try {
@@ -69,31 +162,51 @@ async function translateMdxFile(sourceFile, targetFile) {
     // Split frontmatter and body
     const { frontmatter, body } = splitFrontmatter(content)
 
-    // Only protect import statements
-    const { protectedContent, imports } = protectImports(body)
+    // Protect formatting first
+    const { content: formattingProtected, protections: formatProtections } = protectFormatting(body)
+
+    // Then protect JSX and imports
+    const { content: fullyProtected, protections: jsxProtections } = protectJSXAndImports(formattingProtected)
 
     console.log(`Translating (zh -> ${targetLanguage})...`)
-    console.log(`Protected ${imports.length} import statements`)
+    console.log(`Protected ${jsxProtections.length} JSX/import elements`)
+    console.log(`Protected ${formatProtections.length} formatting elements`)
 
     // Debug: Check if we have content to translate
-    const trimmedContent = protectedContent.trim()
+    const trimmedContent = fullyProtected.trim()
     if (!trimmedContent) {
       throw new Error('No content to translate')
     }
 
     console.log(`Content length: ${trimmedContent.length} characters`)
 
-    // Translate the content (Google Translate will handle JSX)
-    const [translations] = await translate.translate(trimmedContent, {
-      from: 'zh',
-      to: targetLanguage,
-      format: 'text', // Treat as plain text, not HTML
-    })
+    // Translate the content in smaller chunks to preserve formatting
+    const chunks = trimmedContent.split(/(?<=\.)\s+(?=[A-Z])|(?<=。)\s*/).filter((chunk) => chunk.trim())
+    const translatedChunks = []
 
-    const translatedText = Array.isArray(translations) ? translations[0] : translations
+    for (const chunk of chunks) {
+      if (chunk.trim()) {
+        try {
+          const [translation] = await translate.translate(chunk.trim(), {
+            from: 'zh',
+            to: targetLanguage,
+            format: 'text',
+          })
+          translatedChunks.push(Array.isArray(translation) ? translation[0] : translation)
+        } catch (error) {
+          console.warn(`Warning: Failed to translate chunk, keeping original: ${error.message}`)
+          translatedChunks.push(chunk)
+        }
+      }
+    }
 
-    // Restore import statements
-    const restoredBody = restoreImports(translatedText, imports)
+    const translatedText = translatedChunks.join(' ')
+
+    // Restore JSX and imports first
+    const jsxRestored = restoreJSXAndImports(translatedText, jsxProtections)
+
+    // Then restore formatting
+    const fullyRestored = restoreFormatting(jsxRestored, formatProtections)
 
     // Translate frontmatter separately (line by line to preserve structure)
     const frontmatterLines = frontmatter.split('\n')
@@ -104,11 +217,16 @@ async function translateMdxFile(sourceFile, targetFile) {
         const [key, ...valueParts] = line.split(':')
         const value = valueParts.join(':').trim()
         if (value) {
-          const [translated] = await translate.translate(value, {
-            from: 'zh',
-            to: targetLanguage,
-          })
-          translatedFrontmatterLines.push(`${key}: ${translated}`)
+          try {
+            const [translated] = await translate.translate(value, {
+              from: 'zh',
+              to: targetLanguage,
+            })
+            translatedFrontmatterLines.push(`${key}: ${translated}`)
+          } catch (error) {
+            console.warn(`Warning: Failed to translate frontmatter line, keeping original: ${error.message}`)
+            translatedFrontmatterLines.push(line)
+          }
         } else {
           translatedFrontmatterLines.push(line)
         }
@@ -117,8 +235,8 @@ async function translateMdxFile(sourceFile, targetFile) {
       }
     }
 
-    // Reconstruct the file
-    const finalContent = `---\n${translatedFrontmatterLines.join('\n')}\n---\n${restoredBody}`
+    // Reconstruct the file with proper spacing
+    const finalContent = `---\n${translatedFrontmatterLines.join('\n')}\n---\n${fullyRestored}`
 
     console.log('Translation complete.')
 
