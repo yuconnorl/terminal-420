@@ -25,7 +25,7 @@ const AllDeviceTooltip = ({
             className={cn('cursor-pointer text-[#8c796a] hover:opacity-70 dark:text-[#c3bbae]', className)}
             onClick={() => setOpen(!open)}
             onMouseEnter={() => setOpen(true)}
-            // onMouseLeave={() => setOpen(false)}
+            onMouseLeave={() => setOpen(false)}
             // onTouchStart={() => setOpen(!open)}
           >
             {children}
@@ -42,14 +42,6 @@ const AllDeviceTooltip = ({
             sideOffset={5}
           >
             <span className='inline-block text-sm'>{content}</span>
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className='absolute -top-4 -right-3 text-3xl'
-            >
-              💭
-            </motion.span>
           </TooltipContent>
         </TooltipPortal>
       </Tooltip>
