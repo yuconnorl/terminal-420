@@ -1,5 +1,7 @@
 import dayjs from 'dayjs'
 
+import { routing } from '@/i18n/routing'
+
 import { getBlogPosts } from './[locale]/blog/utils'
 
 type Sitemap = Array<{
@@ -8,26 +10,23 @@ type Sitemap = Array<{
 }>
 
 async function generateSitemap(): Promise<Sitemap> {
-  const postDataZhTW = getBlogPosts('zh-TW').map((post) => ({
-    url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}/`,
-    lastModified: dayjs(post.metadata.modifiedAt).format('YYYY-MM-DD').toString(),
+  const now = dayjs().format('YYYY-MM-DD')
+  const defaultLocale = routing.defaultLocale
+  const getLocalePath = (locale: string) => (locale === defaultLocale ? '' : `/${locale}`)
+
+  const postData = routing.locales.flatMap((locale) =>
+    getBlogPosts(locale).map((post) => ({
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}${getLocalePath(locale)}/blog/${post.slug}/`,
+      lastModified: dayjs(post.metadata.modifiedAt).format('YYYY-MM-DD').toString(),
+    })),
+  )
+
+  const routeData = routing.locales.map((locale) => ({
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}${getLocalePath(locale)}/`,
+    lastModified: now,
   }))
 
-  const postDataEn = getBlogPosts('en').map((post) => ({
-    url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}/`,
-    lastModified: dayjs(post.metadata.modifiedAt).format('YYYY-MM-DD').toString(),
-  }))
-
-  const routeData = [''].map((route) => {
-    const now = dayjs().format('YYYY-MM-DD')
-
-    return {
-      url: `${process.env.NEXT_PUBLIC_SITE_URL}/${route}`,
-      lastModified: now,
-    }
-  })
-
-  return [...postDataZhTW, ...postDataEn, ...routeData]
+  return [...postData, ...routeData]
 }
 
 export default generateSitemap
