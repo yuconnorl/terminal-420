@@ -8,7 +8,7 @@
     "lint": "next lint",
     "start": "next start",
     "release": "standard-version --release-as",
-    "translate": "node translate.js"
+    "translate": "node --env-file=.env translate.js"
   },
   "dependencies": {
     "@giscus/react": "^3.1.0",
