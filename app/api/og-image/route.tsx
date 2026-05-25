@@ -30,9 +30,9 @@ export async function GET(request: NextRequest) {
           }}
         >
           <div tw='flex flex-col absolute bottom-20 left-20'>
-            <div tw='mb-6 max-w-4xl text-[3.1rem] leading-[1.3]'>{title}</div>
-            <div style={{ fontFamily: 'Cubic 11' }} tw='text-lg leading-tight opacity-50'>
-              mind agonist
+            <div tw='mb-4 max-w-4xl text-[3.1rem] leading-[1.3]'>{title}</div>
+            <div style={{ fontFamily: 'Noto Sans TC' }} tw='text-xl leading-tight opacity-70 pl-2'>
+              🧠 Mind Agonist
             </div>
           </div>
         </div>

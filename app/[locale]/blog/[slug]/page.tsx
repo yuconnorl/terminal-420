@@ -100,24 +100,41 @@ export async function generateMetadata({ params }: MetadataProps): Promise<Metad
   const localePath = locale === routing.defaultLocale ? '' : `/${locale}`
   const pageUrl = `${siteUrl}${localePath}/blog/${post.slug}`
   const ogImageUrl = `${siteUrl}/api/og-image?${new URLSearchParams({ title }).toString()}`
+  const pageUrlObject = new URL(pageUrl)
+  const ogImageUrlObject = new URL(ogImageUrl)
 
   return {
     title,
     description,
+    alternates: {
+      canonical: pageUrlObject,
+    },
     openGraph: {
       title,
       description,
       type: 'article',
       publishedTime: publishedAt,
-      url: pageUrl,
+      url: pageUrlObject,
       siteName: process.env.NEXT_PUBLIC_SITE_NAME,
-      images: [ogImageUrl],
+      images: [
+        {
+          url: ogImageUrlObject,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [ogImageUrl],
+      images: [
+        {
+          url: ogImageUrlObject,
+          alt: title,
+        },
+      ],
     },
   }
 }
