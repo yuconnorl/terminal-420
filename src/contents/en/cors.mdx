@@ -3,7 +3,7 @@ title: Cross-Origin Resource Sharing (CORS)
 description: Oops, it’s CORS!
 id: 8bd5ae80-7109-405d-ae72-df83556e2e26
 publishedAt: 2023-Oct-09 14:53:21+08:00
-modifiedAt: 2025-Apr-29 14:53:21+08:00
+modifiedAt: 2026-May-24 14:53:21+08:00
 category: frontend
 ---
 import { CustomImage, Admonition } from '@/components/custom-blog-components'
@@ -18,14 +18,14 @@ Also known as cross-origin resource sharing, when we use JavaScript to retrieve 
 
 ## What is the same origin?
 
-According to the [Same Origin Policy](https://developer.mozilla.org/zh-TW/docs/Web/Security/Same-origin_policy), two web pages are considered to have the same origin if they share the same protocol, port (if specified), and domain. Requests from websites that do not share the same origin are considered cross-origin HTTP requests. Compare `https://www.terminal-420.space` to the following URLs:
+According to the [Same Origin Policy](https://developer.mozilla.org/zh-TW/docs/Web/Security/Same-origin_policy), two web pages are considered to have the same origin if they share the same protocol, port (if specified), and domain. Requests from websites that do not share the same origin are considered cross-origin HTTP requests. Compare `https://www.mindagonist.com` to the following URLs:
 
 ```markdown
-1. http://www.terminal-420.space // Different protocol, non-same origin
-2. https://www.terminal-420.com // Different domain, non-same origin
-3. https://www.cannabis.terminal-420.space // Different domain, non-same origin
-4. https://www.terminal-420.space:3080 // Different port number, non-same origin
-5. https://www.terminal-420.space/blog // Same origin
+1. http://www.mindagonist.com // Different protocol, non-same origin
+2. https://www.mindagonist.com // Different domain, non-same origin
+3. https://www.cannabis.mindagonist.com // Different domain, non-same origin
+4. https://www.mindagonist.com:3080 // Different port number, non-same origin
+5. https://www.mindagonist.com/blog // Same origin
 ```
 
 ## What is CORS?
@@ -65,7 +65,7 @@ headers: {
 });
 ```
 
-If the request meets all the requirements for a simple request, the browser will send a request to the server. If we send a request from `https://www.terminal-420.space` to another server, it might look like this:
+If the request meets all the requirements for a simple request, the browser will send a request to the server. If we send a request from `https://www.mindagonist.com` to another server, it might look like this:
 
 ```http
 GET /resources/public-data/ HTTP/1.1
@@ -77,10 +77,10 @@ Accept-Encoding: ...
 Accept-Charset: ...
 Connection: ...
 Referer: ...
-Origin: https://www.terminal-420.space
+Origin: https://www.mindagonist.com
 ```
 
-The `Origin` header at the end indicates where the request originated. In this case, `https://www.terminal-420.space` is making the request. Let's see how the server responds to this request.
+The `Origin` header at the end indicates where the request originated. In this case, `https://www.mindagonist.com` is making the request. Let's see how the server responds to this request.
 
 http
 HTTP/1.1 200 OK
@@ -92,13 +92,13 @@ Connection: ...
 Transfer-Encoding: ...
 Content-Type: application/xml
 
-The header returned by the server contains an `Access-Control-Allow-Origin` header with a value of `*`, which allows any website to request cross-site resources. If the server only allows access from specific origins, such as `https://www.terminal-420.space`, the `Access-Control-Allow-Origin` header will be returned:
+The header returned by the server contains an `Access-Control-Allow-Origin` header with a value of `*`, which allows any website to request cross-site resources. If the server only allows access from specific origins, such as `https://www.mindagonist.com`, the `Access-Control-Allow-Origin` header will be returned:
 
 ```http
-Access-Control-Allow-Origin: https://www.terminal-420.space
+Access-Control-Allow-Origin: https://www.mindagonist.com
 ```
 
-Origins other than `https://www.terminal-420.space` will be unable to access the resource.
+Origins other than `https://www.mindagonist.com` will be unable to access the resource.
 
 ### Preflighted Requests
 

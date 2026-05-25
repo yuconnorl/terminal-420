@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
         >
           <div tw='flex flex-col absolute bottom-20 left-20'>
             <div tw='mb-6 text-[3.1rem] leading-[1.3] max-w-4xl'>{title}</div>
-            <div tw='leading-tight text-lg opacity-50'>Terminal 420</div>
+            <div tw='leading-tight text-lg opacity-50'>mind agonist</div>
           </div>
         </div>
       ),

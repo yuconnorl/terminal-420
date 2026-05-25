@@ -23,6 +23,6 @@ export default function robots(): Robots {
       allow: '/',
       disallow: '/private/',
     },
-    sitemap: 'https://terminal-420.space/sitemap.xml',
+    sitemap: 'https://mindagonist.com/sitemap.xml',
   }
 }

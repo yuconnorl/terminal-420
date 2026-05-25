@@ -3,7 +3,7 @@ title: Cross-Origin Resource Sharing (CORS)
 description: 糟了，是 CORS！
 id: 8bd5ae80-7109-405d-ae72-df83556e2e26
 publishedAt: 2023-Oct-09 14:53:21+08:00
-modifiedAt: 2025-Apr-29 14:53:21+08:00
+modifiedAt: 2026-May-24 14:53:21+08:00
 category: frontend
 ---
 
@@ -19,14 +19,14 @@ import { CustomImage, Admonition } from '@/components/custom-blog-components'
 
 ## 什麼是同源?
 
-依據 [同源政策](https://developer.mozilla.org/zh-TW/docs/Web/Security/Same-origin_policy)（Same-origin policy），兩個網頁具備相同協定（protocol）、埠號（port，如果有指定）以及網域（domain），則為同源。而非同源的網站產生的 request 即為跨來源請求（cross-origin http request）。以 `https://www.terminal-420.space` 來和下面幾個網址相比：
+依據 [同源政策](https://developer.mozilla.org/zh-TW/docs/Web/Security/Same-origin_policy)（Same-origin policy），兩個網頁具備相同協定（protocol）、埠號（port，如果有指定）以及網域（domain），則為同源。而非同源的網站產生的 request 即為跨來源請求（cross-origin http request）。以 `https://www.mindagonist.com` 來和下面幾個網址相比：
 
 ```markdown
-1. http://www.terminal-420.space // 通訊協定不同，非同源
-2. https://www.terminal-420.com // domain 不同，非同源
-3. https://www.cannabis.terminal-420.space // domain 不同，非同源
-4. https://www.terminal-420.space:3080 // 埠號不同，非同源
-5. https://www.terminal-420.space/blog // 同源
+1. http://www.mindagonist.com // 通訊協定不同，非同源
+2. https://www.mindagonist.com // domain 不同，非同源
+3. https://www.cannabis.mindagonist.com // domain 不同，非同源
+4. https://www.mindagonist.com:3080 // 埠號不同，非同源
+5. https://www.mindagonist.com/blog // 同源
 ```
 
 ## 什麼是 CORS？
@@ -66,7 +66,7 @@ const response = await fetch('https://othersite.com/data', {
 });
 ```
 
-如果該請求符合簡單請求的所有規範，那麼瀏覽器會向 Server 發送 request。如果我們在 `https://www.terminal-420.space` 向另一個 Server 發送一個 request，大概會長的像這樣：
+如果該請求符合簡單請求的所有規範，那麼瀏覽器會向 Server 發送 request。如果我們在 `https://www.mindagonist.com` 向另一個 Server 發送一個 request，大概會長的像這樣：
 
 ```http
 GET /resources/public-data/ HTTP/1.1
@@ -78,10 +78,10 @@ Accept-Encoding: ...
 Accept-Charset: ...
 Connection: ...
 Referer: ...
-Origin: https://www.terminal-420.space
+Origin: https://www.mindagonist.com
 ```
 
-在最後的 `Origin` header 當中，標示了這個 request 從何而來。這個情境下是 `https://www.terminal-420.space` 發出請求。再來看看伺服器如何回應這個請求
+在最後的 `Origin` header 當中，標示了這個 request 從何而來。這個情境下是 `https://www.mindagonist.com` 發出請求。再來看看伺服器如何回應這個請求
 
 ```http
 HTTP/1.1 200 OK
@@ -94,13 +94,13 @@ Transfer-Encoding: ...
 Content-Type: application/xml
 ```
 
-在 Server 回傳的 header 當中有一個 `Access-Control-Allow-Origin`，其值為 `*`，代表他可以允許任何網站跨站請求資源。如果伺服器僅允許特定來源，像是 `https://www.terminal-420.space` 才能夠存取的話，那麼 `Access-Control-Allow-Origin` 這個 header 則會回傳：
+在 Server 回傳的 header 當中有一個 `Access-Control-Allow-Origin`，其值為 `*`，代表他可以允許任何網站跨站請求資源。如果伺服器僅允許特定來源，像是 `https://www.mindagonist.com` 才能夠存取的話，那麼 `Access-Control-Allow-Origin` 這個 header 則會回傳：
 
 ```http
-Access-Control-Allow-Origin: https://www.terminal-420.space
+Access-Control-Allow-Origin: https://www.mindagonist.com
 ```
 
-而其他非 `https://www.terminal-420.space` 的來源都無法存取該資源。
+而其他非 `https://www.mindagonist.com` 的來源都無法存取該資源。
 
 ### 預檢請求（Preflighted request）
 

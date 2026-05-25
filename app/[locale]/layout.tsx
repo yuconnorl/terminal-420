@@ -14,21 +14,20 @@ import { routing } from '@/i18n/routing'
 
 // built-in SEO helper
 export const metadata: Metadata = {
-  metadataBase: new URL('https://terminal-420.space'),
+  metadataBase: new URL('https://mindagonist.com'),
   title: {
-    default: 'Terminal 420',
-    template: '%s - Terminal 420',
+    default: 'mind agonist',
+    template: '%s - mind agonist',
   },
-  description:
-    'Welcome to Terminal 420, a blog that focuses on web-related tech, cannabis and psychedelic research. Pull up a chair and have fun!',
+  description: 'mind agonist',
   openGraph: {
-    title: 'Terminal 420',
+    title: 'mind agonist',
     description: 'Way to go. Take a load off and relax.',
-    url: 'https://terminal-420.space',
-    siteName: 'Terminal 420',
+    url: 'https://mindagonist.com',
+    siteName: 'mind agonist',
     images: [
       {
-        url: 'https://terminal-420.space/images/og.jpeg',
+        url: 'https://mindagonist.com/images/og.jpeg',
         width: 1200,
         height: 630,
       },
@@ -38,9 +37,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Terminal 420',
+    title: 'mind agonist',
     description: 'Way to go. Take a load off and relax.',
-    images: 'https://terminal-420.space/images/og.jpeg',
+    images: 'https://mindagonist.com/images/og.jpeg',
   },
   robots: {
     index: true,
