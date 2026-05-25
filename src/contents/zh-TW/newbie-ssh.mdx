@@ -196,7 +196,7 @@ sudo iptables -A INPUT -p tcp --dport 22 -j DROP
 
 Firewalld 將設定區分為 _Runtime Configuration_ 及 _Permanent Configuration_，前者只在當下的 session 生效，所以在重啟或重新載入後就會消失；後者則是當下不會生效，但重啟或重新載入後會永久生效。
 
-<CustomImage src='/images/newbie-ssh/firewalld-zone.png' width={600} height={338} alt='Firewalld Zones' caption='Firewalld ゾーン！'/>
+<CustomImage src='/images/newbie-ssh/firewalld-zone.webp' width={600} height={338} alt='Firewalld Zones' caption='Firewalld ゾーン！'/>
 
 在安裝完 firewalld 後，預設會有九個 zones，分別是 `drop`、`public`、`trusted`、`block`、`dmz`、`external`、`home`、`internal` 及 `work`。
 
