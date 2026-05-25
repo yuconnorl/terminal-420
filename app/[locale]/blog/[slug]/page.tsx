@@ -96,6 +96,10 @@ export async function generateMetadata({ params }: MetadataProps): Promise<Metad
   }
 
   const { title, publishedAt, description } = post.metadata
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://mindagonist.com').replace(/\/+$/, '')
+  const localePath = locale === routing.defaultLocale ? '' : `/${locale}`
+  const pageUrl = `${siteUrl}${localePath}/blog/${post.slug}`
+  const ogImageUrl = `${siteUrl}/api/og-image?${new URLSearchParams({ title }).toString()}`
 
   return {
     title,
@@ -105,15 +109,15 @@ export async function generateMetadata({ params }: MetadataProps): Promise<Metad
       description,
       type: 'article',
       publishedTime: publishedAt,
-      url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}`,
+      url: pageUrl,
       siteName: process.env.NEXT_PUBLIC_SITE_NAME,
-      images: [`/api/og-image?title=${title}`],
+      images: [ogImageUrl],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [`/api/og-image?title=${title}`],
+      images: [ogImageUrl],
     },
   }
 }

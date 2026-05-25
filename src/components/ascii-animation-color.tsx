@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 class AnimationManager {
   private _animation: number | null = null
@@ -47,6 +47,7 @@ class AnimationManager {
 
 interface ASCIIAnimationProps {
   frames?: string[]
+  initialFrame?: string | null
   className?: string
   fps?: number
   frameCount?: number
@@ -55,6 +56,7 @@ interface ASCIIAnimationProps {
 
 export default function ASCIIAnimation({
   frames: providedFrames,
+  initialFrame: initialFrameProp = null,
   className = '',
   fps = 24,
   frameCount = 60,
@@ -62,8 +64,11 @@ export default function ASCIIAnimation({
 }: ASCIIAnimationProps) {
   const [frames, setFrames] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [initialFrame, setInitialFrame] = useState<string | null>(initialFrameProp ?? providedFrames?.[0] ?? null)
   const [currentFrame, setCurrentFrame] = useState(0)
+  const [shouldLoadFrames, setShouldLoadFrames] = useState(Boolean(providedFrames))
   const framesRef = useRef<string[]>([])
+  const containerRef = useRef<HTMLDivElement | null>(null)
   const [animationManager] = useState(
     () =>
       new AnimationManager(() => {
@@ -75,8 +80,46 @@ export default function ASCIIAnimation({
   )
 
   useEffect(() => {
+    setInitialFrame(initialFrameProp ?? providedFrames?.[0] ?? null)
+  }, [initialFrameProp, providedFrames])
+
+  useEffect(() => {
+    if (providedFrames) {
+      setShouldLoadFrames(true)
+      return
+    }
+
+    const node = containerRef.current
+
+    if (!node) {
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return
+
+        setShouldLoadFrames(true)
+        observer.disconnect()
+      },
+      { rootMargin: '200px 0px' },
+    )
+
+    observer.observe(node)
+
+    return () => observer.disconnect()
+  }, [providedFrames])
+
+  useEffect(() => {
+    if (!shouldLoadFrames) {
+      return
+    }
+
     const loadFrames = async () => {
+      setIsLoading(true)
+
       if (providedFrames) {
+        setInitialFrame(providedFrames[0] ?? null)
         setFrames(providedFrames)
         framesRef.current = providedFrames
         setIsLoading(false)
@@ -85,9 +128,17 @@ export default function ASCIIAnimation({
 
       try {
         const frameFiles = Array.from({ length: frameCount }, (_, i) => `frame_${String(i + 1).padStart(4, '0')}`)
+        const [firstFrameFile, ...remainingFrameFiles] = frameFiles
 
-        // Load ASCII frames
-        const framePromises = frameFiles.map(async (filename) => {
+        const firstFrameResponse = await fetch(`/${frameFolder}/${firstFrameFile}.html`)
+        if (!firstFrameResponse.ok) {
+          throw new Error(`Failed to fetch ${firstFrameFile}.html: ${firstFrameResponse.status}`)
+        }
+
+        const firstFrameHtml = await firstFrameResponse.text()
+        setInitialFrame(firstFrameHtml)
+
+        const remainingFramePromises = remainingFrameFiles.map(async (filename) => {
           const response = await fetch(`/${frameFolder}/${filename}.html`)
           if (!response.ok) {
             throw new Error(`Failed to fetch ${filename}.html: ${response.status}`)
@@ -95,7 +146,8 @@ export default function ASCIIAnimation({
           return await response.text()
         })
 
-        const loadedFrames = await Promise.all(framePromises)
+        const remainingFrames = await Promise.all(remainingFramePromises)
+        const loadedFrames = [firstFrameHtml, ...remainingFrames]
         console.log(`Loaded ${loadedFrames.length} frames`)
         setFrames(loadedFrames)
         framesRef.current = loadedFrames
@@ -109,7 +161,7 @@ export default function ASCIIAnimation({
     }
 
     loadFrames()
-  }, [providedFrames, frameCount, frameFolder])
+  }, [providedFrames, frameCount, frameFolder, shouldLoadFrames])
 
   useEffect(() => {
     animationManager.updateFPS(fps)
@@ -145,15 +197,31 @@ export default function ASCIIAnimation({
   // const currentColor = frameColors[currentFrame] || null;
 
   if (isLoading) {
-    return <div className={`overflow-hidden font-mono whitespace-pre ${className}`}>Loading ASCII animation...</div>
+    return (
+      <div
+        ref={containerRef}
+        className={`relative w-full overflow-hidden font-mono text-[6px] leading-none whitespace-pre xs:text-[8px] sm:text-xs ${className}`}
+      >
+        {initialFrame ? (
+          <div className='relative' dangerouslySetInnerHTML={{ __html: initialFrame }} />
+        ) : (
+          'Loading ASCII animation...'
+        )}
+      </div>
+    )
   }
 
   if (!frames.length) {
-    return <div className={`overflow-hidden font-mono whitespace-pre ${className}`}>No frames loaded</div>
+    return (
+      <div ref={containerRef} className={`overflow-hidden font-mono whitespace-pre ${className}`}>
+        No frames loaded
+      </div>
+    )
   }
 
   return (
     <div
+      ref={containerRef}
       className={`relative w-full overflow-hidden font-mono text-[6px] leading-none whitespace-pre xs:text-[8px] sm:text-xs ${className}`}
     >
       <div className='relative' dangerouslySetInnerHTML={{ __html: frames[currentFrame] || '' }} />

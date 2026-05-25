@@ -26,16 +26,19 @@ const notoTc = localFont({
 const jetBrain = localFont({
   src: '../public/fonts/jetbrain-mono-variable.ttf',
   variable: '--font-jet-brain',
+  preload: false,
 })
 
 const cubic_11 = localFont({
   src: '../public/fonts/cubic_11.woff2',
   variable: '--font-cubic-11',
+  preload: false,
 })
 
 const silkScreen = localFont({
   src: '../public/fonts/silk-screen-regular.ttf',
   variable: '--font-silk-screen',
+  preload: false,
 })
 
 // Since we have a `not-found.tsx` page on the root, a layout file
