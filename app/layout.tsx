@@ -26,7 +26,6 @@ const notoTc = localFont({
 const jetBrain = localFont({
   src: '../public/fonts/jetbrain-mono-variable.ttf',
   variable: '--font-jet-brain',
-  preload: false,
 })
 
 const cubic_11 = localFont({

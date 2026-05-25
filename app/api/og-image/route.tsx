@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
             flexDirection: 'column',
             position: 'relative',
             backgroundColor: 'white',
-            fontFamily: 'Noto Sans TC',
+            fontFamily: 'Cubic 11',
           }}
         >
           <div tw='flex flex-col absolute bottom-20 left-20'>
