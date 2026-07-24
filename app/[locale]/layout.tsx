@@ -16,15 +16,15 @@ import { routing } from '@/i18n/routing'
 export const metadata: Metadata = {
   metadataBase: new URL('https://mindagonist.com'),
   title: {
-    default: 'mind agonist',
-    template: '%s - mind agonist',
+    default: 'Mind Agonist',
+    template: '%s - Mind Agonist',
   },
-  description: 'mind agonist',
+  description: 'Mind Agonist',
   openGraph: {
-    title: 'mind agonist',
+    title: 'Mind Agonist',
     description: 'Way to go. Take a load off and relax.',
     url: 'https://mindagonist.com',
-    siteName: 'mind agonist',
+    siteName: 'Mind Agonist',
     images: [
       {
         url: 'https://mindagonist.com/images/og.jpeg',
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'mind agonist',
+    title: 'Mind Agonist',
     description: 'Way to go. Take a load off and relax.',
     images: 'https://mindagonist.com/images/og.jpeg',
   },

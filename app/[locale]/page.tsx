@@ -6,8 +6,8 @@ import { loadFrame } from '@/helper/loadFrames'
 import { BlogPosts } from './blog/blog-post'
 
 export const metadata: Metadata = {
-  title: 'mind agonist',
-  description: 'mind agonist',
+  title: 'Mind Agonist',
+  description: 'Mind Agonist',
 }
 
 const LandingPage = async ({ params }: { params: Promise<{ locale: string }> }) => {
